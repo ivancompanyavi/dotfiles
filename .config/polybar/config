@@ -78,11 +78,11 @@ cursor-scroll = ns-resize
 
 [bar/right]
 ;monitor = ${env:MONITOR:HDMI-1}
-width = 20%
+width = 30%
 height = 27
-offset-x = 79%
+offset-x = 69%
 ;offset-y = 1%
-radius = 6.0
+radius = 10.0
 fixed-center = false
 
 background = ${colors.background}
@@ -267,7 +267,7 @@ label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = wlp0s20f3
+interface = wlo1
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>

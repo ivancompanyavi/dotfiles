@@ -102,55 +102,55 @@
   #multiplier: 3
 
 # Font configuration
-#font:
+font:
   # Normal (roman) font face
-  #normal:
+  normal:
     # Font family
     #
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    #family: monospace
+    family: "Fira Code"
 
     # The `style` can be specified to pick a specific face.
     #style: Regular
 
   # Bold font face
-  #bold:
+  bold:
     # Font family
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: "Fira Code"
 
     # The `style` can be specified to pick a specific face.
     #style: Bold
 
   # Italic font face
-  #italic:
+  italic:
     # Font family
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: "Fira Code"
 
     # The `style` can be specified to pick a specific face.
     #style: Italic
 
   # Bold italic font face
-  #bold_italic:
+  bold_italic:
     # Font family
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: "Fira Code"
 
     # The `style` can be specified to pick a specific face.
     #style: Bold Italic
 
   # Point size
-  #size: 11.0
+  size: 10.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -311,54 +311,89 @@
   #   `- { index: 16, color: '#ff00ff' }`
   #
   #indexed_colors: []
+  # colors:
+  #   primary:
+  #     background: '#2e3440'
+  #     foreground: '#d8dee9'
+  #     dim_foreground: '#a5abb6'
+  #   cursor:
+  #     text: '#2e3440'
+  #     cursor: '#d8dee9'
+  #   vi_mode_cursor:
+  #     text: '#2e3440'
+  #     cursor: '#d8dee9'
+  #   selection:
+  #     text: CellForeground
+  #     background: '#4c566a'
+  #   search:
+  #     matches:
+  #       foreground: CellBackground
+  #       background: '#88c0d0'
+  #     bar:
+  #       background: '#434c5e'
+  #       foreground: '#d8dee9'
+  #   normal:
+  #     black: '#3b4252'
+  #     red: '#bf616a'
+  #     green: '#a3be8c'
+  #     yellow: '#ebcb8b'
+  #     blue: '#81a1c1'
+  #     magenta: '#b48ead'
+  #     cyan: '#88c0d0'
+  #     white: '#e5e9f0'
+  #   bright:
+  #     black: '#4c566a'
+  #     red: '#bf616a'
+  #     green: '#a3be8c'
+  #     yellow: '#ebcb8b'
+  #     blue: '#81a1c1'
+  #     magenta: '#b48ead'
+  #     cyan: '#8fbcbb'
+  #     white: '#eceff4'
+  #   dim:
+  #     black: '#373e4d'
+  #     red: '#94545d'
+  #     green: '#809575'
+  #     yellow: '#b29e75'
+  #     blue: '#68809a'
+  #     magenta: '#8c738c'
+  #     cyan: '#6d96a5'
+ # Shades of Purple Alacritty
+# https://github.com/ahmadawais/shades-of-purple-alacritty
+
+# Colors
 colors:
-  primary:
-    background: '#2e3440'
-    foreground: '#d8dee9'
-    dim_foreground: '#a5abb6'
-  cursor:
-    text: '#2e3440'
-    cursor: '#d8dee9'
-  vi_mode_cursor:
-    text: '#2e3440'
-    cursor: '#d8dee9'
-  selection:
-    text: CellForeground
-    background: '#4c566a'
-  search:
-    matches:
-      foreground: CellBackground
-      background: '#88c0d0'
-    bar:
-      background: '#434c5e'
-      foreground: '#d8dee9'
-  normal:
-    black: '#3b4252'
-    red: '#bf616a'
-    green: '#a3be8c'
-    yellow: '#ebcb8b'
-    blue: '#81a1c1'
-    magenta: '#b48ead'
-    cyan: '#88c0d0'
-    white: '#e5e9f0'
-  bright:
-    black: '#4c566a'
-    red: '#bf616a'
-    green: '#a3be8c'
-    yellow: '#ebcb8b'
-    blue: '#81a1c1'
-    magenta: '#b48ead'
-    cyan: '#8fbcbb'
-    white: '#eceff4'
-  dim:
-    black: '#373e4d'
-    red: '#94545d'
-    green: '#809575'
-    yellow: '#b29e75'
-    blue: '#68809a'
-    magenta: '#8c738c'
-    cyan: '#6d96a5'
-    white: '#aeb3bb'
+    # Default colors
+    primary:
+        background: '#1E1E3F'
+        foreground: '#FFFFFF'
+
+    # Colors the cursor will use if `custom_cursor_colors` is true
+    cursor:
+        text: '#1E1E3F'
+        cursor: '#FAD000'
+
+    # Normal colors
+    normal:
+        black: '#000000'
+        red: '#D52822'
+        green: '#3DB72A'
+        yellow: '#FAD000'
+        blue: '#6943FF'
+        magenta: '#FF628C'
+        cyan: '#9EFFFF'
+        white: '#DBDBE0'
+
+    # Bright colors
+    bright:
+        black: '#5C5C61'
+        red: '#FF000D'
+        green: '#3AD900'
+        yellow: '#FAD000'
+        blue: '#6943FF'
+        magenta: '#FF628C'
+        cyan: '#9EFFFF'
+        white: '#FFFFFF' #     white: '#aeb3bb'
 # Bell
 #
 # The bell is rung every time the BEL control character is received.
@@ -404,7 +439,7 @@ colors:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.8
+background_opacity: 0.9 
 
 #selection:
   # This string contains all characters that are used as separators for
