@@ -5,20 +5,16 @@ call plug#begin()
     Plug 'preservim/nerdtree'
     let NERDTreeShowHidden=1
     " Themes
-    Plug 'arcticicestudio/nord-vim'
-    "Plug 'pangloss/vim-javascript'
+    Plug 'Shatur/neovim-ayu'
     Plug 'leafgarland/typescript-vim'
     Plug 'mattn/emmet-vim'
     Plug 'yuezk/vim-js'
     Plug 'maxmellon/vim-jsx-pretty'
-    "Plug 'peitalin/vim-jsx-typescript'
-    "Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-    Plug 'jparise/vim-graphql'
     Plug 'easymotion/vim-easymotion'
     " Status bar
     Plug 'itchyny/lightline.vim'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     let g:coc_global_extensions = ['coc-tsserver', 'coc-tailwindcss'
         \ ]
@@ -50,7 +46,7 @@ set clipboard=unnamedplus
 
 " color scheme
 syntax on
-colorscheme nord
+colorscheme ayu
 filetype on
 filetype plugin indent on
 
@@ -98,10 +94,9 @@ nmap <leader>f  <Plug>(coc-format-selected)
 " NERDTree
 noremap <leader>b :NERDTreeToggle<CR>
 
-" fzf
-nnoremap <leader>o :GFiles<CR>
-nnoremap <leader>y "+y
-nnoremap <leader>p "+p
+" Telescope
+nnoremap <leader>of <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>ob <cmd>lua require('telescope.builtin').buffers()<cr>
 
 " Formatter
 vmap <leader>f  <Plug>(coc-format-selected)
@@ -111,3 +106,4 @@ nmap <leader>f  <Plug>(coc-format-selected)
 nnoremap <silent><leader>1 :source ~/.config/nvim/init.vim \| :PlugInstall<CR>
 " map <Leader>s <Plug>(easymotion-prefix)
 imap ii <Esc>
+nnoremap <C-s> :w<CR>
