@@ -107,3 +107,6 @@ nnoremap <silent><leader>1 :source ~/.config/nvim/init.vim \| :PlugInstall<CR>
 " map <Leader>s <Plug>(easymotion-prefix)
 imap ii <Esc>
 nnoremap <C-s> :w<CR>
+" Move pieces of code around
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
