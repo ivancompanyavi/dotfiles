@@ -10,7 +10,7 @@ vim.g.maplocalleader = " "
 -- themes
 function _G.dark_theme()
   vim.cmd("!osascript -e 'tell application \"System Events\" to tell appearance preferences to set dark mode to true'")
-  vim.cmd("!sed -i.bak 's/\\(colors:\\ \\*\\).*$/\\1frappe/' ~/projects/dotfiles/.config/alacritty/alacritty.yml")
+  vim.cmd("!sed -i.bak 's/\\(colors:\\ \\*\\).*$/\\1nord/' ~/projects/dotfiles/.config/alacritty/alacritty.yml")
   vim.o.background = 'dark'
 end
 
@@ -57,31 +57,40 @@ keymap("n", "˚", ":m -2<cr>", opts) -- Alt-k in Mac OS
 -- Nvim Tree
 keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", opts)
 
--- Telescope
-keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<leader>ft", "<cmd>lua require'telescope.builtin'.live_grep()<cr>", opts)
+-- telescope
+-- alt + p
+-- keymap("n", "π", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap("n", "<leader>p", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap("n", "<leader>f", "<cmd>lua require'telescope.builtin'.live_grep()<cr>", opts)
+keymap("n", "gD", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts)
+keymap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+keymap("n", "gd", "<cmd>lua require'telescope.builtin'.lsp_definitions()<cr>", opts)
+keymap("n", "gt", "<cmd>lua require'telescope.builtin'.lsp_type_definitions()<cr>", opts)
+keymap("n", "gr", "<cmd>lua require'telescope.builtin'.lsp_references()<cr>", opts)
+keymap("n", "gi", "<cmd>lua require'telescope.builtin'.lsp_implementations()<cr>", opts)
+
 -- Reload config
 keymap("n", "<leader><leader>", "<cmd>lua ReloadConfig()<CR>", { noremap = true, silent = false })
 
 -- LSP
-keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
--- keymap("n", "K", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 keymap("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-keymap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
--- keymap("n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-keymap("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-keymap(
-  "n",
-  "gl",
-  '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>',
-  opts
-)
-keymap("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+keymap("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+-- keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+-- keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+-- keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+-- keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+-- keymap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+-- -- keymap("n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+-- keymap("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
+-- keymap(
+--   "n",
+--   "gl",
+--   '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>',
+--   opts
+-- )
+-- keymap("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
+-- keymap("n", "gL", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 
 -- Terminal
 keymap("n", "<leader>tt", '<cmd>ToggleTerm size=10 direction=horizontal<cr>', opts)

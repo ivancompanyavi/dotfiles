@@ -14,33 +14,11 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
 	debug = false,
 	sources = {
-		formatting.prettier,
-		formatting.black.with({ extra_args = { "--fast" } }),
-    actions.eslint_d.with({ prefer_local = "node_modules/.bin" }),
-		formatting.stylua,
+		formatting.prettierd,
+		-- formatting.black.with({ extra_args = { "--fast" } }),
+    -- actions.eslint_d,
+		-- formatting.stylua,
     -- diagnostics.flake8
 	},
 })
 
-
--- local eslint = require("eslint")
---
--- eslint.setup({
---   bin = 'eslint_d', -- or `eslint_d`
---   code_actions = {
---     enable = true,
---     apply_on_save = {
---       enable = true,
---       types = { "problem" }, -- "directive", "problem", "suggestion", "layout"
---     },
---     disable_rule_comment = {
---       enable = true,
---       location = "separate_line", -- or `same_line`
---     },
---   },
---   diagnostics = {
---     enable = true,
---     report_unused_disable_directives = false,
---     run_on = "type", -- or `save`
---   },
--- })

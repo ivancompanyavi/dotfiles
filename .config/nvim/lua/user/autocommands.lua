@@ -3,9 +3,9 @@ vim.cmd [[
   augroup _general_settings
     autocmd!
     autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR> 
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup='IncSearch', timeout=300}
     autocmd BufWinEnter * :set formatoptions-=cro
     autocmd FileType qf set nobuflisted
+    autocmd vimenter * ++nested colorscheme gruvbox
   augroup end
 ]]
 

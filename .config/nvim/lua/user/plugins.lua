@@ -52,6 +52,9 @@ return packer.startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
+  use {
+	"windwp/nvim-autopairs",
+}
   -- cmp plugins
   use { 'hrsh7th/nvim-cmp' }
   use "hrsh7th/cmp-buffer" -- buffer completions
@@ -83,7 +86,7 @@ return packer.startup(function(use)
   }
   use 'JoosepAlviste/nvim-ts-context-commentstring' -- Better comments
   -- Themes
-  use 'NLKNguyen/papercolor-theme'
+  use 'morhetz/gruvbox'
   if PACKER_BOOTSTRAP then
     require("packer").sync()
   end

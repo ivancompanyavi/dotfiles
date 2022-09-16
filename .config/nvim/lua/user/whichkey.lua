@@ -72,14 +72,14 @@ wk.setup {
 wk.register({
   x = {
     d = { function()
-      vim.cmd("!osascript -e 'tell application \"System Events\" to tell appearance preferences to set dark mode to true'")
-      vim.cmd("!sed -i.bak 's/\\(colors:\\ \\*\\).*$/\\1frappe/' ~/projects/dotfiles/.config/alacritty/alacritty.yml")
       vim.o.background = 'dark'
+      vim.cmd("!osascript -e 'tell application \"System Events\" to tell appearance preferences to set dark mode to true'")
+      vim.cmd "hi Normal guibg=NONE ctermbg=NONE"
     end, "Dark theme"},
     l = { function()
-      vim.cmd("!osascript -e 'tell application \"System Events\" to tell appearance preferences to set dark mode to false'")
-      vim.cmd("!sed -i.bak 's/\\(colors:\\ \\*\\).*$/\\1latte/' ~/projects/dotfiles/.config/alacritty/alacritty.yml")
       vim.o.background = 'light'
+      vim.cmd("!osascript -e 'tell application \"System Events\" to tell appearance preferences to set dark mode to false'")
+      vim.cmd "hi Normal guibg=NONE ctermbg=NONE"
     end, "Light theme"},
   }
 }, { prefix = "<leader>" })
@@ -88,5 +88,7 @@ wk.register({
   g = {
     d = "Go to definition",
     D = "Go to declaration",
+    h = "Go to hover help"
   },
+
 })

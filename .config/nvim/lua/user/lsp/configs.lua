@@ -5,7 +5,7 @@ end
 
 local lspconfig = require("lspconfig")
 
-local servers = { "tsserver", "rust_analyzer" }
+local servers = { "tsserver", "rust_analyzer", "eslint" }
 
 lsp_installer.setup {
 	ensure_installed = servers
