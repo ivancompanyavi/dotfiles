@@ -1,7 +1,7 @@
-require "user.plugins"
 require "user.autocommands"
 require "user.options"
 
+require "user.plugins"
 require "user.bufferline"
 require "user.treesitter"
 require "user.cmp"
@@ -14,5 +14,8 @@ require "user.snippets"
 require "user.lualine"
 require "user.comment"
 require "user.terminal"
+require "user.notes"
 require "user.gitsigns"
 require "user.autopairs"
+require 'user.leap'
+require 'user.theme'

@@ -12,6 +12,7 @@ local events = require("luasnip.util.events")
 local ai = require("luasnip.nodes.absolute_indexer")
 local fmt = require("luasnip.extras.fmt").fmt
 local m = require("luasnip.extras").m
+local rep = require("luasnip.extras").rep
 local lambda = require("luasnip.extras").l
 local postfix = require("luasnip.extras.postfix").postfix
 
@@ -26,22 +27,17 @@ ls.add_snippets("all", {
       "",
       "interface Props {",
       "}",
-      "",
-      "const "
     }),
-    i(1, "name"),
+    t({"", "", ""}),
+    t("const "), i(1, "name"), t({": React.FC<Props> = ({}) => {"}),
+    t({"", ""}),
     t({
-      ": React.FC<Props> = ({}) => {",
       "\treturn (",
       "\t)",
       "}",
-      "",
-      "export default ",
     }),
-    t({ "interface Props {" }),
-    t({ "}" }),
-    t({ "" }),
-    t({ "const " }), i(1, "name"),
-    t({ "" }),
+    t({"", "", ""}),
+    t("export default "), rep(1),
+    t({""}),
 })
 })

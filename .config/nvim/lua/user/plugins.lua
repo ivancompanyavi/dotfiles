@@ -85,8 +85,12 @@ return packer.startup(function(use)
     run = ":TSUpdate",
   }
   use 'JoosepAlviste/nvim-ts-context-commentstring' -- Better comments
+  use 'xolox/vim-misc'
+  use 'xolox/vim-notes'
+  use 'ggandor/leap.nvim'
   -- Themes
   use 'morhetz/gruvbox'
+  use 'folke/tokyonight.nvim'
   if PACKER_BOOTSTRAP then
     require("packer").sync()
   end

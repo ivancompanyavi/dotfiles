@@ -72,13 +72,18 @@ wk.setup {
 wk.register({
   x = {
     d = { function()
-      vim.o.background = 'dark'
+      -- vim.o.background = 'dark'
       vim.cmd("!osascript -e 'tell application \"System Events\" to tell appearance preferences to set dark mode to true'")
+      vim.cmd("colorscheme tokyonight-storm")
+      vim.cmd("set background=dark")
       vim.cmd "hi Normal guibg=NONE ctermbg=NONE"
     end, "Dark theme"},
     l = { function()
-      vim.o.background = 'light'
+      -- vim.o.background = 'light'
       vim.cmd("!osascript -e 'tell application \"System Events\" to tell appearance preferences to set dark mode to false'")
+      -- vim.cmd("colorscheme tokyonight-day")
+      vim.cmd("colorscheme gruvbox")
+      vim.cmd("set background=light")
       vim.cmd "hi Normal guibg=NONE ctermbg=NONE"
     end, "Light theme"},
   }
@@ -88,7 +93,7 @@ wk.register({
   g = {
     d = "Go to definition",
     D = "Go to declaration",
-    h = "Go to hover help"
+    h = "Go to hover help",
   },
 
 })
