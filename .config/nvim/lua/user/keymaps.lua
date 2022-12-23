@@ -36,6 +36,8 @@ keymap("n", "<leader>c", "<cmd>source $MYVIMRC<cr>", opts)
 keymap("n", "<leader>w", "<cmd>w<CR>", opts)
 keymap("n", "<leader>W", "<cmd>wa<CR>", opts)
 keymap("i", "jk", "<ESC>", opts)
+keymap("n", "<C-d>", "<C-d>zz", opts)
+keymap("n", "<C-u>", "<C-u>zz", opts)
 
 -- Navigate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)
