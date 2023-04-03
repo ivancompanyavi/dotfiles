@@ -1,21 +1,16 @@
 local wezterm = require 'wezterm'
+local theme = require 'theme'
 
-function scheme_for_appearance(appearance)
-	if appearance:find "Dark" then
-    return "tokyonight"
-	else
-    return "Gruvbox Light"
-	end
-
-end
+color_scheme = theme.get_theme(wezterm.gui.get_appearance())
 
 return {
   font = wezterm.font 'Fira Code',
   font_size = 14.0,
-  color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
+  color_scheme = color_scheme,
   window_decorations = 'RESIZE',
   enable_tab_bar = false,
   window_background_opacity = 0.9,
+  default_cwd = '~/projects',
   keys = {
     { key = 'd', mods = 'CMD', action = wezterm.action.SplitVertical {domain="CurrentPaneDomain"}},
     { key = 'd', mods = 'CMD|SHIFT', action = wezterm.action.SplitHorizontal {domain="CurrentPaneDomain"}},

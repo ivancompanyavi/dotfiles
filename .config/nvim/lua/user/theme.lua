@@ -1,7 +1,9 @@
-require('tokyonight').setup({
-  transparent = true,
-  styles = {
-    sidebars = "transparent",
-    floats = "transparent"
-  }
+local M = {}
+
+require('gruvbox').setup({
+  transparent_mode = false,
 })
+
+M.colorscheme = 'gruvbox'
+
+return M

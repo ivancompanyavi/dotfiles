@@ -39,24 +39,24 @@ packer.init {
 
 return packer.startup(function(use)
   use "wbthomason/packer.nvim" -- Have packer manage itself
-  use "nvim-lua/plenary.nvim"                  -- Useful lua functions used ny lots of plugins
-  use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
+  use "nvim-lua/plenary.nvim"  -- Useful lua functions used ny lots of plugins
+  use { 'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons' }
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icons
     },
-    tag = 'nightly' -- optional, updated every week. (see issue #1193)
+    tag = 'nightly'                   -- optional, updated every week. (see issue #1193)
   }
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
   use {
-	"windwp/nvim-autopairs",
-}
+    "windwp/nvim-autopairs",
+  }
   -- cmp plugins
-  use { 'hrsh7th/nvim-cmp' }
+    use { 'hrsh7th/nvim-cmp' }
   use "hrsh7th/cmp-buffer" -- buffer completions
   use "hrsh7th/cmp-path" -- path completions
   use "hrsh7th/cmp-cmdline" -- cmdline completions
@@ -68,16 +68,24 @@ return packer.startup(function(use)
   use "numToStr/Comment.nvim" -- comments
   use 'lewis6991/gitsigns.nvim'
 
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    ft = { "markdown" },
+  })
+
   -- LSP
-  use "neovim/nvim-lspconfig" -- enable LSP
+  use "neovim/nvim-lspconfig"           -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
-  use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
+  use "tamago324/nlsp-settings.nvim"    -- language server settings defined in json for
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
   use "jose-elias-alvarez/nvim-lsp-ts-utils"
-  use "akinsho/toggleterm.nvim" -- Cooler terminal
+  use 'neovim/nvim-lspconfig'
+  use 'simrat39/rust-tools.nvim'
 
   -- Telescope
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'nvim-telescope/telescope.nvim'
 
   use {
@@ -89,8 +97,9 @@ return packer.startup(function(use)
   use 'xolox/vim-notes'
   use 'ggandor/leap.nvim'
   -- Themes
-  use 'morhetz/gruvbox'
+  use 'ellisonleao/gruvbox.nvim'
   use 'folke/tokyonight.nvim'
+  use '~/projects/personal/nvim-plugin'
   if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
