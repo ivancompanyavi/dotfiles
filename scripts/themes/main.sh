@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-THEME_FOLDER="$dot/../themes/$2"
+THEME_FOLDER="$dot/themes/$2"
 
 _set_wallpaper() {
   theme=$1
@@ -59,8 +59,7 @@ _theme() {
   _set_wallpaper $theme
   _set_neovim $theme
   _set_wezterm $theme
-  _set_sketchybar $theme
-
-  brew services restart sketchybar
+  # _set_sketchybar $theme
+  # brew services restart sketchybar
 
 }

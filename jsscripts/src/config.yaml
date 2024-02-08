@@ -1,0 +1,21 @@
+packages:
+  -
+    name: yabai
+    type: homebrew
+  -
+    name: lazygit
+    type: homebrew
+    preInstall:
+      - brew tap koekeishiya/formulae/yabai
+  -
+    name: typescript
+    type: npm
+    preInstall:
+      - brew install node
+  -
+    name: neovim
+    type: homebrew
+  -
+    name: nvm
+    type: shell
+    install: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash

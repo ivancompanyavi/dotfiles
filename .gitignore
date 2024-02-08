@@ -3,3 +3,4 @@ plugged/
 .config/nvim.old
 .config/nvim/plugin
 output.log
+node_modules

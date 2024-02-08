@@ -1,23 +1,27 @@
 if vim.g.vscode then
-  -- vscode extension
+-- vscode extension
 else
-  require "user.autocommands"
-  require "user.options"
+	-- require("user.lazy")
+	require("user.autocommands")
 
-  require "user.plugins"
-  require "user.bufferline"
-  require "user.treesitter"
-  require "user.cmp"
-  require "user.tree"
-  require "user.telescope"
-  require "user.lsp"
-  require "user.keymaps"
-  require "user.whichkey"
-  require "user.lualine"
-  require "user.comment"
-  require "user.notes"
-  require "user.gitsigns"
-  require "user.autopairs"
-  require 'user.leap'
-  require 'user.theme'
+	require("user.options")
+	require("user.autopairs")
+	require("user.bufferline")
+	require("user.cmp")
+	require("user.comment")
+	require("user.gitsigns")
+	require("user.keymaps")
+	require("user.leap")
+	require("user.lsp")
+	require("user.lualine")
+	require("user.notes")
+	require("user.plugins")
+	require("user.prettier")
+	require("user.telescope")
+	require("user.theme")
+	require("user.tree")
+	require("user.treesitter")
+	require("user.vimwiki")
+	require("user.whichkey")
+	-- require("user.ivan")
 end

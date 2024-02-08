@@ -5,7 +5,7 @@ dot="$(cd "$(dirname "$0")"; pwd)"
 source "$dot"/config.sh
 source "$dot"/helpers/utils.sh
 source "$dot"/helpers/install.sh
-source "$dot"/helpers/theme.sh
+source "$dot"/themes/main.sh
 
 install() {
   _install
