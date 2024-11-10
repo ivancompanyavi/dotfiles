@@ -1,36 +1,34 @@
-local theme = require('user.theme')
+local theme = require("user.theme")
 
-local general_settings = vim.api.nvim_create_augroup('_general_settings', { clear = true })
-local lsp_settings = vim.api.nvim_create_augroup('_lsp_settings', { clear = true })
-
-print(vim.inspect(theme.theme))
+local general_settings = vim.api.nvim_create_augroup("_general_settings", { clear = true })
+local lsp_settings = vim.api.nvim_create_augroup("_lsp_settings", { clear = true })
 
 vim.api.nvim_create_autocmd("vimenter", {
-  group = general_settings,
-  pattern = "*",
-  nested = true,
-  command = "colorscheme " .. theme.colorscheme
+	group = general_settings,
+	pattern = "*",
+	nested = true,
+	command = "colorscheme " .. theme.colorscheme,
 })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = lsp_settings,
-  pattern = "*",
-  callback = function()
-    vim.lsp.buf.format()
-  end
-})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+-- 	group = lsp_settings,
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		vim.lsp.buf.format()
+-- 	end,
+-- })
 
-vim.cmd [[
+vim.cmd([[
   augroup _random
      autocmd!
      autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
      autocmd BufWinEnter * :set formatoptions-=cro
      autocmd FileType qf set nobuflisted
      autocmd ColorScheme * hi Normal ctermbg=none guibg=none
+     autocmd ColorScheme * hi NonText ctermbg=none guibg=none
      autocmd ColorScheme * hi NvimTreeNormal guibg=NONE ctermbg=NONE
    augroup end
-]]
-
+]])
 
 -- vim.cmd [[
 --   augroup _general_settings
@@ -43,7 +41,6 @@ vim.cmd [[
 --     autocmd ColorScheme * hi NvimTreeNormal guibg=NONE ctermbg=NONE
 --   augroup end
 -- ]]
-
 
 -- Autoformat
 -- vim.cmd [[
