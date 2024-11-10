@@ -69,7 +69,7 @@ keymap("n", "∆", ":m +1<cr>", opts) -- Alt-j in Mac OS
 keymap("n", "˚", ":m -2<cr>", opts) -- Alt-k in Mac OS
 
 -- Nvim Tree
-keymap("n", "<leader>e", "<cmd>Oil --float<cr>", opts)
+keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", opts)
 
 -- telescope
 -- alt + p

@@ -4,6 +4,8 @@ else
 	-- require("user.lazy")
 	require("user.autocommands")
 
+	require("user.tree")
+
 	require("user.options")
 	require("user.autopairs")
 	require("user.bufferline")
@@ -23,5 +25,5 @@ else
 	require("user.treesitter")
 	require("user.vimwiki")
 	-- require("user.whichkey")
-	require("user.oil")
+	-- require("user.oil")
 end
