@@ -1,7 +1,7 @@
 return {
-	  {
-    "folke/tokyonight.nvim",
-    lazy = true,
-    transparent = true,
-  },
+	{
+		"folke/tokyonight.nvim",
+		lazy = true,
+		transparent = true,
+	},
 }
