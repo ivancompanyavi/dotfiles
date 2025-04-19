@@ -1,0 +1,21 @@
+packages:
+  darwin:
+    brews:
+    - 'git'
+    - 'chezmoi'
+    - 'cmake'
+    - 'coreutils'
+    - 'fd'
+    - 'fzf'
+    - 'lua'
+    - 'lua-language-server'
+    - 'neovim'
+    - 'ripgrep'
+    - 'stylua'
+    - 'typescript-language-server'
+    - 'wget'
+    - 'jesseduffield/lazygit/lazygit'
+    casks:
+    - 'google-chrome'
+    - 'font-fira-code'
+    - 'wezterm'
