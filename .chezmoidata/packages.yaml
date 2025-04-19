@@ -2,7 +2,6 @@ packages:
   darwin:
     brews:
     - 'git'
-    - 'chezmoi'
     - 'cmake'
     - 'coreutils'
     - 'fd'
