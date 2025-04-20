@@ -1,7 +1,6 @@
 return {
 	{
 		"folke/tokyonight.nvim",
-		lazy = true,
-		transparent = true,
+		transparent = vim.g.transparent_enabled,
 	},
 }

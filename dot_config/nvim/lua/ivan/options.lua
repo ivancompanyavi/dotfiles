@@ -6,6 +6,7 @@ vim.opt.relativenumber = true
 vim.opt.tabstop = 8     -- Always 8 (see :h tabstop)
 vim.opt.softtabstop = 2 -- What you expecting
 vim.opt.shiftwidth = 2  -- What you expecting
+vim.opt.clipboard = "unnamedplus"
 
 vim.cmd [[colorscheme tokyonight-moon]]
 
