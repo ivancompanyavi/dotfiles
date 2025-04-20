@@ -1,6 +1,5 @@
 return {
-	{
-		"folke/tokyonight.nvim",
-		transparent = vim.g.transparent_enabled,
-	},
+	{ "folke/tokyonight.nvim" },
+	{ "ellisonleao/gruvbox.nvim", priority = 1000 }
+
 }

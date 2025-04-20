@@ -8,14 +8,13 @@ vim.opt.softtabstop = 2 -- What you expecting
 vim.opt.shiftwidth = 2  -- What you expecting
 vim.opt.clipboard = "unnamedplus"
 
-vim.cmd [[colorscheme tokyonight-moon]]
 
-vim.cmd [[
-  highlight Normal guibg=none
-  highlight NonText guibg=none
-  highlight Normal ctermbg=none
-  highlight NonText ctermbg=none
-]]
+-- vim.cmd [[
+--   highlight Normal guibg=none
+--   highlight NonText guibg=none
+--   highlight Normal ctermbg=none
+--   highlight NonText ctermbg=none
+-- ]]
 
 
 

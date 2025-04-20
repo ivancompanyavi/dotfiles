@@ -11,7 +11,7 @@ function scheme_for_appearance(appearance)
 	if appearance:find 'Dark' then
 		return 'tokyonight'
 	else
-		return 'tokyonight-day'
+		return 'Gruvbox light, hard (base16)'
 	end
 end
 
@@ -21,7 +21,7 @@ return {
 	color_scheme = scheme_for_appearance(get_appearance()),
 	-- window_decorations = 'RESIZE',
 	enable_tab_bar = true,
-	window_background_opacity = 0.9,
+	window_background_opacity = 1.0,
 	default_cwd = '~/projects',
 	keys = {
 		{ key = 'd', mods = 'CMD',       action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" } },
