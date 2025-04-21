@@ -1,5 +1,7 @@
 packages:
   darwin:
+    taps:
+      - 'jesseduffield/lazygit'
     brews:
     - 'git'
     - 'cmake'
