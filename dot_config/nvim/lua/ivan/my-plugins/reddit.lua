@@ -93,7 +93,7 @@ function M.show_reddit(posts)
 
 	-- map <CR> in this buffer to open the URL
 	vim.api.nvim_buf_set_keymap(buf, 'n', '<CR>',
-		"<Cmd>lua require('ivan.my-plugins.reddit').open_url()<CR>",
+		"<Cmd>lua require('ivan.my-plugins.reddit.reddit').open_url()<CR>",
 		{ nowait = true, noremap = true, silent = true })
 end
 
