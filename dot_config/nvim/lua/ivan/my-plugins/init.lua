@@ -16,6 +16,6 @@ end, {
     end,
 })
 
-vim.api.nvim_create_user_command('Jira', function(opts)
-    jira.show_inprogress()
+vim.keymap.set('n', '<leader>j', function()
+    jira.test()
 end, {})

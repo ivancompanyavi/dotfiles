@@ -15,6 +15,7 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
 require('lspconfig').lua_ls.setup {}
 require 'lspconfig'.ts_ls.setup {}
 require 'lspconfig'.ruby_lsp.setup {}
+require 'lspconfig'.pylsp.setup {}
 
 -- This is where you enable features that only work
 -- if there is a language server active in the file
