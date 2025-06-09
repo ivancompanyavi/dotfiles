@@ -1,21 +1,22 @@
-local reddit = require("ivan.my-plugins.reddit")
-local jira = require("ivan.my-plugins.jira")
+-- local reddit = require("ivan.my-plugins.reddit")
+-- local jira = require("ivan.my-plugins.jira")
+local dashboard = require("ivan.my-plugins.dashboard")
 
-vim.api.nvim_create_user_command('Reddit', function(opts)
-    local args      = vim.fn.split(opts.args, '%s\\+')
-    local subreddit = args[1] or 'neovim'
-    local limit     = tonumber(args[2]) or 10
-    reddit.fetch_and_show(subreddit, limit)
-end, {
-    nargs    = '*',
-    complete = function(lead)
-        local examples = { 'neovim', 'lua', 'vim', 'programming' }
-        return vim.tbl_filter(function(item)
-            return vim.startswith(item, lead)
-        end, examples)
-    end,
-})
+-- vim.api.nvim_create_user_command('Reddit', function(opts)
+--     local args      = vim.fn.split(opts.args, '%s\\+')
+--     local subreddit = args[1] or 'neovim'
+--     local limit     = tonumber(args[2]) or 10
+--     reddit.fetch_and_show(subreddit, limit)
+-- end, {
+--     nargs    = '*',
+--     complete = function(lead)
+--         local examples = { 'neovim', 'lua', 'vim', 'programming' }
+--         return vim.tbl_filter(function(item)
+--             return vim.startswith(item, lead)
+--         end, examples)
+--     end,
+-- })
 
-vim.keymap.set('n', '<leader>j', function()
-    jira.test()
+vim.keymap.set('n', '<leader>d', function()
+    dashboard.setup()
 end, {})

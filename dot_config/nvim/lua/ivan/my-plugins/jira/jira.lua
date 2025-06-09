@@ -1,5 +1,5 @@
 local dotenv = require("ivan.my-plugins.dotenv")
-local ui = require("ivan.my-plugins.jira.ui")
+local ui = require("ivan.my-plugins.ui")
 local api = require("ivan.my-plugins.jira.api")
 
 require("ivan.my-plugins.dotenv").load_dotenv()
@@ -148,7 +148,7 @@ function M.show_menu()
     end, { buffer = buf })
 end
 
-function M.test()
+function M.setup()
     ui.render_table_window {
         title   = "Jira Menu",
         columns = {
