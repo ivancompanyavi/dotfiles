@@ -2,12 +2,15 @@ packages:
   darwin:
     taps:
       - 'jesseduffield/lazygit'
+      - 'FelixKratz/formulae'
     brews:
     - 'git'
     - 'cmake'
     - 'coreutils'
     - 'fd'
     - 'fzf'
+    - 'gcalcli'
+    - 'starship'
     - 'lua'
     - 'lua-language-server'
     - 'neovim'
@@ -17,7 +20,10 @@ packages:
     - 'python-lsp-server'
     - 'wget'
     - 'jesseduffield/lazygit/lazygit'
+    - 'sketchybar'
+    - 'borders'
     casks:
     - 'google-chrome'
     - 'font-fira-code'
     - 'wezterm'
+    - 'nikitabobko/tap/aerospace'
