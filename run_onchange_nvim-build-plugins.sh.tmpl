@@ -1,0 +1,22 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+# Trigger rebuild when nvim-pack-lock.json changes:
+# {{ include "dot_config/nvim/nvim-pack-lock.json" | sha256sum }}
+
+PACK_DIR="$HOME/.local/share/nvim/site/pack/core/opt"
+
+# telescope-fzf-native: compile C extension
+FZF_DIR="$PACK_DIR/telescope-fzf-native.nvim"
+if [ -d "$FZF_DIR" ] && [ ! -f "$FZF_DIR/build/libfzf.so" ]; then
+    echo "Building telescope-fzf-native.nvim..."
+    (cd "$FZF_DIR" && make)
+fi
+
+# markdown-preview: install node dependencies
+MDP_DIR="$PACK_DIR/markdown-preview.nvim"
+if [ -d "$MDP_DIR/app" ] && [ ! -d "$MDP_DIR/app/node_modules" ]; then
+    echo "Building markdown-preview.nvim..."
+    (cd "$MDP_DIR/app" && npx --yes yarn install)
+fi
+{{ end -}}

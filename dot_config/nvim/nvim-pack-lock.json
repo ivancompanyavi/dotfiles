@@ -31,7 +31,7 @@
     },
     "leap.nvim": {
       "rev": "f19d43590c4b6d31188ee1ea2954d2b7558a9e11",
-      "src": "https://github.com/ggandor/leap.nvim"
+      "src": "https://codeberg.org/andyg/leap.nvim"
     },
     "lualine.nvim": {
       "rev": "47f91c416daef12db467145e16bed5bbfe00add8",

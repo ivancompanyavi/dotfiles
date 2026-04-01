@@ -1,48 +1,20 @@
 -- LSP utilities for Native Neovim 0.11+
 local M = {}
 
--- Get LSP capabilities (for completion integration)
-function M.get_capabilities()
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-    -- Try to extend with blink.cmp capabilities if available
-    local ok, blink = pcall(require, "blink.cmp")
-    if ok then
-        capabilities = blink.get_lsp_capabilities(capabilities)
-    end
-
-    return capabilities
-end
-
-M.capabilities = M.get_capabilities()
-
 function M.on_attach(client, bufnr)
-    local function buf_set_option(...)
-        vim.api.nvim_buf_set_option(bufnr, ...)
-    end
-
-    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-    -- Set keybindings
+    vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
     pcall(M.set_keys, client, bufnr)
 end
-
-function M.format()
-    vim.lsp.buf.format()
-end
-
-M.diagnostics_active = true
 
 function M.toggle_hints()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
 end
 
-function M.format_sync()
-    vim.lsp.buf.format({ async = true })
+function M.format()
+    vim.lsp.buf.format({ timeout_ms = 1000 })
 end
 
 function M.set_keys(client, buffer)
-    -- Try to use which-key if available, otherwise use native keymaps
     local ok, wk = pcall(require, "which-key")
     if ok then
         wk.add({
@@ -54,7 +26,6 @@ function M.set_keys(client, buffer)
             { "<C-j>",      vim.diagnostic.goto_next,                           desc = "next error" },
             { "<C-k>",      vim.diagnostic.goto_prev,                           desc = "prev error" },
         })
-    else
     end
 end
 

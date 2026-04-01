@@ -1,7 +1,3 @@
--- Neovim 0.12+ Native Configuration
--- Using vim.pack for plugin management and native LSP
-
--- Set leaders before anything else
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
@@ -26,11 +22,10 @@ vim.pack.add({
     'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
 
     -- File explorer
-    'https://github.com/nvim-neo-tree/neo-tree.nvim',
     'https://github.com/stevearc/oil.nvim',
 
     -- Navigation
-    'https://github.com/ggandor/leap.nvim',
+    'https://codeberg.org/andyg/leap.nvim',
     'https://github.com/otavioschwanck/arrow.nvim',
 
     -- Syntax highlighting
