@@ -97,13 +97,6 @@ automatically-unhide-macos-hidden-apps = true
     # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
     # You can uncomment the following lines to open up terminal with alt + enter shortcut
     # (like in i3)
-    # alt-enter = '''exec-and-forget osascript -e '
-    # tell application "wezterm"
-    #     do script
-    #     activate
-    # end tell'
-    # '''
-    # alt-a = '''exec-and-forget /Applications/Arc.app/Contents/MacOS/Arc'''
     alt-s = '''exec-and-forget osascript -e '
 if application "Slack" is not running then
 	tell application "Slack" to launch
@@ -113,10 +106,10 @@ end if
 '
 '''
     alt-enter = '''exec-and-forget osascript -e '
-if application "Wezterm" is not running then
-	tell application "Wezterm" to launch
+if application "Ghostty" is not running then
+	tell application "Ghostty" to launch
 else
-	tell application "Wezterm" to activate
+	tell application "Ghostty" to activate
 end if
 '
 '''
@@ -129,10 +122,10 @@ end if
 '
 '''
     alt-b = '''exec-and-forget osascript -e '
-if application "Arc" is not running then
-	tell application "Arc" to launch
+if application "Helium" is not running then
+	tell application "Helium" to launch
 else
-	tell application "Arc" to activate
+	tell application "Helium" to activate
 end if
 '
 '''
@@ -220,10 +213,10 @@ end if
     shift-down = ['volume set 0', 'mode main']
 
 [[on-window-detected]]
-    if.app-id = 'com.github.wez.wezterm'
+    if.app-id = 'com.mitchellh.ghostty'
     run = 'move-node-to-workspace 1'
 [[on-window-detected]]
-    if.app-id = 'company.thebrowser.Browser'
+    if.app-id = 'net.imput.helium'
     run = 'move-node-to-workspace 2'
 [[on-window-detected]]
     # Cursor
