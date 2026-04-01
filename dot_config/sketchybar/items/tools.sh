@@ -11,13 +11,13 @@ sketchybar --add item battery right \
                       label.padding_left=5 \
                       background.padding_left=5  \
                       background.padding_right=5  \
-                      update_freq=60 \
+                      update_freq=30 \
                       script="$PLUGIN_DIR/battery.sh" \
            --subscribe battery system_woke
 
 sketchybar  --add   item telegram right \
             --set   telegram \
-                    update_freq=30 \
+                    update_freq=10 \
                     background.drawing=off \
                     script="$PLUGIN_DIR/telegram.sh" \
                     background.padding_left=5  \
@@ -26,7 +26,7 @@ sketchybar  --add   item telegram right \
 
 sketchybar  --add   item slack right \
             --set   slack \
-                    update_freq=30 \
+                    update_freq=10 \
                     script="$PLUGIN_DIR/slack.sh" \
                     background.drawing=off \
                     background.padding_left=15  \
@@ -42,5 +42,5 @@ sketchybar --add bracket tools_bracket  battery telegram slack  \
 
 sketchybar --add item tools_spacer right \
            --set      tools_spacer \
-                      width=20 \
+                      width=$ITEM_SPACING \
                       background.drawing=off

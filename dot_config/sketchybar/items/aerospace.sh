@@ -77,5 +77,5 @@ done
 
 sketchybar --add item aerospace_spacer left \
            --set      aerospace_spacer \
-                      width=20 \
+                      width=$ITEM_SPACING \
                       background.drawing=off

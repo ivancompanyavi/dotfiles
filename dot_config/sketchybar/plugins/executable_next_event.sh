@@ -1,5 +1,5 @@
 next_event() {
-  raw=$(gcalcli --nocolor agenda --nostarted --nodeclined "now" "tomorrow" | head -n 2)
+  raw=$(gcalcli --nocolor agenda --calendar "ivan.company@stackadapt.com" --nostarted --nodeclined --details end "now" | head -n 2)
 
   if [ -z "$raw" ]; then
     echo "📅 No upcoming events"
@@ -9,11 +9,12 @@ next_event() {
 
   clean=$(echo "$raw" | tr -s ' ')
 
-  # Now parse it: date = fields 1-3, time = 4, title = 5+
-  time=$(echo "$clean" | awk '{print $4}')
-  title=$(echo "$clean" | cut -d' ' -f5-)
+  # Now parse it: date = fields 1-3, start_time = 4, dash = 5, end_time = 6, title = 7+
+  start_time=$(echo "$clean" | awk '{print $4}')
+  end_time=$(echo "$clean" | awk '{print $6}')
+  title=$(echo "$clean" | cut -d' ' -f7-)
 
-  echo "📅 $time - $title"
+  echo "📅 $start_time - $end_time - $title"
 }
 
 sketchybar --set $NAME label="$(next_event)"

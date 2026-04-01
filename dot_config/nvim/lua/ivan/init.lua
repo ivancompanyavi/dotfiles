@@ -1,4 +1,5 @@
-require("ivan.lazy")
+-- Personal configuration module (Native Neovim 0.11+)
 require("ivan.remap")
 require("ivan.options")
+require("ivan.plugin-config")
 require("ivan.my-plugins")

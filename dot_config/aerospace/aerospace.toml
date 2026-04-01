@@ -31,7 +31,7 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 accordion-padding = 30
 
 # Possible values: tiles|accordion
-default-root-container-layout = 'tiles'
+default-root-container-layout = 'accordion'
 
 # Possible values: horizontal|vertical|auto
 # 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
@@ -64,12 +64,12 @@ automatically-unhide-macos-hidden-apps = true
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-    inner.horizontal = 10
-    inner.vertical =   10
-    outer.left =       10
-    outer.bottom =     10
-    outer.top =        20
-    outer.right =      10
+    inner.horizontal = 5
+    inner.vertical =   5
+    outer.left =       5
+    outer.bottom =     5
+    outer.top =        [{ monitor."built-in" = 15 }, 45]
+    outer.right =      5
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -144,6 +144,14 @@ else
 end if
 '
 '''
+    alt-c = '''exec-and-forget osascript -e '
+if application "Cursor" is not running then
+	tell application "Cursor" to launch
+else
+	tell application "Cursor" to activate
+end if
+'
+'''
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-slash = 'layout tiles horizontal vertical'
@@ -170,6 +178,7 @@ end if
     alt-2 = 'workspace 2'
     alt-3 = 'workspace 3'
     alt-4 = 'workspace 4'
+    alt-5 = 'workspace 5'
     alt-r = 'workspace R'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
@@ -177,6 +186,7 @@ end if
     alt-shift-2 = 'move-node-to-workspace 2'
     alt-shift-3 = 'move-node-to-workspace 3'
     alt-shift-4 = 'move-node-to-workspace 4'
+    alt-shift-5 = 'move-node-to-workspace 5'
     alt-shift-r = 'move-node-to-workspace R'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
@@ -186,6 +196,8 @@ end if
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-semicolon = 'mode service'
+
+    alt-f = 'fullscreen'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -214,16 +226,28 @@ end if
     if.app-id = 'company.thebrowser.Browser'
     run = 'move-node-to-workspace 2'
 [[on-window-detected]]
-    if.app-id = 'com.electron.asana'
+    # Cursor
+    if.app-id = 'com.todesktop.230313mzl4w4u92'
     run = 'move-node-to-workspace 3'
+[[on-window-detected]]
+    if.app-id = 'com.electron.asana'
+    run = 'move-node-to-workspace 4'
 [[on-window-detected]]
     if.app-id = 'com.tinyspeck.slackmacgap'
-    run = 'move-node-to-workspace 3'
-[[on-window-detected]]
-    if.app-id = 'net.whatsapp.WhatsApp'
-    run = 'move-node-to-workspace 4'
-[[on-window-detected]]
-    if.app-id = 'ru.keepcoder.Telegram'
-    run = 'move-node-to-workspace 4'
+    run = 'move-node-to-workspace 5'
 [[on-window-detected]]
     run = 'move-node-to-workspace R'
+
+
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+
+2 = 'main'
+
+3 = 'main'
+
+4 = ['secondary', 'main']
+
+5 = ['secondary', 'main']
+
+R = ['secondary', 'main']

@@ -28,5 +28,5 @@ sketchybar --add bracket clock_bracket clock_spacer_left clock clock_spacer_righ
 
 sketchybar --add item clock_spacer right \
            --set      clock_spacer \
-                      width=20 \
+                      width=$ITEM_SPACING \
                       background.drawing=off
