@@ -3,6 +3,22 @@
 source "$CONFIG_DIR/environment.sh"
 source "$THEME_DIR/tokyonight.sh"
 
+# Nerd Font (Hack Nerd Font) glyphs shown next to each workspace number,
+# matching the app assignment in ~/.config/aerospace/aerospace.toml.
+# UTF-8 byte sequences are used so this works on macOS's bash 3.2,
+# where printf '\uXXXX' is not supported.
+workspace_icon() {
+  case "$1" in
+    1) printf '\xef\x84\xa0' ;; # U+F120 terminal  (WezTerm)
+    2) printf '\xef\x82\xac' ;; # U+F0AC globe     (Helium)
+    3) printf '\xef\x84\xa1' ;; # U+F121 code      (Cursor)
+    4) printf '\xef\x82\xae' ;; # U+F0AE tasks     (Asana)
+    5) printf '\xef\x86\x98' ;; # U+F198 slack     (Slack)
+    R) printf '\xef\x85\x81' ;; # U+F141 ellipsis  (misc)
+    *) printf '\xef\x83\x88' ;; # U+F0C8 square    (fallback)
+  esac
+}
+
 create_workspace_bracket_for_monitor() {
   parameters=("$@")
   monitor_id=${parameters[0]}
@@ -17,13 +33,19 @@ create_workspace_bracket_for_monitor() {
   fi
 
   for workspace_id in ${monitor_workspaces[@]}; do
+    icon_glyph=$(workspace_icon "$workspace_id")
     sketchybar --add item  workspaces."$monitor_id"."$workspace_id" left \
                           --subscribe workspaces."$monitor_id"."$workspace_id" aerospace_workspace_change \
                           --set       workspaces."$monitor_id"."$workspace_id" \
                                       background.drawing=off \
                                       click_script="aerospace workspace $workspace_id" \
+                                      icon="$icon_glyph" \
+                                      icon.color="$LABEL_COLOR" \
+                                      icon.highlight_color="$LABEL_HIGHLIGHT_COLOR" \
+                                      icon.padding_left=4 \
+                                      icon.padding_right=2 \
                                       label="$workspace_id" \
-                                      label.width="25" \
+                                      label.width="20" \
                                       script="$PLUGIN_DIR/aerospace.sh $workspace_id"
   done
 

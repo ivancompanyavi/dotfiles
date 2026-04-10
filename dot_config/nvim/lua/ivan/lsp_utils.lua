@@ -27,6 +27,15 @@ function M.set_keys(client, buffer)
             { "<C-k>",      vim.diagnostic.goto_prev,                           desc = "prev error" },
         })
     end
+
+    -- Smart "go to implementation" - falls back to definition if not supported
+    vim.keymap.set("n", "gri", function()
+        if client:supports_method("textDocument/implementation") then
+            vim.lsp.buf.implementation()
+        else
+            vim.lsp.buf.definition()
+        end
+    end, { buffer = buffer, desc = "Go to implementation (or definition)" })
 end
 
 return M

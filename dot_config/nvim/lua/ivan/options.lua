@@ -27,11 +27,16 @@ vim.opt.winborder = 'rounded'
 vim.api.nvim_create_augroup("LspFormatting", { clear = true })
 local group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
 
--- Format on save
+-- Format on save (handled by conform.nvim if available, fallback to LSP)
 vim.api.nvim_create_autocmd("BufWritePre", {
     group = "LspFormatting",
-    callback = function()
-        vim.lsp.buf.format({ timeout_ms = 1000 })
+    callback = function(args)
+        local ok, conform = pcall(require, "conform")
+        if ok then
+            conform.format({ bufnr = args.buf, timeout_ms = 500, lsp_fallback = true })
+        else
+            vim.lsp.buf.format({ async = false })
+        end
     end,
 })
 
@@ -85,4 +90,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Enable native LSP servers (Neovim 0.11+)
 -- These servers are configured in lsp/*.lua files
-vim.lsp.enable({ 'lua_ls', 'basedpyright', 'ts_ls', 'ruby_lsp' })
+vim.lsp.enable({
+    'lua_ls',
+    'basedpyright',
+    'ts_ls',
+    'ruby_lsp',
+    'gopls',
+    'terraformls',
+})

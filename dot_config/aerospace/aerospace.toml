@@ -145,6 +145,14 @@ else
 end if
 '
 '''
+    alt-d = '''exec-and-forget osascript -e '
+tell application "System Events"
+    tell appearance preferences
+        set dark mode to not dark mode
+    end tell
+end tell
+'
+'''
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-slash = 'layout tiles horizontal vertical'
@@ -167,20 +175,23 @@ end if
     alt-equal = 'resize smart +50'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-1 = 'workspace 1'
-    alt-2 = 'workspace 2'
-    alt-3 = 'workspace 3'
-    alt-4 = 'workspace 4'
-    alt-5 = 'workspace 5'
-    alt-r = 'workspace R'
+    # --auto-back-and-forth: pressing the key while already on that workspace
+    # bounces you back to the previously focused one.
+    alt-1 = 'workspace --auto-back-and-forth 1'
+    alt-2 = 'workspace --auto-back-and-forth 2'
+    alt-3 = 'workspace --auto-back-and-forth 3'
+    alt-4 = 'workspace --auto-back-and-forth 4'
+    alt-5 = 'workspace --auto-back-and-forth 5'
+    alt-r = 'workspace --auto-back-and-forth R'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    alt-shift-1 = 'move-node-to-workspace 1'
-    alt-shift-2 = 'move-node-to-workspace 2'
-    alt-shift-3 = 'move-node-to-workspace 3'
-    alt-shift-4 = 'move-node-to-workspace 4'
-    alt-shift-5 = 'move-node-to-workspace 5'
-    alt-shift-r = 'move-node-to-workspace R'
+    # --focus-follows-window: move the node AND follow it to the destination.
+    alt-shift-1 = 'move-node-to-workspace --focus-follows-window 1'
+    alt-shift-2 = 'move-node-to-workspace --focus-follows-window 2'
+    alt-shift-3 = 'move-node-to-workspace --focus-follows-window 3'
+    alt-shift-4 = 'move-node-to-workspace --focus-follows-window 4'
+    alt-shift-5 = 'move-node-to-workspace --focus-follows-window 5'
+    alt-shift-r = 'move-node-to-workspace --focus-follows-window R'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'

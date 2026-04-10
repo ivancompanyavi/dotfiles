@@ -1,7 +1,7 @@
 -- Native LSP configuration for ruby-lsp (Neovim 0.11+)
--- Install via: gem install ruby-lsp
+-- Uses mise to ensure correct Ruby version per project
 return {
-    cmd = { 'ruby-lsp' },
+    cmd = { 'mise', 'x', '--', 'bundle', 'exec', 'ruby-lsp' },
     filetypes = { 'ruby', 'eruby' },
     root_markers = {
         'Gemfile',

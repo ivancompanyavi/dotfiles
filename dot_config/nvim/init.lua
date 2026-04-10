@@ -46,10 +46,47 @@ vim.pack.add({
 
     -- Ruby on Rails
     'https://github.com/tpope/vim-rails',
+
+    -- Git integration
+    'https://github.com/lewis6991/gitsigns.nvim',
+
+    -- Project/workspace management
+    'https://github.com/ahmedkhalf/project.nvim',
+
+    -- Formatting
+    'https://github.com/stevearc/conform.nvim',
 }, {
     load = true,
     confirm = false,
 })
+
+-- User commands for vim.pack
+vim.api.nvim_create_user_command("PackUpdate", function() vim.pack.update() end, { desc = "Update all plugins" })
+vim.api.nvim_create_user_command("PackList", function() print(vim.inspect(vim.pack.get())) end, { desc = "List plugins" })
+
+-- LSP info commands
+vim.api.nvim_create_user_command("LspClients", function()
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
+    if #clients == 0 then
+        print("No LSP clients attached to this buffer")
+        return
+    end
+    for _, client in ipairs(clients) do
+        print(string.format("• %s (id=%d)", client.name, client.id))
+    end
+end, { desc = "Show LSP clients for current buffer" })
+
+vim.api.nvim_create_user_command("LspCapabilities", function()
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
+    if #clients == 0 then
+        print("No LSP clients attached")
+        return
+    end
+    for _, client in ipairs(clients) do
+        print("=== " .. client.name .. " ===")
+        print(vim.inspect(client.server_capabilities))
+    end
+end, { desc = "Show LSP capabilities for current buffer" })
 
 -- Load personal configuration
 require("ivan")

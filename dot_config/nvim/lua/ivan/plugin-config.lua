@@ -121,7 +121,18 @@ if ok then
             "tsx",
             "lua",
             "ruby",
-            "embedded_template", -- ERB support
+            "embedded_template",
+            "go",
+            "gomod",
+            "gosum",
+            "hcl",
+            "terraform",
+            "graphql",
+            "json",
+            "yaml",
+            "toml",
+            "markdown",
+            "markdown_inline",
         },
         highlight = { enable = true },
     })
@@ -202,6 +213,100 @@ end
 -- Markdown Preview (lazy configuration via vim.g)
 --------------------------------------------------------------------------------
 vim.g.mkdp_filetypes = { "markdown" }
+
+--------------------------------------------------------------------------------
+-- Gitsigns (Git integration)
+--------------------------------------------------------------------------------
+local ok, gitsigns = pcall(require, "gitsigns")
+if ok then
+    gitsigns.setup({
+        signs = {
+            add = { text = "+" },
+            change = { text = "~" },
+            delete = { text = "_" },
+            topdelete = { text = "‾" },
+            changedelete = { text = "~" },
+        },
+        on_attach = function(bufnr)
+            local gs = package.loaded.gitsigns
+            local function map(mode, l, r, opts)
+                opts = opts or {}
+                opts.buffer = bufnr
+                vim.keymap.set(mode, l, r, opts)
+            end
+            map("n", "]c", function()
+                if vim.wo.diff then return "]c" end
+                vim.schedule(function() gs.next_hunk() end)
+                return "<Ignore>"
+            end, { expr = true, desc = "Next hunk" })
+            map("n", "[c", function()
+                if vim.wo.diff then return "[c" end
+                vim.schedule(function() gs.prev_hunk() end)
+                return "<Ignore>"
+            end, { expr = true, desc = "Prev hunk" })
+            map("n", "<leader>gb", gs.blame_line, { desc = "Blame line" })
+            map("n", "<leader>gB", function() gs.blame_line({ full = true }) end, { desc = "Blame line (full)" })
+            map("n", "<leader>gp", gs.preview_hunk, { desc = "Preview hunk" })
+            map("n", "<leader>gr", gs.reset_hunk, { desc = "Reset hunk" })
+            map("n", "<leader>gR", gs.reset_buffer, { desc = "Reset buffer" })
+            map("n", "<leader>gs", gs.stage_hunk, { desc = "Stage hunk" })
+            map("n", "<leader>gu", gs.undo_stage_hunk, { desc = "Undo stage hunk" })
+        end,
+    })
+end
+
+--------------------------------------------------------------------------------
+-- Project.nvim (Workspace management)
+--------------------------------------------------------------------------------
+local ok, project = pcall(require, "project_nvim")
+if ok then
+    project.setup({
+        patterns = { ".git" },
+        detection_methods = { "pattern" },
+        show_hidden = true,
+        manual_mode = true,
+        silent_chdir = true,
+    })
+    pcall(function()
+        require("telescope").load_extension("projects")
+    end)
+    vim.keymap.set("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "Switch project" })
+
+end
+
+--------------------------------------------------------------------------------
+-- Conform.nvim (Formatting)
+--------------------------------------------------------------------------------
+local ok, conform = pcall(require, "conform")
+if ok then
+    conform.setup({
+        formatters_by_ft = {
+            python = { "ruff_format" },
+            lua = { "stylua" },
+            javascript = { "prettier" },
+            typescript = { "prettier" },
+            typescriptreact = { "prettier" },
+            javascriptreact = { "prettier" },
+            json = { "prettier" },
+            yaml = { "prettier" },
+            markdown = { "prettier" },
+            ruby = { "rubocop" },
+            terraform = { "terraform_fmt" },
+            hcl = { "terraform_fmt" },
+            go = { "gofmt", "goimports" },
+        },
+        format_on_save = function(bufnr)
+            local disable_filetypes = { c = true, cpp = true }
+            return {
+                timeout_ms = 500,
+                lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+            }
+        end,
+    })
+    vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+        conform.format({ async = true, lsp_fallback = true })
+    end, { desc = "Format buffer" })
+end
 
 --------------------------------------------------------------------------------
 -- vim-rails (Rails navigation)
