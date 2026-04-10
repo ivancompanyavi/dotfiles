@@ -30,3 +30,8 @@ sketchybar --add bracket sprint_bracket sprint_spacer_right sprint sprint_spacer
                          background.border_color="$SPRINT_BACKGROUND_BORDER_COLOR" \
                          background.corner_radius="$BRACKET_BACKGROUND_CORNER_RADIUS" \
                          background.border_width="$BRACKET_BACKGROUND_BORDER_WIDTH"
+
+sketchybar --add item sprint_spacer right \
+           --set      sprint_spacer \
+                      width=$ITEM_SPACING \
+                      background.drawing=off
