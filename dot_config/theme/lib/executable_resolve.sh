@@ -38,11 +38,13 @@ declare -a FALLBACK=(
   "accent=#7aa2f7" "accent2=#bb9af7" "ok=#9ece6a" "warn=#e0af68"
   "urgent=#f7768e" "info=#7dcfff"
 )
-_fallback_role() { local r="$1" kv; for kv in "${FALLBACK[@]}"; do [ "${kv%%=*}" = "$r" ] && { echo "${kv#*=}"; return; }; done; }
+_fallback_role() { local r="$1" kv; for kv in "${FALLBACK[@]}"; do [ "${kv%%=*}" = "$r" ] && { echo "${kv#*=}"; return 0; }; done; return 0; }
 
 current_name() {
   local n
-  n="$(cat "$POINTER" 2>/dev/null || true)"
+  # Trim whitespace so a manually-corrupted pointer ("  gruvbox  ") still
+  # resolves the same way the Lua readers (which trim) do.
+  n="$(cat "$POINTER" 2>/dev/null | tr -d '[:space:]' || true)"
   if [ -n "$n" ] && [ -f "$REGISTRY_DIR/$n.json" ]; then echo "$n"; else echo "$DEFAULT_THEME"; fi
 }
 

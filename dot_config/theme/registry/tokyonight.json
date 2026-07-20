@@ -3,7 +3,7 @@
   "variants": {
     "dark": {
       "wezterm": "Tokyo Night Storm (Gogh)",
-      "nvim": { "plugin": "folke/tokyonight.nvim", "colorscheme": "tokyonight-storm", "background": "dark", "opts": { "style": "storm", "transparent": true } },
+      "nvim": { "plugin": "folke/tokyonight.nvim", "module": "tokyonight", "colorscheme": "tokyonight-storm", "background": "dark", "opts": { "style": "storm", "transparent": true } },
       "wallpaper": "",
       "roles": {
         "bg": "#1a1b26",
@@ -20,7 +20,7 @@
     },
     "light": {
       "wezterm": "Tokyo Night Day",
-      "nvim": { "plugin": "folke/tokyonight.nvim", "colorscheme": "tokyonight-day", "background": "light", "opts": { "style": "day", "transparent": true } },
+      "nvim": { "plugin": "folke/tokyonight.nvim", "module": "tokyonight", "colorscheme": "tokyonight-day", "background": "light", "opts": { "style": "day", "transparent": true } },
       "wallpaper": "",
       "roles": {
         "bg": "#e1e2e7",

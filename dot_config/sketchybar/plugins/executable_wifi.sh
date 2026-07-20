@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Theme colors (ROLE_*) from the active theme.
+source "$CONFIG_DIR/environment.sh"
+source "$THEME_DIR/palette.sh"
+
 WIFI_INTERFACE="en0"
 
 get_wifi_status() {
@@ -13,21 +17,21 @@ get_wifi_status() {
         if [ -n "$ssid" ]; then
             # Connected to WiFi
             ICON="󰤨"  # WiFi connected
-            ICON_COLOR="0xffa6da95"  # green
+            ICON_COLOR="$ROLE_OK"
         else
             # Connected but no SSID (might be ethernet adapter)
             ICON="󰤯"  # WiFi uncertain
-            ICON_COLOR="0xffeed49f"  # yellow
+            ICON_COLOR="$ROLE_WARN"
         fi
     else
         # No IP on WiFi interface
         wifi_power=$(networksetup -getairportpower "$WIFI_INTERFACE" 2>/dev/null)
         if echo "$wifi_power" | grep -q "Off"; then
             ICON="󰤭"  # WiFi off
-            ICON_COLOR="0xff6e738d"  # gray
+            ICON_COLOR="$ROLE_MUTED"
         else
             ICON="󰤯"  # WiFi on but not connected
-            ICON_COLOR="0xffeed49f"  # yellow
+            ICON_COLOR="$ROLE_WARN"
         fi
     fi
     

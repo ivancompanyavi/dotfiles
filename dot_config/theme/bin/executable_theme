@@ -32,7 +32,11 @@ current()     { bash "$RESOLVE" current-name; }
 reapply() {
   mkdir -p "$STATE_DIR"
   # 1. sketchybar palette cache (fast path for the reader), then reload the bar.
-  bash "$RESOLVE" roles-argb > "$STATE_DIR/sketchybar-palette.env" 2>/dev/null || true
+  #    Write atomically (temp + mv) so a concurrent plugin tick never reads a
+  #    half-written cache.
+  if bash "$RESOLVE" roles-argb > "$STATE_DIR/.sketchybar-palette.env.tmp" 2>/dev/null; then
+    mv -f "$STATE_DIR/.sketchybar-palette.env.tmp" "$STATE_DIR/sketchybar-palette.env"
+  fi
   command -v sketchybar >/dev/null 2>&1 && sketchybar --reload >/dev/null 2>&1 || true
 
   # 2. shell-tool artifacts (generators appear in Phase 3; guarded until then).
