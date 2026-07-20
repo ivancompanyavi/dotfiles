@@ -13,7 +13,7 @@ sketchybar --add item clock right \
                       label.color="$LABEL_COLOR" \
                       label.padding_left=0 \
                       label.padding_right=0 \
-                      update_freq=10 \
+                      update_freq=30 \
                       script="$PLUGIN_DIR/clock.sh"
 
 sketchybar --add item clock_spacer_left right \

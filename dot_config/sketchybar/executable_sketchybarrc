@@ -36,13 +36,16 @@ default=(
 )
 sketchybar --default "${default[@]}"
 
+# Keep the bar's outer inset matched to the connected displays (dock/undock).
+source "$ITEM_DIR/bar_margin.sh"
+
 # Left
 source "$ITEM_DIR/aerospace.sh"
 source "$ITEM_DIR/next_event.sh"
 
 # Right
 source "$ITEM_DIR/clock.sh"
-source "$ITEM_DIR/sprint.sh"
+# source "$ITEM_DIR/sprint.sh"
 source "$ITEM_DIR/tools.sh"
 source "$ITEM_DIR/front_app.sh"
 

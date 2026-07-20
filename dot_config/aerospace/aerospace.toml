@@ -64,12 +64,16 @@ automatically-unhide-macos-hidden-apps = true
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-    inner.horizontal = 5
-    inner.vertical =   5
-    outer.left =       5
-    outer.bottom =     5
-    outer.top =        [{ monitor."built-in" = 15 }, 45]
-    outer.right =      5
+    # Per-monitor gaps: built-in laptop screen stays compact, the big Odyssey
+    # gets a thick wallpaper frame. AeroSpace has no percentage unit, so these
+    # are absolute px — the second (bare) number is the default for any monitor
+    # that doesn't match 'built-in'.
+    inner.horizontal = [{ monitor."built-in" = 10 }, 45]
+    inner.vertical =   [{ monitor."built-in" = 10 }, 45]
+    outer.left =       [{ monitor."built-in" = 10 }, 120]
+    outer.right =      [{ monitor."built-in" = 10 }, 120]
+    outer.top =        [{ monitor."built-in" = 15 }, 80]
+    outer.bottom =     [{ monitor."built-in" = 10 }, 80]
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -97,54 +101,14 @@ automatically-unhide-macos-hidden-apps = true
     # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
     # You can uncomment the following lines to open up terminal with alt + enter shortcut
     # (like in i3)
-    alt-s = '''exec-and-forget osascript -e '
-if application "Slack" is not running then
-	tell application "Slack" to launch
-else
-	tell application "Slack" to activate
-end if
-'
-'''
-    alt-enter = '''exec-and-forget osascript -e '
-if application "Ghostty" is not running then
-	tell application "Ghostty" to launch
-else
-	tell application "Ghostty" to activate
-end if
-'
-'''
-    alt-a = '''exec-and-forget osascript -e '
-if application "Asana" is not running then
-	tell application "Asana" to launch
-else
-	tell application "Asana" to activate
-end if
-'
-'''
-    alt-b = '''exec-and-forget osascript -e '
-if application "Helium" is not running then
-	tell application "Helium" to launch
-else
-	tell application "Helium" to activate
-end if
-'
-'''
-    alt-t = '''exec-and-forget osascript -e '
-if application "Telegram" is not running then
-	tell application "Telegram" to launch
-else
-	tell application "Telegram" to activate
-end if
-'
-'''
-    alt-c = '''exec-and-forget osascript -e '
-if application "Cursor" is not running then
-	tell application "Cursor" to launch
-else
-	tell application "Cursor" to activate
-end if
-'
-'''
+    # App launchers. `open -a` launches the app if needed and activates it
+    # otherwise, so it replaces the old launch-or-activate osascript blocks.
+    alt-s = 'exec-and-forget open -a Slack'
+    alt-enter = 'exec-and-forget open -a WezTerm'
+    alt-a = 'exec-and-forget open -a Asana'
+    alt-b = 'exec-and-forget open -a Helium'
+    alt-t = 'exec-and-forget open -a Telegram'
+    alt-c = 'exec-and-forget open -a Cursor'
     alt-d = '''exec-and-forget osascript -e '
 tell application "System Events"
     tell appearance preferences
@@ -157,6 +121,7 @@ end tell
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-slash = 'layout tiles horizontal vertical'
     alt-comma = 'layout accordion horizontal vertical'
+    alt-period = 'layout floating tiling'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
     alt-h = 'focus left'
@@ -224,7 +189,8 @@ end tell
     shift-down = ['volume set 0', 'mode main']
 
 [[on-window-detected]]
-    if.app-id = 'com.mitchellh.ghostty'
+    # WezTerm
+    if.app-id = 'com.github.wez.wezterm'
     run = 'move-node-to-workspace 1'
 [[on-window-detected]]
     if.app-id = 'net.imput.helium'

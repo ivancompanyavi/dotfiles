@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-percent=$(ioreg -rc AppleSmartBattery | awk '/"CurrentCapacity"/ { print $3 }')
 
-# Get battery info from pmset
+# Get battery info from pmset. pmset reports a true 0-100 percentage on every
+# Mac; ioreg's CurrentCapacity is raw mAh on some models, so we use pmset as the
+# single source for both the icon and the label.
 battery_info=$(pmset -g batt | grep -E "InternalBattery")
 
 # Extract percentage (remove % symbol)
 percentage=$(echo "$battery_info" | grep -o '[0-9]\+%' | sed 's/%//')
+percent="$percentage"
 
 # Check if charging (look for 'AC Power' or 'charging')
 if echo "$battery_info" | grep -q "discharging"; then

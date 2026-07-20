@@ -22,10 +22,35 @@ BAR_BLUR_RADIUS=30
 ## Geometry
 BAR_POSITION="top"
 BAR_HEIGHT=40
-BAR_PADDING=0
+# Inner padding between the bar's edge and its first/last item. The outer inset
+# now comes from BAR_MARGIN (below), so this only needs to be small.
+BAR_PADDING=10
 BAR_Y_OFFSET=5
 BAR_CORNER_RADIUS=12
-BAR_MARGIN=5
+# Outer inset between the bar and the screen edge, mirroring AeroSpace's
+# per-monitor outer gaps (~/.config/aerospace/aerospace.toml [gaps]): the
+# built-in laptop panel stays compact, an external monitor (e.g. the Odyssey)
+# gets the wide inset so the bar's blur band and item pills line up with the
+# window column. sketchybar's bar margin is a single global value, so we pick it
+# from the currently-connected displays at load and re-apply on display changes
+# (see items/bar_margin.sh + plugins/bar_margin.sh).
+BAR_MARGIN_BUILTIN=10
+BAR_MARGIN_EXTERNAL=120
+
+bar_margin_for_displays() {
+  # Any connected monitor whose name isn't the built-in Retina panel counts as
+  # "external" → use the wide inset. Falls back to the compact inset if
+  # AeroSpace can't be reached (e.g. the bar loads before the WM is up).
+  local externals
+  externals=$(aerospace list-monitors 2>/dev/null | grep -civ 'built-in')
+  if [ "${externals:-0}" -gt 0 ]; then
+    printf '%s' "$BAR_MARGIN_EXTERNAL"
+  else
+    printf '%s' "$BAR_MARGIN_BUILTIN"
+  fi
+}
+
+BAR_MARGIN="$(bar_margin_for_displays)"
 
 # Item Defaults
 ## Colors
