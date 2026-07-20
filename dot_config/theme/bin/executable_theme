@@ -48,9 +48,15 @@ reapply() {
   # 3. aerospace borders (JankyBorders picks up new args live).
   [ -x "$THEME_HOME/bin/theme-borders" ] && "$THEME_HOME/bin/theme-borders" >/dev/null 2>&1 &
 
-  # 4. WezTerm watches the pointer — bump its mtime so a same-name reapply
-  #    (e.g. a polarity flip) still triggers a live reload.
+  # 4. WezTerm: force a live reload across ALL open windows. WezTerm auto-watches
+  #    its main config file, so touching it (content unchanged → no git diff) is
+  #    the reliable trigger; the external-file watch on the pointer isn't always
+  #    honored, and a window opened before that watch line existed never
+  #    registered it. On reload the config re-reads the pointer → new colors.
   [ -f "$POINTER" ] && touch "$POINTER"
+  for _wz in "$HOME/.config/wezterm/wezterm.lua" "$HOME/.wezterm.lua"; do
+    [ -f "$_wz" ] && touch "$_wz"
+  done
 
   # 5. Wallpaper — best-effort. No wallpaper mapped for this theme+polarity =>
   #    leave the current wallpaper untouched.
