@@ -36,6 +36,8 @@ reapply() {
   #    half-written cache.
   if bash "$RESOLVE" roles-argb > "$STATE_DIR/.sketchybar-palette.env.tmp" 2>/dev/null; then
     mv -f "$STATE_DIR/.sketchybar-palette.env.tmp" "$STATE_DIR/sketchybar-palette.env"
+  else
+    rm -f "$STATE_DIR/.sketchybar-palette.env.tmp"
   fi
   command -v sketchybar >/dev/null 2>&1 && sketchybar --reload >/dev/null 2>&1 || true
 
