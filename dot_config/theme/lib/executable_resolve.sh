@@ -96,11 +96,34 @@ fzf_opts() {
     "$(role urgent)" "$(role ok)" "$(role muted)" "$(role muted)"
 }
 
+# Echo a RANDOM image path from a directory (one level deep), or return 1.
+_random_image() {
+  local dir="$1" f
+  local files=()
+  [ -d "$dir" ] || return 1
+  while IFS= read -r f; do files+=("$f"); done < <(
+    find "$dir" -maxdepth 1 -type f \
+      \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.heic' -o -iname '*.gif' \) 2>/dev/null
+  )
+  [ "${#files[@]}" -eq 0 ] && return 1
+  echo "${files[$((RANDOM % ${#files[@]}))]}"
+  return 0
+}
+
+# Wallpaper for the active theme: a random pick from wallpapers/<theme>/ (or the
+# polarity subfolder wallpapers/<theme>/<dark|light>/ if present). No folder /
+# empty folder => print nothing => the caller leaves the wallpaper unchanged.
+# Falls back to a legacy explicit registry `wallpaper` path for back-compat.
 wallpaper() {
+  local theme pol dir
+  theme="$(current_name)"
+  pol="$(polarity)"
+  for dir in "$WALLPAPER_DIR/$theme/$pol" "$WALLPAPER_DIR/$theme"; do
+    _random_image "$dir" && return 0
+  done
   local rel; rel="$(field .wallpaper)"
-  [ -z "$rel" ] && return 0
-  local abs="$WALLPAPER_DIR/$rel"
-  [ -f "$abs" ] && echo "$abs" || true
+  if [ -n "$rel" ] && [ -f "$WALLPAPER_DIR/$rel" ]; then echo "$WALLPAPER_DIR/$rel"; fi
+  return 0
 }
 
 cmd="${1:-}"; shift || true

@@ -1,5 +1,3 @@
 .env
-# Wallpapers are large binaries (~278MB); kept local-only, not committed to git.
-# The theme system reads ~/.config/theme/wallpapers if present, and simply
-# leaves the wallpaper unchanged when a mapped image is absent (fresh machine).
-.config/theme/wallpapers
+# Big wallpaper LIBRARY (~278MB) — local only, curate from it into per-theme pools.
+.config/theme/wallpapers/_packs

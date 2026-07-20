@@ -4,7 +4,7 @@
     "dark": {
       "wezterm": "GruvboxDark",
       "nvim": { "plugin": "ellisonleao/gruvbox.nvim", "module": "gruvbox", "colorscheme": "gruvbox", "background": "dark", "opts": { "transparent_mode": true } },
-      "wallpaper": "gruvbox/gruv-temple.png",
+      "wallpaper": "",
       "roles": {
         "bg": "#282828",
         "surface": "#3c3836",

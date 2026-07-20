@@ -43,7 +43,7 @@ Themes: `tokyonight`, `gruvbox`, `catppuccin`, `rose-pine`.
 | starship  | `readers/gen-starship.sh` → `~/.local/state/theme/starship.toml` | next shell (`STARSHIP_CONFIG`) |
 | fzf       | `shell/init.zsh` → `FZF_DEFAULT_OPTS` | next shell |
 | lazygit   | `readers/gen-lazygit.sh` → `~/.local/state/theme/lazygit.yml` | next launch (`LG_CONFIG_FILE`) |
-| wallpaper | `resolve.sh wallpaper` + osascript | on switch, only if a wallpaper is mapped |
+| wallpaper | `resolve.sh wallpaper` + osascript | on switch, random pick from `wallpapers/<theme>/` |
 
 The macOS light/dark watcher is a launchd agent
 (`~/Library/LaunchAgents/com.ivan.theme.dark-notify.plist`) running `dark-notify`,
@@ -55,15 +55,20 @@ which calls `bin/theme-appearance-hook` (→ `theme reapply`) on every flip.
    - `wezterm`: a built-in WezTerm color-scheme name.
    - `nvim`: `{ plugin, module, colorscheme, background, opts }`.
    - `roles`: the 10 semantic colors as `#rrggbb`.
-   - `wallpaper`: path relative to `wallpapers/`, or `""` for none.
+   - `wallpaper`: leave `""` — wallpapers now come from a folder (below).
 2. Add the nvim colorscheme plugin URL to `~/.config/nvim/init.lua` (`vim.pack.add`).
-3. `theme set <name>` — done.
+3. (optional) `wallpapers/<name>/` — drop in any images; one is picked at RANDOM
+   on each switch. Optional `wallpapers/<name>/dark/` + `/light/` subfolders
+   split by polarity. No folder = wallpaper left unchanged.
+4. `theme set <name>` — done.
 
 ## Notes / caveats
 
-- **Wallpapers** live locally under `wallpapers/` but are **git-ignored**
-  (~278 MB). A fresh machine won't set a wallpaper until you add images; theme
-  switching is unaffected. Switching to a theme with no mapped wallpaper leaves
-  the current wallpaper unchanged (by design).
+- **Wallpapers**: each switch picks a RANDOM image from `wallpapers/<theme>/`.
+  The curated per-theme pools ARE committed; the big source library
+  `wallpapers/_packs/` (~278 MB, e.g. the full gruvbox pack) is git-ignored —
+  curate from it into a theme folder. A theme with no folder leaves the current
+  wallpaper unchanged (by design), so switching to one without images keeps
+  whatever was there. Currently only `gruvbox` has a pool.
 - The pointer and all `~/.local/state/theme/*` artifacts are regenerated; safe
   to delete.
