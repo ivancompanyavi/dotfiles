@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 source "$CONFIG_DIR/environment.sh"
-source "$THEME_DIR/tokyonight.sh"
+source "$THEME_DIR/current.sh"
 
-FRONT_APP_LABEL_COLOR="$blue"
-FRONT_APP_BACKGROUND_BORDER_COLOR="$blue"
+FRONT_APP_LABEL_COLOR="$ROLE_ACCENT"
+FRONT_APP_BACKGROUND_BORDER_COLOR="$ROLE_ACCENT"
 
 sketchybar --add item front_app_spacer_left right \
            --set      front_app_spacer_left \

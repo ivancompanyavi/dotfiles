@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Apply the active theme's colors to JankyBorders (aerospace window borders).
+# Called at aerospace startup and by `theme reapply`. JankyBorders picks up new
+# args live when re-invoked, so this both starts and re-themes the daemon.
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+command -v borders >/dev/null 2>&1 || exit 0
+RESOLVE="$HOME/.config/theme/lib/resolve.sh"
+exec borders \
+  active_color="$(bash "$RESOLVE" role-argb accent)" \
+  inactive_color="$(bash "$RESOLVE" role-argb muted)" \
+  width=5.0

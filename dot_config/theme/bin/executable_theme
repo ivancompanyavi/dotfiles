@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# ─────────────────────────────────────────────────────────────────────────────
+# theme — select and apply a system-wide theme across WezTerm, Neovim,
+# sketchybar, aerospace borders, starship, fzf, lazygit and the wallpaper.
+#
+#   theme                 open the fzf picker (also: `theme pick`)
+#   theme set <name>      switch to <name> and reload everything
+#   theme <name>          shorthand for `theme set <name>`
+#   theme reapply         re-resolve the CURRENT theme for the current polarity
+#                         (used by the macOS light/dark watcher)
+#   theme current         print the active theme name
+#   theme list            list available themes
+#   theme polarity        print dark|light
+#
+# The active theme is a single pointer file (machine-local state, not committed);
+# theme definitions live in the chezmoi-managed registry.
+# ─────────────────────────────────────────────────────────────────────────────
+set -euo pipefail
+
+THEME_HOME="${THEME_HOME:-$HOME/.config/theme}"
+RESOLVE="$THEME_HOME/lib/resolve.sh"
+REGISTRY_DIR="$THEME_HOME/registry"
+READERS="$THEME_HOME/readers"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/theme"
+POINTER="$STATE_DIR/current"
+
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
+list_themes() { local f; for f in "$REGISTRY_DIR"/*.json; do [ -e "$f" ] && basename "$f" .json; done; }
+current()     { bash "$RESOLVE" current-name; }
+
+reapply() {
+  mkdir -p "$STATE_DIR"
+  # 1. sketchybar palette cache (fast path for the reader), then reload the bar.
+  bash "$RESOLVE" roles-argb > "$STATE_DIR/sketchybar-palette.env" 2>/dev/null || true
+  command -v sketchybar >/dev/null 2>&1 && sketchybar --reload >/dev/null 2>&1 || true
+
+  # 2. shell-tool artifacts (generators appear in Phase 3; guarded until then).
+  [ -x "$READERS/gen-starship.sh" ] && bash "$READERS/gen-starship.sh" || true
+  [ -x "$READERS/gen-lazygit.sh" ]  && bash "$READERS/gen-lazygit.sh"  || true
+
+  # 3. aerospace borders (JankyBorders picks up new args live).
+  [ -x "$THEME_HOME/bin/theme-borders" ] && "$THEME_HOME/bin/theme-borders" >/dev/null 2>&1 &
+
+  # 4. WezTerm watches the pointer — bump its mtime so a same-name reapply
+  #    (e.g. a polarity flip) still triggers a live reload.
+  [ -f "$POINTER" ] && touch "$POINTER"
+
+  # 5. Wallpaper — best-effort. No wallpaper mapped for this theme+polarity =>
+  #    leave the current wallpaper untouched.
+  local wp; wp="$(bash "$RESOLVE" wallpaper 2>/dev/null || true)"
+  if [ -n "$wp" ]; then
+    osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"$wp\"" >/dev/null 2>&1 || true
+  fi
+}
+
+set_theme() {
+  local name="$1"
+  if [ ! -f "$REGISTRY_DIR/$name.json" ]; then
+    echo "theme: unknown theme '$name'" >&2
+    echo "available: $(list_themes | paste -sd' ' -)" >&2
+    return 1
+  fi
+  mkdir -p "$STATE_DIR"
+  printf '%s\n' "$name" > "$POINTER"
+  reapply
+  echo "theme: switched to $name ($(bash "$RESOLVE" polarity))"
+}
+
+pick() {
+  if ! command -v fzf >/dev/null 2>&1; then
+    echo "theme: fzf not found — use 'theme set <name>'. Available: $(list_themes | paste -sd' ' -)" >&2
+    return 1
+  fi
+  local cur sel
+  cur="$(current)"
+  sel="$(list_themes \
+        | sed "s/^${cur}\$/${cur}  (current)/" \
+        | fzf --prompt='theme> ' --height=40% --reverse --no-multi \
+              --header='Enter to apply · Esc to cancel')" || return 0
+  sel="${sel%%  (current)*}"
+  [ -n "$sel" ] && set_theme "$sel"
+}
+
+case "${1:-pick}" in
+  pick|"")          pick ;;
+  set)              shift; set_theme "${1:?usage: theme set <name>}" ;;
+  reapply)          reapply ;;
+  current)          current ;;
+  list)             list_themes ;;
+  polarity)         bash "$RESOLVE" polarity ;;
+  -h|--help|help)   echo "usage: theme [pick | set <name> | <name> | reapply | current | list | polarity]" ;;
+  *)                if [ -f "$REGISTRY_DIR/$1.json" ]; then set_theme "$1"
+                    else echo "theme: unknown command '$1' (try: theme --help)" >&2; exit 2; fi ;;
+esac

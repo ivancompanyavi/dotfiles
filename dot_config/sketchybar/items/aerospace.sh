@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 source "$CONFIG_DIR/environment.sh"
-source "$THEME_DIR/tokyonight.sh"
+source "$THEME_DIR/current.sh"
 
 # Nerd Font (Hack Nerd Font) glyphs shown next to each workspace number,
 # matching the app assignment in ~/.config/aerospace/aerospace.toml.

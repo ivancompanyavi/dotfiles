@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Invoked by dark-notify (via the launchd agent) whenever macOS flips
+# light↔dark. Re-resolves the CURRENT theme for the new polarity and reloads
+# the always-on surfaces (sketchybar, borders, wallpaper). WezTerm/Neovim/shell
+# tools pick up the new polarity on their own (natively or on next start).
+exec "$HOME/.config/theme/bin/theme" reapply

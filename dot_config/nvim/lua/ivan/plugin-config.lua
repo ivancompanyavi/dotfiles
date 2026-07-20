@@ -3,16 +3,12 @@
 -- Using pcall for plugins that may not be loaded yet
 
 --------------------------------------------------------------------------------
--- Colorscheme
+-- Colorscheme — driven by the shared theme system (~/.config/theme).
+-- Applies the active theme now and wires live macOS polarity following +
+-- :ThemeReload (see lua/ivan/theme.lua). Replaces the old hardcoded tokyonight
+-- block and the separate auto-dark-mode.setup() call below.
 --------------------------------------------------------------------------------
-local ok, tokyonight = pcall(require, "tokyonight")
-if ok then
-    tokyonight.setup({
-        style = "storm",
-        transparent = true,
-    })
-    vim.cmd([[colorscheme tokyonight-storm]])
-end
+require("ivan.theme").setup()
 
 --------------------------------------------------------------------------------
 -- Mason (LSP installer)
@@ -194,12 +190,9 @@ if ok then
 end
 
 --------------------------------------------------------------------------------
--- Auto dark mode
+-- Auto dark mode: configured by require("ivan.theme").setup() above (it wires
+-- set_dark_mode/set_light_mode to the active theme's variants).
 --------------------------------------------------------------------------------
-local ok, autodark = pcall(require, "auto-dark-mode")
-if ok then
-    autodark.setup()
-end
 
 --------------------------------------------------------------------------------
 -- Fastaction

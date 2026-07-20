@@ -1,0 +1,39 @@
+{
+  "name": "tokyonight",
+  "variants": {
+    "dark": {
+      "wezterm": "Tokyo Night Storm (Gogh)",
+      "nvim": { "plugin": "folke/tokyonight.nvim", "colorscheme": "tokyonight-storm", "background": "dark", "opts": { "style": "storm", "transparent": true } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#1a1b26",
+        "surface": "#24283b",
+        "fg": "#a9b1d6",
+        "muted": "#565f89",
+        "accent": "#7aa2f7",
+        "accent2": "#bb9af7",
+        "ok": "#9ece6a",
+        "warn": "#e0af68",
+        "urgent": "#f7768e",
+        "info": "#7dcfff"
+      }
+    },
+    "light": {
+      "wezterm": "Tokyo Night Day",
+      "nvim": { "plugin": "folke/tokyonight.nvim", "colorscheme": "tokyonight-day", "background": "light", "opts": { "style": "day", "transparent": true } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#e1e2e7",
+        "surface": "#d5d6db",
+        "fg": "#3760bf",
+        "muted": "#848cb5",
+        "accent": "#2e7de9",
+        "accent2": "#9854f1",
+        "ok": "#587539",
+        "warn": "#8c6c3e",
+        "urgent": "#f52a65",
+        "info": "#007197"
+      }
+    }
+  }
+}

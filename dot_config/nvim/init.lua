@@ -8,8 +8,11 @@ vim.pack.add({
     'https://github.com/MunifTanjim/nui.nvim',
     'https://github.com/nvim-tree/nvim-web-devicons',
 
-    -- Colorschemes
+    -- Colorschemes (theme system: ~/.config/theme registry selects one)
     'https://github.com/folke/tokyonight.nvim',
+    'https://github.com/ellisonleao/gruvbox.nvim',
+    'https://github.com/catppuccin/nvim',
+    'https://github.com/rose-pine/neovim',
 
     -- LSP installer (still needed to install LSP binaries)
     'https://github.com/mason-org/mason.nvim',

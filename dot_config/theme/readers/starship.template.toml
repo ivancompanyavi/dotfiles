@@ -1,0 +1,64 @@
+format = """
+[░▒▓]({{ACCENT2}})\
+[  ](bg:{{ACCENT2}} fg:{{BG}})\
+[](bg:{{ACCENT}} fg:{{ACCENT2}})\
+$directory\
+[](fg:{{ACCENT}} bg:{{SURFACE}})\
+$git_branch\
+$git_status\
+[](fg:{{SURFACE}} bg:{{BG}})\
+$nodejs\
+$rust\
+$golang\
+$php\
+[](fg:{{BG}} bg:{{SURFACE}})\
+$time\
+[ ](fg:{{SURFACE}})\
+\n$character"""
+
+[directory]
+style = "fg:{{BG}} bg:{{ACCENT}}"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+
+[git_branch]
+symbol = ""
+style = "bg:{{SURFACE}}"
+format = '[[ $symbol $branch ](fg:{{ACCENT}} bg:{{SURFACE}})]($style)'
+
+[git_status]
+style = "bg:{{SURFACE}}"
+format = '[[($all_status$ahead_behind )](fg:{{ACCENT}} bg:{{SURFACE}})]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:{{BG}}"
+format = '[[ $symbol ($version) ](fg:{{ACCENT}} bg:{{BG}})]($style)'
+
+[rust]
+symbol = ""
+style = "bg:{{BG}}"
+format = '[[ $symbol ($version) ](fg:{{ACCENT}} bg:{{BG}})]($style)'
+
+[golang]
+symbol = ""
+style = "bg:{{BG}}"
+format = '[[ $symbol ($version) ](fg:{{ACCENT}} bg:{{BG}})]($style)'
+
+[php]
+symbol = ""
+style = "bg:{{BG}}"
+format = '[[ $symbol ($version) ](fg:{{ACCENT}} bg:{{BG}})]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:{{SURFACE}}"
+format = '[[  $time ](fg:{{MUTED}} bg:{{SURFACE}})]($style)'

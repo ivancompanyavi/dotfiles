@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 source "$CONFIG_DIR/environment.sh"
-source "$THEME_DIR/tokyonight.sh"
+source "$THEME_DIR/current.sh"
 
 # Configure general bar appearance.
 bar=(

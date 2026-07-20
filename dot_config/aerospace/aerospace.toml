@@ -11,7 +11,7 @@ after-login-command = []
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
     'exec-and-forget sketchybar',
-    'exec-and-forget borders active_color=0xff7aa2f7 inactive_color=0xff494d64 width=5.0',
+    'exec-and-forget /Users/ivan.company/.config/theme/bin/theme-borders',
 ]
 
 exec-on-workspace-change = ['/bin/bash', '-c',
@@ -109,6 +109,8 @@ automatically-unhide-macos-hidden-apps = true
     alt-b = 'exec-and-forget open -a Helium'
     alt-t = 'exec-and-forget open -a Telegram'
     alt-c = 'exec-and-forget open -a Cursor'
+    # Theme picker (floating WezTerm running the fzf selector).
+    alt-shift-t = 'exec-and-forget open -na WezTerm --args start -- /Users/ivan.company/.config/theme/bin/theme-picker'
     alt-d = '''exec-and-forget osascript -e '
 tell application "System Events"
     tell appearance preferences
@@ -187,6 +189,15 @@ end tell
     down = 'volume down'
     up = 'volume up'
     shift-down = ['volume set 0', 'mode main']
+
+[[on-window-detected]]
+    # Theme picker → float it and stop, so the generic WezTerm rule below
+    # doesn't also sweep it to workspace 1. (Best-effort: relies on the window
+    # title being set by theme-picker; if the title lands late it tiles on ws1.)
+    if.app-id = 'com.github.wez.wezterm'
+    if.window-title-regex-substring = 'theme-picker'
+    check-further-callbacks = false
+    run = 'layout floating'
 
 [[on-window-detected]]
     # WezTerm

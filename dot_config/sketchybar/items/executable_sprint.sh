@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 source "$CONFIG_DIR/environment.sh"
-source "$THEME_DIR/tokyonight.sh"
+source "$THEME_DIR/current.sh"
 
-SPRINT_LABEL_COLOR="$green"
-SPRINT_BACKGROUND_BORDER_COLOR="$green"
+SPRINT_LABEL_COLOR="$ROLE_OK"
+SPRINT_BACKGROUND_BORDER_COLOR="$ROLE_OK"
 
 sketchybar --add item sprint_spacer_right right \
            --set      sprint_spacer_right \

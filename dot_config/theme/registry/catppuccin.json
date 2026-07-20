@@ -1,0 +1,39 @@
+{
+  "name": "catppuccin",
+  "variants": {
+    "dark": {
+      "wezterm": "Catppuccin Mocha",
+      "nvim": { "plugin": "catppuccin/nvim", "module": "catppuccin", "colorscheme": "catppuccin-mocha", "background": "dark", "opts": { "flavour": "mocha", "transparent_background": true } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#1e1e2e",
+        "surface": "#313244",
+        "fg": "#cdd6f4",
+        "muted": "#6c7086",
+        "accent": "#89b4fa",
+        "accent2": "#cba6f7",
+        "ok": "#a6e3a1",
+        "warn": "#f9e2af",
+        "urgent": "#f38ba8",
+        "info": "#94e2d5"
+      }
+    },
+    "light": {
+      "wezterm": "Catppuccin Latte",
+      "nvim": { "plugin": "catppuccin/nvim", "module": "catppuccin", "colorscheme": "catppuccin-latte", "background": "light", "opts": { "flavour": "latte", "transparent_background": true } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#eff1f5",
+        "surface": "#ccd0da",
+        "fg": "#4c4f69",
+        "muted": "#8c8fa1",
+        "accent": "#1e66f5",
+        "accent2": "#8839ef",
+        "ok": "#40a02b",
+        "warn": "#df8e1d",
+        "urgent": "#d20f39",
+        "info": "#179299"
+      }
+    }
+  }
+}

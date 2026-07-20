@@ -1,0 +1,39 @@
+{
+  "name": "rose-pine",
+  "variants": {
+    "dark": {
+      "wezterm": "rose-pine",
+      "nvim": { "plugin": "rose-pine/neovim", "module": "rose-pine", "colorscheme": "rose-pine-main", "background": "dark", "opts": { "variant": "main", "styles": { "transparency": true } } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#191724",
+        "surface": "#1f1d2e",
+        "fg": "#e0def4",
+        "muted": "#6e6a86",
+        "accent": "#9ccfd8",
+        "accent2": "#c4a7e7",
+        "ok": "#31748f",
+        "warn": "#f6c177",
+        "urgent": "#eb6f92",
+        "info": "#ebbcba"
+      }
+    },
+    "light": {
+      "wezterm": "rose-pine-dawn",
+      "nvim": { "plugin": "rose-pine/neovim", "module": "rose-pine", "colorscheme": "rose-pine-dawn", "background": "light", "opts": { "variant": "dawn", "styles": { "transparency": true } } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#faf4ed",
+        "surface": "#fffaf3",
+        "fg": "#575279",
+        "muted": "#9893a5",
+        "accent": "#56949f",
+        "accent2": "#907aa9",
+        "ok": "#286983",
+        "warn": "#ea9d34",
+        "urgent": "#b4637a",
+        "info": "#d7827e"
+      }
+    }
+  }
+}

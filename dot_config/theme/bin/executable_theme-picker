@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Launched by the aerospace alt-shift-t keybind inside a fresh WezTerm window.
+# Sets the window title to "theme-picker" (matched by an aerospace
+# on-window-detected rule that floats it), then runs the fzf picker.
+printf '\033]0;theme-picker\007'
+exec "$HOME/.config/theme/bin/theme" pick

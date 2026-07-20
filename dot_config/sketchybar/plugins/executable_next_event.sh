@@ -10,7 +10,7 @@
 #  5 html_link   6 hangout_link 7 conf_entry_type 8 conf_uri  9 title
 
 source "$CONFIG_DIR/environment.sh"
-source "$THEME_DIR/tokyonight.sh"
+source "$THEME_DIR/current.sh"
 
 CAL="ivan.company@stackadapt.com"
 
@@ -68,7 +68,7 @@ fi
 
 # Imminent (<=5 min out, or live) -> red to grab attention.
 if [ "$mins" -le 5 ]; then
-  color="$red"
+  color="$ROLE_URGENT"
 else
   color="$LABEL_COLOR"
 fi

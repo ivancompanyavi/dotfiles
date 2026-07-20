@@ -1,0 +1,39 @@
+{
+  "name": "gruvbox",
+  "variants": {
+    "dark": {
+      "wezterm": "GruvboxDark",
+      "nvim": { "plugin": "ellisonleao/gruvbox.nvim", "module": "gruvbox", "colorscheme": "gruvbox", "background": "dark", "opts": { "transparent_mode": true } },
+      "wallpaper": "gruvbox/gruv-temple.png",
+      "roles": {
+        "bg": "#282828",
+        "surface": "#3c3836",
+        "fg": "#ebdbb2",
+        "muted": "#928374",
+        "accent": "#83a598",
+        "accent2": "#d3869b",
+        "ok": "#b8bb26",
+        "warn": "#fabd2f",
+        "urgent": "#fb4934",
+        "info": "#8ec07c"
+      }
+    },
+    "light": {
+      "wezterm": "GruvboxLight",
+      "nvim": { "plugin": "ellisonleao/gruvbox.nvim", "module": "gruvbox", "colorscheme": "gruvbox", "background": "light", "opts": { "transparent_mode": true } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#fbf1c7",
+        "surface": "#ebdbb2",
+        "fg": "#3c3836",
+        "muted": "#7c6f64",
+        "accent": "#076678",
+        "accent2": "#8f3f71",
+        "ok": "#79740e",
+        "warn": "#b57614",
+        "urgent": "#9d0006",
+        "info": "#427b58"
+      }
+    }
+  }
+}

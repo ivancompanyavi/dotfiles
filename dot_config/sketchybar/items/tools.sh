@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 source "$CONFIG_DIR/environment.sh"
-source "$THEME_DIR/tokyonight.sh"
+source "$THEME_DIR/current.sh"
 
 
 sketchybar --add item cpu right \
            --set      cpu \
                       background.drawing=off \
                       icon="" \
-                      icon.color="$magenta" \
+                      icon.color="$ROLE_ACCENT2" \
                       icon.padding_right=4 \
                       label.color="$LABEL_COLOR" \
                       label.padding_left=0 \
