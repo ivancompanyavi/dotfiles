@@ -26,5 +26,6 @@ packages:
     casks:
     - 'helium-browser'
     - 'font-fira-code'
+    - 'font-hack-nerd-font'
     - 'wezterm'
     - 'nikitabobko/tap/aerospace'
