@@ -24,7 +24,7 @@ packages:
     - 'sketchybar'
     - 'borders'
     casks:
-    - 'google-chrome'
+    - 'helium-browser'
     - 'font-fira-code'
     - 'wezterm'
     - 'nikitabobko/tap/aerospace'
