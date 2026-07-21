@@ -64,6 +64,11 @@ reapply() {
   if [ -n "$wp" ]; then
     osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"$wp\"" >/dev/null 2>&1 || true
   fi
+
+  # 6. Helium browser accent — best-effort. Chromium only reads the theme at
+  #    launch, so this no-ops while Helium is open and applies on its next
+  #    launch (see theme-helium).
+  [ -x "$THEME_HOME/bin/theme-helium" ] && "$THEME_HOME/bin/theme-helium" apply || true
 }
 
 set_theme() {
