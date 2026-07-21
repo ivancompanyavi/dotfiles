@@ -11,7 +11,7 @@ after-login-command = []
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
     'exec-and-forget sketchybar',
-    'exec-and-forget /Users/ivan.company/.config/theme/bin/theme-borders',
+    'exec-and-forget {{ .chezmoi.homeDir }}/.config/theme/bin/theme-borders',
 ]
 
 exec-on-workspace-change = ['/bin/bash', '-c',
@@ -110,7 +110,7 @@ automatically-unhide-macos-hidden-apps = true
     alt-t = 'exec-and-forget open -a Telegram'
     alt-c = 'exec-and-forget open -a Cursor'
     # Theme picker (floating WezTerm running the fzf selector).
-    alt-shift-t = 'exec-and-forget open -na WezTerm --args start -- /Users/ivan.company/.config/theme/bin/theme-picker'
+    alt-shift-t = 'exec-and-forget open -na WezTerm --args start -- {{ .chezmoi.homeDir }}/.config/theme/bin/theme-picker'
     alt-d = '''exec-and-forget osascript -e '
 tell application "System Events"
     tell appearance preferences
