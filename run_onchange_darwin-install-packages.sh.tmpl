@@ -11,8 +11,10 @@ brew {{ . | quote }}
 {{ range .packages.darwin.casks -}}
 cask {{ . | quote }}
 {{ end -}}
-{{ if .apps.browser.cask -}}
-cask {{ .apps.browser.cask | quote }}
+{{ range $name, $app := .apps -}}
+{{ if $app.cask -}}
+cask {{ $app.cask | quote }}
+{{ end -}}
 {{ end -}}
 EOF
 {{ end -}}

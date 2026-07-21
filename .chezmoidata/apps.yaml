@@ -4,12 +4,25 @@
 # aerospace, the package manifest, and the theme scripts.
 #
 # Consumed by (all chezmoi templates):
-#   run_onchange_darwin-install-packages.sh.tmpl   -> .apps.<x>.cask
-#   dot_config/aerospace/aerospace.toml.tmpl        -> .apps.<x>.bundleId
+#   run_onchange_darwin-install-packages.sh.tmpl   -> every .apps.<x>.cask
+#   dot_config/aerospace/aerospace.toml.tmpl        -> .apps.<x>.{bundleId,appName}
 #   dot_config/theme/bin/executable_theme-browser.tmpl -> .apps.browser.{appName,profileDir}
+#
+# Every entry with a `cask` is installed automatically. Common fields:
+#   cask      Homebrew cask to install
+#   bundleId  macOS bundle id (aerospace window matching)
+#   appName   .app name for `open -a` / pgrep
 apps:
   browser:
-    cask: "brave-browser"                      # Homebrew cask to install
-    bundleId: "com.brave.Browser"              # macOS bundle id (aerospace window matching)
-    appName: "Brave Browser"                   # .app name for `open -a` / pgrep
-    profileDir: "BraveSoftware/Brave-Browser"  # dir under ~/Library/Application Support/
+    cask: "brave-browser"
+    bundleId: "com.brave.Browser"
+    appName: "Brave Browser"
+    profileDir: "BraveSoftware/Brave-Browser"  # under ~/Library/Application Support/ (theme-browser)
+  terminal:
+    cask: "wezterm"
+    bundleId: "com.github.wez.wezterm"
+    appName: "WezTerm"
+  editor:
+    cask: "cursor"
+    bundleId: "com.todesktop.230313mzl4w4u92"
+    appName: "Cursor"

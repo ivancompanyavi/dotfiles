@@ -24,9 +24,9 @@ packages:
     - 'sketchybar'
     - 'borders'
     casks:
-    # NB: the browser cask lives in apps.yaml (.apps.browser.cask) so the whole
-    # browser definition stays in one place; the install template pulls it in.
+    # NB: swappable app casks (browser, terminal, editor) live in apps.yaml
+    # (.apps.<x>.cask) so each app's whole definition stays in one place; the
+    # install template pulls them in. Only non-app casks remain here.
     - 'font-fira-code'
     - 'font-hack-nerd-font'
-    - 'wezterm'
     - 'nikitabobko/tap/aerospace'

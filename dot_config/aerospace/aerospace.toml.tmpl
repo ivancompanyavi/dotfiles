@@ -113,13 +113,14 @@ automatically-unhide-macos-hidden-apps = true
     # App launchers. `open -a` launches the app if needed and activates it
     # otherwise, so it replaces the old launch-or-activate osascript blocks.
     alt-s = 'exec-and-forget open -a Slack'
-    alt-enter = 'exec-and-forget open -a WezTerm'
+    alt-enter = 'exec-and-forget open -a {{ .apps.terminal.appName }}'
     alt-a = 'exec-and-forget open -a Asana'
     alt-b = 'exec-and-forget {{ .chezmoi.homeDir }}/.config/theme/bin/theme-browser open'
     alt-t = 'exec-and-forget open -a Telegram'
-    alt-c = 'exec-and-forget open -a Cursor'
-    # Theme picker (floating WezTerm running the fzf selector).
-    alt-shift-t = 'exec-and-forget open -na WezTerm --args start -- {{ .chezmoi.homeDir }}/.config/theme/bin/theme-picker'
+    alt-c = 'exec-and-forget open -a {{ .apps.editor.appName }}'
+    # Theme picker (floating terminal running the fzf selector; WezTerm-specific
+    # `--args start --` invocation).
+    alt-shift-t = 'exec-and-forget open -na {{ .apps.terminal.appName }} --args start -- {{ .chezmoi.homeDir }}/.config/theme/bin/theme-picker'
     alt-d = '''exec-and-forget osascript -e '
 tell application "System Events"
     tell appearance preferences
@@ -200,24 +201,25 @@ end tell
     shift-down = ['volume set 0', 'mode main']
 
 [[on-window-detected]]
-    # Theme picker → float it and stop, so the generic WezTerm rule below
+    # Theme picker → float it and stop, so the generic terminal rule below
     # doesn't also sweep it to workspace 1. (Best-effort: relies on the window
     # title being set by theme-picker; if the title lands late it tiles on ws1.)
-    if.app-id = 'com.github.wez.wezterm'
+    if.app-id = '{{ .apps.terminal.bundleId }}'
     if.window-title-regex-substring = 'theme-picker'
     check-further-callbacks = false
     run = 'layout floating'
 
 [[on-window-detected]]
-    # WezTerm
-    if.app-id = 'com.github.wez.wezterm'
+    # Terminal
+    if.app-id = '{{ .apps.terminal.bundleId }}'
     run = 'move-node-to-workspace 1'
 [[on-window-detected]]
+    # Browser
     if.app-id = '{{ .apps.browser.bundleId }}'
     run = 'move-node-to-workspace 2'
 [[on-window-detected]]
-    # Cursor
-    if.app-id = 'com.todesktop.230313mzl4w4u92'
+    # Editor
+    if.app-id = '{{ .apps.editor.bundleId }}'
     run = 'move-node-to-workspace 3'
 [[on-window-detected]]
     if.app-id = 'com.electron.asana'
