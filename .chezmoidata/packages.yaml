@@ -24,7 +24,7 @@ packages:
     - 'sketchybar'
     - 'borders'
     casks:
-    - 'helium-browser'
+    - 'brave-browser'
     - 'font-fira-code'
     - 'font-hack-nerd-font'
     - 'wezterm'

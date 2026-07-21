@@ -10,7 +10,7 @@ source "$THEME_DIR/current.sh"
 workspace_icon() {
   case "$1" in
     1) printf '\xef\x84\xa0' ;; # U+F120 terminal  (WezTerm)
-    2) printf '\xef\x82\xac' ;; # U+F0AC globe     (Helium)
+    2) printf '\xef\x82\xac' ;; # U+F0AC globe     (Brave)
     3) printf '\xef\x84\xa1' ;; # U+F121 code      (Cursor)
     4) printf '\xef\x82\xae' ;; # U+F0AE tasks     (Asana)
     5) printf '\xef\x86\x98' ;; # U+F198 slack     (Slack)

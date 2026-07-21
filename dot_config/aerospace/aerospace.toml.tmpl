@@ -115,7 +115,7 @@ automatically-unhide-macos-hidden-apps = true
     alt-s = 'exec-and-forget open -a Slack'
     alt-enter = 'exec-and-forget open -a WezTerm'
     alt-a = 'exec-and-forget open -a Asana'
-    alt-b = 'exec-and-forget {{ .chezmoi.homeDir }}/.config/theme/bin/theme-helium open'
+    alt-b = 'exec-and-forget {{ .chezmoi.homeDir }}/.config/theme/bin/theme-browser open'
     alt-t = 'exec-and-forget open -a Telegram'
     alt-c = 'exec-and-forget open -a Cursor'
     # Theme picker (floating WezTerm running the fzf selector).
@@ -213,7 +213,7 @@ end tell
     if.app-id = 'com.github.wez.wezterm'
     run = 'move-node-to-workspace 1'
 [[on-window-detected]]
-    if.app-id = 'net.imput.helium'
+    if.app-id = 'com.brave.Browser'
     run = 'move-node-to-workspace 2'
 [[on-window-detected]]
     # Cursor
