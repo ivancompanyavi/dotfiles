@@ -44,6 +44,22 @@ tool-written git settings (e.g. `git maintenance register`) go in
 `~/.gitconfig.local`, which is **not** chezmoi-managed and is pulled in via an
 `[include]` at the end of the managed gitconfig.
 
+### What `.work` gates
+
+Work-only surfaces are wrapped in `{{ if .work }}` so a personal machine gets a
+clean setup:
+
+- `dot_config/aerospace/aerospace.toml.tmpl` — the `alt-s`/`alt-a` Slack/Asana
+  launchers and the `on-window-detected` rules routing Asana→4 / Slack→5.
+- `dot_config/sketchybar/items/tools.sh.tmpl` — the Slack widget (and its entry
+  in the `tools_bracket`).
+
+> The nvim Jira/Asana plugins are currently commented out in
+> `my-plugins/init.lua`, so they need no gating. If re-enabled, gate their
+> `require` on `.work` there. Workspaces 4/5 stay in `persistent-workspaces`
+> regardless (harmless empty slots on a personal machine); their sketchybar
+> glyphs are still Asana/Slack — cosmetic only, not yet gated.
+
 ## The app registry (`.chezmoidata/apps.yaml`)
 
 Single source of truth for every swappable, user-facing app. Each entry defines

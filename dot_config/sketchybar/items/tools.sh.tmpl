@@ -45,7 +45,7 @@ sketchybar  --add   item telegram right \
                     background.padding_left=5  \
                     icon.font.size=18 \
            --subscribe telegram system_woke
-
+{{ if .work }}
 sketchybar  --add   item slack right \
             --set   slack \
                     update_freq=30 \
@@ -54,9 +54,9 @@ sketchybar  --add   item slack right \
                     background.padding_left=15  \
                     icon.font.size=18 \
            --subscribe slack system_woke
+{{ end }}
 
-
-sketchybar --add bracket tools_bracket  cpu battery wifi telegram slack  \
+sketchybar --add bracket tools_bracket  cpu battery wifi telegram{{ if .work }} slack{{ end }}  \
            --set         tools_bracket \
                          background.border_color="$FRONT_APP_BACKGROUND_BORDER_COLOR" \
                          background.corner_radius="$BRACKET_BACKGROUND_CORNER_RADIUS" \

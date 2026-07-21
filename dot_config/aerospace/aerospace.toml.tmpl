@@ -112,12 +112,15 @@ automatically-unhide-macos-hidden-apps = true
     # (like in i3)
     # App launchers. `open -a` launches the app if needed and activates it
     # otherwise, so it replaces the old launch-or-activate osascript blocks.
-    alt-s = 'exec-and-forget open -a Slack'
     alt-enter = 'exec-and-forget open -a {{ .apps.terminal.appName }}'
-    alt-a = 'exec-and-forget open -a Asana'
     alt-b = 'exec-and-forget {{ .chezmoi.homeDir }}/.config/theme/bin/theme-browser open'
     alt-t = 'exec-and-forget open -a {{ .apps.telegram.appName }}'
     alt-c = 'exec-and-forget open -a {{ .apps.editor.appName }}'
+{{- if .work }}
+    # Work-only launchers (Slack/Asana — installed manually on work machines).
+    alt-s = 'exec-and-forget open -a Slack'
+    alt-a = 'exec-and-forget open -a Asana'
+{{- end }}
     # Theme picker (floating terminal running the fzf selector; WezTerm-specific
     # `--args start --` invocation).
     alt-shift-t = 'exec-and-forget open -na {{ .apps.terminal.appName }} --args start -- {{ .chezmoi.homeDir }}/.config/theme/bin/theme-picker'
@@ -221,14 +224,16 @@ end tell
     # Editor
     if.app-id = '{{ .apps.editor.bundleId }}'
     run = 'move-node-to-workspace 3'
+{{- if .work }}
 [[on-window-detected]]
-    # Asana (not chezmoi-managed / not auto-installed; hardcoded id)
+    # Asana (work-only; not chezmoi-managed / not auto-installed; hardcoded id)
     if.app-id = 'com.electron.asana'
     run = 'move-node-to-workspace 4'
 [[on-window-detected]]
-    # Slack (not chezmoi-managed / not auto-installed; hardcoded id)
+    # Slack (work-only; not chezmoi-managed / not auto-installed; hardcoded id)
     if.app-id = 'com.tinyspeck.slackmacgap'
     run = 'move-node-to-workspace 5'
+{{- end }}
 [[on-window-detected]]
     # Catch-all: any window not matched above lands on workspace R.
     # config-version 2 requires an explicit condition; 'true' matches everything.
