@@ -183,6 +183,11 @@ end tell
 
     alt-f = 'fullscreen'
 
+    # Close the focused window (single-window; service mode still has
+    # close-all-windows-but-current). See:
+    # https://nikitabobko.github.io/AeroSpace/commands#close
+    alt-shift-q = 'close'
+
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
@@ -234,6 +239,30 @@ end tell
     if.app-id = 'com.tinyspeck.slackmacgap'
     run = 'move-node-to-workspace 5'
 {{- end }}
+# System / utility windows → float instead of tiling. Matching stops here
+# (check-further-callbacks defaults to false), so they stay on the current
+# workspace rather than being swept to R by the catch-all below.
+[[on-window-detected]]
+    # System Settings
+    if.app-id = 'com.apple.systempreferences'
+    run = 'layout floating'
+[[on-window-detected]]
+    # Finder
+    if.app-id = 'com.apple.finder'
+    run = 'layout floating'
+[[on-window-detected]]
+    # Calculator
+    if.app-id = 'com.apple.calculator'
+    run = 'layout floating'
+[[on-window-detected]]
+    # Activity Monitor
+    if.app-id = 'com.apple.ActivityMonitor'
+    run = 'layout floating'
+[[on-window-detected]]
+    # Archive Utility (unzip progress window)
+    if.app-id = 'com.apple.archiveutility'
+    run = 'layout floating'
+
 [[on-window-detected]]
     # Catch-all: any window not matched above lands on workspace R.
     # config-version 2 requires an explicit condition; 'true' matches everything.
