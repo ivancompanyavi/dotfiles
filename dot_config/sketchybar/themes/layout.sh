@@ -12,8 +12,10 @@ BAR_BLUR_RADIUS=0               # no frosted blur band — empty areas show the 
 BAR_POSITION="top"
 BAR_HEIGHT=40
 # Inner padding between the bar's edge and its first/last item. The outer inset
-# comes from BAR_MARGIN (below), so this stays small.
-BAR_PADDING=10
+# comes from BAR_MARGIN (below), so this stays small. Set to 8 to match
+# WezTerm's default window padding, so the bar's items line up with the
+# terminal's text column (the bar frame itself already matches the window).
+BAR_PADDING=8
 BAR_Y_OFFSET=5
 BAR_CORNER_RADIUS=12
 Y_OFFSET=0
