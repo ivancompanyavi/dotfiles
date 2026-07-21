@@ -1,0 +1,32 @@
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+{{- if .signingKey }}
+	signingkey = {{ .signingKey }}
+{{- end }}
+{{- if .signingKey }}
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+{{- end }}
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[pull]
+	rebase = true
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+# Machine-local / tool-managed git settings (e.g. `git maintenance register`
+# writes here-adjacent entries). Not managed by chezmoi. Optional — git ignores
+# a missing include path.
+[include]
+	path = ~/.gitconfig.local

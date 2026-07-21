@@ -1,0 +1,18 @@
+{{/*
+Machine profile. Rendered ONCE by `chezmoi init` into the machine-local config
+~/.config/chezmoi/chezmoi.toml (NOT committed). Templates branch on `.work` and
+read `.name` / `.email` / `.signingKey`.
+  Re-prompt: chezmoi init --prompt
+  Seed:      chezmoi init --promptBool work=true \
+               --promptString name="…",email="…",signingKey="…"
+*/ -}}
+{{- $work := promptBoolOnce . "work" "Is this a work machine (StackAdapt: Jira/Asana/Slack, work git identity)" -}}
+{{- $name := promptStringOnce . "name" "Git author name" -}}
+{{- $email := promptStringOnce . "email" "Git author email" -}}
+{{- $signingKey := promptStringOnce . "signingKey" "Git SSH signing key path (empty to disable commit signing)" }}
+# Generated from .chezmoi.toml.tmpl — machine-local, not committed.
+[data]
+    work = {{ $work }}
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    signingKey = {{ $signingKey | quote }}

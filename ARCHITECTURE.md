@@ -8,11 +8,41 @@ the repo is the *source state*, `chezmoi apply` renders it into `~` (the
 
 | Path | What it is |
 |------|-----------|
+| `.chezmoi.toml.tmpl` | **Machine profile.** Rendered once at `chezmoi init` into the machine-local config; prompts for `work` / `name` / `email` / `signingKey`. See [Machine profiles](#machine-profiles). |
 | `.chezmoidata/*.yaml` | Data files merged into the template namespace. `apps.yaml` → `.apps`, `packages.yaml` → `.packages`. |
 | `dot_config/…` | Everything under `~/.config/…` (chezmoi maps `dot_` → `.`). |
+| `dot_gitconfig.tmpl` | `~/.gitconfig`, identity templated from the machine profile. See [Machine profiles](#machine-profiles). |
 | `run_onchange_*.sh.tmpl` | Scripts chezmoi runs **when their rendered content changes** (package install, nvim plugin build). |
 | `*.tmpl` | Go-templated files, rendered at `apply` time. Non-`.tmpl` files are copied verbatim. |
 | `executable_*` | chezmoi sets the executable bit on the target. |
+
+## Machine profiles
+
+The repo is shared across machines (e.g. a work laptop and a personal one) but
+carries **no hardcoded identity or per-machine flags**. Those live in the
+machine-local chezmoi config, generated once at `chezmoi init` from
+`.chezmoi.toml.tmpl` and never committed:
+
+| Var | Meaning |
+|-----|---------|
+| `.work` | `true` on a work machine (StackAdapt: Jira/Asana/Slack, work git identity). Templates branch on it. |
+| `.name` / `.email` | Git author identity. |
+| `.signingKey` | SSH signing-key path; empty disables commit signing. |
+
+On a **new machine** `chezmoi init` prompts interactively. To seed
+non-interactively (or re-answer):
+
+```
+chezmoi init --promptBool work=true \
+  --promptString name="…",email="…",signingKey="…"
+# or re-prompt everything:  chezmoi init --prompt
+```
+
+**Git identity** (`dot_gitconfig.tmpl`) reads `.name`/`.email`/`.signingKey`;
+commit/tag signing is gated on `.signingKey` being non-empty. Machine-local or
+tool-written git settings (e.g. `git maintenance register`) go in
+`~/.gitconfig.local`, which is **not** chezmoi-managed and is pulled in via an
+`[include]` at the end of the managed gitconfig.
 
 ## The app registry (`.chezmoidata/apps.yaml`)
 
