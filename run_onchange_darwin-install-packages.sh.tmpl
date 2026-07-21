@@ -11,5 +11,8 @@ brew {{ . | quote }}
 {{ range .packages.darwin.casks -}}
 cask {{ . | quote }}
 {{ end -}}
+{{ if .apps.browser.cask -}}
+cask {{ .apps.browser.cask | quote }}
+{{ end -}}
 EOF
 {{ end -}}

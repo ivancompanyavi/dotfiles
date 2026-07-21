@@ -1,0 +1,15 @@
+# Central registry of the swappable, user-facing apps this dotfiles config
+# integrates with. Define each app ONCE here; templates read these values so a
+# swap (e.g. changing the browser) is a one-file edit instead of hunting through
+# aerospace, the package manifest, and the theme scripts.
+#
+# Consumed by (all chezmoi templates):
+#   run_onchange_darwin-install-packages.sh.tmpl   -> .apps.<x>.cask
+#   dot_config/aerospace/aerospace.toml.tmpl        -> .apps.<x>.bundleId
+#   dot_config/theme/bin/executable_theme-browser.tmpl -> .apps.browser.{appName,profileDir}
+apps:
+  browser:
+    cask: "brave-browser"                      # Homebrew cask to install
+    bundleId: "com.brave.Browser"              # macOS bundle id (aerospace window matching)
+    appName: "Brave Browser"                   # .app name for `open -a` / pgrep
+    profileDir: "BraveSoftware/Brave-Browser"  # dir under ~/Library/Application Support/

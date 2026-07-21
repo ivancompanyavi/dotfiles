@@ -213,7 +213,7 @@ end tell
     if.app-id = 'com.github.wez.wezterm'
     run = 'move-node-to-workspace 1'
 [[on-window-detected]]
-    if.app-id = 'com.brave.Browser'
+    if.app-id = '{{ .apps.browser.bundleId }}'
     run = 'move-node-to-workspace 2'
 [[on-window-detected]]
     # Cursor

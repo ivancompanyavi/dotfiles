@@ -65,9 +65,9 @@ reapply() {
     osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"$wp\"" >/dev/null 2>&1 || true
   fi
 
-  # 6. Brave browser accent — best-effort. Chromium only reads the theme at
-  #    launch, so this no-ops while Brave is open and applies on its next
-  #    launch (see theme-browser).
+  # 6. Browser accent — best-effort. Chromium only reads the theme at launch,
+  #    so this no-ops while the browser is open and applies on its next launch
+  #    (see theme-browser; the browser is defined in .chezmoidata/apps.yaml).
   [ -x "$THEME_HOME/bin/theme-browser" ] && "$THEME_HOME/bin/theme-browser" apply || true
 }
 

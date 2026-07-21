@@ -24,7 +24,8 @@ packages:
     - 'sketchybar'
     - 'borders'
     casks:
-    - 'brave-browser'
+    # NB: the browser cask lives in apps.yaml (.apps.browser.cask) so the whole
+    # browser definition stays in one place; the install template pulls it in.
     - 'font-fira-code'
     - 'font-hack-nerd-font'
     - 'wezterm'
