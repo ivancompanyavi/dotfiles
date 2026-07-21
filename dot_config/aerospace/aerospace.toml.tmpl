@@ -112,11 +112,11 @@ automatically-unhide-macos-hidden-apps = true
     # (like in i3)
     # App launchers. `open -a` launches the app if needed and activates it
     # otherwise, so it replaces the old launch-or-activate osascript blocks.
-    alt-s = 'exec-and-forget open -a Slack'
+    alt-s = 'exec-and-forget open -a {{ .apps.slack.appName }}'
     alt-enter = 'exec-and-forget open -a {{ .apps.terminal.appName }}'
-    alt-a = 'exec-and-forget open -a Asana'
+    alt-a = 'exec-and-forget open -a {{ .apps.asana.appName }}'
     alt-b = 'exec-and-forget {{ .chezmoi.homeDir }}/.config/theme/bin/theme-browser open'
-    alt-t = 'exec-and-forget open -a Telegram'
+    alt-t = 'exec-and-forget open -a {{ .apps.telegram.appName }}'
     alt-c = 'exec-and-forget open -a {{ .apps.editor.appName }}'
     # Theme picker (floating terminal running the fzf selector; WezTerm-specific
     # `--args start --` invocation).
@@ -222,10 +222,12 @@ end tell
     if.app-id = '{{ .apps.editor.bundleId }}'
     run = 'move-node-to-workspace 3'
 [[on-window-detected]]
-    if.app-id = 'com.electron.asana'
+    # Asana
+    if.app-id = '{{ .apps.asana.bundleId }}'
     run = 'move-node-to-workspace 4'
 [[on-window-detected]]
-    if.app-id = 'com.tinyspeck.slackmacgap'
+    # Slack
+    if.app-id = '{{ .apps.slack.bundleId }}'
     run = 'move-node-to-workspace 5'
 [[on-window-detected]]
     # Catch-all: any window not matched above lands on workspace R.
