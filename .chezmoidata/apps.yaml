@@ -7,15 +7,16 @@
 #   run_onchange_darwin-install-packages.sh.tmpl        -> every .apps.<x>.cask
 #   dot_config/aerospace/aerospace.toml.tmpl             -> .apps.<x>.{bundleId,appName}
 #   dot_config/theme/bin/executable_theme-browser.tmpl   -> .apps.browser.{appName,profileDir}
-#   dot_config/sketchybar/plugins/executable_slack.sh.tmpl    -> .apps.slack.appName
 #   dot_config/sketchybar/plugins/executable_telegram.sh.tmpl -> .apps.telegram.appName
 #
 # Every entry with a `cask` is installed automatically. Common fields:
 #   cask      Homebrew cask to install
 #   bundleId  macOS bundle id (aerospace window matching)
 #   appName   .app name for `open -a` / pgrep / lsappinfo
-#   workOnly  if true, only installed on machines WITHOUT `personal = true` set
-#             in the machine-local chezmoi config (~/.config/chezmoi/chezmoi.toml)
+#
+# NB: Slack and Asana are intentionally NOT here — chezmoi does not install or
+# manage those (install them yourself). Their aerospace workspace rules + the
+# sketchybar Slack widget keep working via hardcoded bundle ids/names.
 apps:
   browser:
     cask: "brave-browser"
@@ -30,16 +31,6 @@ apps:
     cask: "cursor"
     bundleId: "com.todesktop.230313mzl4w4u92"
     appName: "Cursor"
-  slack:
-    cask: "slack"
-    bundleId: "com.tinyspeck.slackmacgap"
-    appName: "Slack"
-    workOnly: true
-  asana:
-    cask: "asana"
-    bundleId: "com.electron.asana"
-    appName: "Asana"
-    workOnly: true
   telegram:
     cask: "telegram"
     bundleId: "ru.keepcoder.Telegram"

@@ -13,7 +13,6 @@ the repo is the *source state*, `chezmoi apply` renders it into `~` (the
 | `run_onchange_*.sh.tmpl` | Scripts chezmoi runs **when their rendered content changes** (package install, nvim plugin build). |
 | `*.tmpl` | Go-templated files, rendered at `apply` time. Non-`.tmpl` files are copied verbatim. |
 | `executable_*` | chezmoi sets the executable bit on the target. |
-| `~/.config/chezmoi/chezmoi.toml` | **Machine-local** config (NOT in this repo). Holds per-machine template data — see *Machine profiles*. |
 
 ## The app registry (`.chezmoidata/apps.yaml`)
 
@@ -23,7 +22,12 @@ instead of hunting through aerospace, the manifest, and the theme scripts.
 
 Fields: `cask` (Homebrew cask, auto-installed), `bundleId` (aerospace window
 matching), `appName` (`open -a` / `pgrep` / `lsappinfo`), plus per-app extras
-(`profileDir` for the browser, `workOnly` for machine-gating).
+(`profileDir` for the browser).
+
+> Slack and Asana are intentionally **not** in the registry — chezmoi doesn't
+> install or manage them (install them yourself). Their aerospace workspace
+> rules (4/5) and the sketchybar Slack widget still work via **hardcoded**
+> bundle ids / names.
 
 Consumers (all templates):
 - `run_onchange_darwin-install-packages.sh.tmpl` → installs every `.apps.*.cask`
@@ -46,21 +50,6 @@ only re-runs when the rendered package list changes; `brew bundle` is idempotent
 ⚠️ **Third-party taps** (`felixkratz/formulae`, `nikitabobko/tap`,
 `jesseduffield/lazygit`) now require a one-time `brew trust <tap>` per machine
 before `brew bundle` will load them.
-
-## Machine profiles
-
-`~/.config/chezmoi/chezmoi.toml` (machine-local, not committed) provides
-per-machine template data. This laptop sets:
-
-```toml
-[data]
-    personal = true
-```
-
-Apps tagged `workOnly: true` in `apps.yaml` (Slack, Asana) are skipped by the
-installer when `personal = true`, and installed otherwise (the work laptop,
-where the flag is unset). Templates use `index`-based lookups so the unset case
-never errors.
 
 ## Theme system (`dot_config/theme/`)
 
@@ -94,7 +83,7 @@ back on after startup — hence the switch to Brave.)
 
 ## Window management & bar
 
-- **AeroSpace** (`dot_config/aerospace/aerospace.toml.tmpl`) — tiling WM. Config is `config-version = 2` (AeroSpace 0.21+). `on-window-detected` rules assign apps to workspaces (1 terminal, 2 browser, 3 editor, 4 Asana, 5 Slack, R catch-all) **but only fire for newly-opened windows** — already-open windows aren't retroactively sorted. `persistent-workspaces` is declared so empty workspaces still show in the bar.
+- **AeroSpace** (`dot_config/aerospace/aerospace.toml.tmpl`) — tiling WM. Config is `config-version = 2` (AeroSpace 0.21+). `on-window-detected` rules assign apps to workspaces (1 terminal, 2 browser, 3 editor, 4 Asana, 5 Slack, R catch-all) **but only fire for newly-opened windows** — already-open windows aren't retroactively sorted. Registry apps use `.apps.*.bundleId`; Slack/Asana are hardcoded (not registry-managed). `persistent-workspaces` is declared so empty workspaces still show in the bar.
 - **sketchybar** (`dot_config/sketchybar/`) — custom menu bar. `themes/layout.sh` = geometry (theme-independent; bar is fully transparent, `BAR_BLUR_RADIUS=0`), `themes/palette.sh` = colors from the active theme. Uses `Hack Nerd Font` for glyphs.
 
 ## Gotchas

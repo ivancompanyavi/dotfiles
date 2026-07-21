@@ -112,9 +112,9 @@ automatically-unhide-macos-hidden-apps = true
     # (like in i3)
     # App launchers. `open -a` launches the app if needed and activates it
     # otherwise, so it replaces the old launch-or-activate osascript blocks.
-    alt-s = 'exec-and-forget open -a {{ .apps.slack.appName }}'
+    alt-s = 'exec-and-forget open -a Slack'
     alt-enter = 'exec-and-forget open -a {{ .apps.terminal.appName }}'
-    alt-a = 'exec-and-forget open -a {{ .apps.asana.appName }}'
+    alt-a = 'exec-and-forget open -a Asana'
     alt-b = 'exec-and-forget {{ .chezmoi.homeDir }}/.config/theme/bin/theme-browser open'
     alt-t = 'exec-and-forget open -a {{ .apps.telegram.appName }}'
     alt-c = 'exec-and-forget open -a {{ .apps.editor.appName }}'
@@ -222,12 +222,12 @@ end tell
     if.app-id = '{{ .apps.editor.bundleId }}'
     run = 'move-node-to-workspace 3'
 [[on-window-detected]]
-    # Asana
-    if.app-id = '{{ .apps.asana.bundleId }}'
+    # Asana (not chezmoi-managed / not auto-installed; hardcoded id)
+    if.app-id = 'com.electron.asana'
     run = 'move-node-to-workspace 4'
 [[on-window-detected]]
-    # Slack
-    if.app-id = '{{ .apps.slack.bundleId }}'
+    # Slack (not chezmoi-managed / not auto-installed; hardcoded id)
+    if.app-id = 'com.tinyspeck.slackmacgap'
     run = 'move-node-to-workspace 5'
 [[on-window-detected]]
     # Catch-all: any window not matched above lands on workspace R.

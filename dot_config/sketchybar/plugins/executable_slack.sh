@@ -3,7 +3,7 @@
 source "$CONFIG_DIR/environment.sh"
 source "$THEME_DIR/palette.sh"
 
-STATUS_LABEL=$(lsappinfo info -only StatusLabel "{{ .apps.slack.appName }}")
+STATUS_LABEL=$(lsappinfo info -only StatusLabel "Slack")
 ICON="󰒱"
 if [[ $STATUS_LABEL =~ \"label\"=\"([^\"]*)\" ]]; then
     LABEL="${BASH_REMATCH[1]}"
