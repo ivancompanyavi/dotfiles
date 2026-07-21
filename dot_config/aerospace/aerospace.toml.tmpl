@@ -1,6 +1,15 @@
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
 
+# Config schema version (AeroSpace 0.21+). Version 2 makes 'on-window-detected'
+# rules require an explicit 'if' — see the catch-all rule below.
+config-version = 2
+
+# In config-version 1 these were inferred from the keybindings below; in v2 they
+# must be declared, otherwise empty workspaces disappear from 'list-workspaces'
+# and the sketchybar workspace bar collapses to only the occupied ones.
+persistent-workspaces = ['1', '2', '3', '4', '5', 'R']
+
 # You can use it to add commands that run after login to macOS user session.
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
@@ -217,6 +226,9 @@ end tell
     if.app-id = 'com.tinyspeck.slackmacgap'
     run = 'move-node-to-workspace 5'
 [[on-window-detected]]
+    # Catch-all: any window not matched above lands on workspace R.
+    # config-version 2 requires an explicit condition; 'true' matches everything.
+    if = 'true'
     run = 'move-node-to-workspace R'
 
 
