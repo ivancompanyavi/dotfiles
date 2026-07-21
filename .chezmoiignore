@@ -1,3 +1,6 @@
 .env
 # Big wallpaper LIBRARY (~278MB) — local only, curate from it into per-theme pools.
 .config/theme/wallpapers/_packs
+# Repo-only docs — should never be applied into $HOME.
+README.md
+ARCHITECTURE.md
