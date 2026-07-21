@@ -1,0 +1,39 @@
+{
+  "name": "ayu",
+  "variants": {
+    "dark": {
+      "wezterm": "Ayu Mirage",
+      "nvim": { "plugin": "Shatur/neovim-ayu", "module": "ayu", "colorscheme": "ayu-mirage", "background": "dark", "opts": { "mirage": true, "overrides": { "Normal": { "bg": "None" }, "NormalNC": { "bg": "None" }, "SignColumn": { "bg": "None" }, "EndOfBuffer": { "bg": "None" } } } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#1f2430",
+        "surface": "#232834",
+        "fg": "#cccac2",
+        "muted": "#5c6773",
+        "accent": "#ffcc66",
+        "accent2": "#73d0ff",
+        "ok": "#d5ff80",
+        "warn": "#ffd580",
+        "urgent": "#ff6666",
+        "info": "#5ccfe6"
+      }
+    },
+    "light": {
+      "wezterm": "Ayu Light (Gogh)",
+      "nvim": { "plugin": "Shatur/neovim-ayu", "module": "ayu", "colorscheme": "ayu-light", "background": "light", "opts": { "mirage": false, "overrides": { "Normal": { "bg": "None" }, "NormalNC": { "bg": "None" }, "SignColumn": { "bg": "None" }, "EndOfBuffer": { "bg": "None" } } } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#fcfcfc",
+        "surface": "#f3f4f5",
+        "fg": "#5c6166",
+        "muted": "#abb0b6",
+        "accent": "#ff9940",
+        "accent2": "#55b4d4",
+        "ok": "#86b300",
+        "warn": "#f2ae49",
+        "urgent": "#f07171",
+        "info": "#55b4d4"
+      }
+    }
+  }
+}

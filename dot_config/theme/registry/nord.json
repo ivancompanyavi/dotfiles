@@ -1,0 +1,40 @@
+{
+  "name": "nord",
+  "_note": "Nord is a dark-only theme (no upstream light palette / the nvim plugin is dark-only), so the light variant mirrors dark: selecting Nord keeps a dark UI even in macOS light mode.",
+  "variants": {
+    "dark": {
+      "wezterm": "nord",
+      "nvim": { "plugin": "gbprod/nord.nvim", "module": "nord", "colorscheme": "nord", "background": "dark", "opts": { "transparent": true } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#2e3440",
+        "surface": "#3b4252",
+        "fg": "#d8dee9",
+        "muted": "#4c566a",
+        "accent": "#88c0d0",
+        "accent2": "#81a1c1",
+        "ok": "#a3be8c",
+        "warn": "#ebcb8b",
+        "urgent": "#bf616a",
+        "info": "#8fbcbb"
+      }
+    },
+    "light": {
+      "wezterm": "nord",
+      "nvim": { "plugin": "gbprod/nord.nvim", "module": "nord", "colorscheme": "nord", "background": "dark", "opts": { "transparent": true } },
+      "wallpaper": "",
+      "roles": {
+        "bg": "#2e3440",
+        "surface": "#3b4252",
+        "fg": "#d8dee9",
+        "muted": "#4c566a",
+        "accent": "#88c0d0",
+        "accent2": "#81a1c1",
+        "ok": "#a3be8c",
+        "warn": "#ebcb8b",
+        "urgent": "#bf616a",
+        "info": "#8fbcbb"
+      }
+    }
+  }
+}

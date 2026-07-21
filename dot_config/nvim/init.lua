@@ -13,6 +13,9 @@ vim.pack.add({
     'https://github.com/ellisonleao/gruvbox.nvim',
     'https://github.com/catppuccin/nvim',
     'https://github.com/rose-pine/neovim',
+    'https://github.com/neanias/everforest-nvim',
+    'https://github.com/Shatur/neovim-ayu',
+    'https://github.com/gbprod/nord.nvim',
 
     -- LSP installer (still needed to install LSP binaries)
     'https://github.com/mason-org/mason.nvim',
