@@ -6,9 +6,9 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Bar
-BAR_COLOR="0x00000000"          # transparent; the blur band does the work
+BAR_COLOR="0x00000000"          # fully transparent bar background
 BAR_BORDER_COLOR="0x00000000"   # no visible bar border (width stays 0)
-BAR_BLUR_RADIUS=30
+BAR_BLUR_RADIUS=0               # no frosted blur band — empty areas show the wallpaper
 BAR_POSITION="top"
 BAR_HEIGHT=40
 # Inner padding between the bar's edge and its first/last item. The outer inset

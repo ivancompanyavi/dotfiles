@@ -12,7 +12,7 @@ brew {{ . | quote }}
 cask {{ . | quote }}
 {{ end -}}
 {{ range $name, $app := .apps -}}
-{{ if $app.cask -}}
+{{ if and $app.cask (not (and (index $app "workOnly") (index $ "personal"))) -}}
 cask {{ $app.cask | quote }}
 {{ end -}}
 {{ end -}}

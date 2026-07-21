@@ -14,6 +14,8 @@
 #   cask      Homebrew cask to install
 #   bundleId  macOS bundle id (aerospace window matching)
 #   appName   .app name for `open -a` / pgrep / lsappinfo
+#   workOnly  if true, only installed on machines WITHOUT `personal = true` set
+#             in the machine-local chezmoi config (~/.config/chezmoi/chezmoi.toml)
 apps:
   browser:
     cask: "brave-browser"
@@ -32,10 +34,12 @@ apps:
     cask: "slack"
     bundleId: "com.tinyspeck.slackmacgap"
     appName: "Slack"
+    workOnly: true
   asana:
     cask: "asana"
     bundleId: "com.electron.asana"
     appName: "Asana"
+    workOnly: true
   telegram:
     cask: "telegram"
     bundleId: "ru.keepcoder.Telegram"
