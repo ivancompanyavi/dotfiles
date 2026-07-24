@@ -116,6 +116,9 @@ automatically-unhide-macos-hidden-apps = true
     alt-b = 'exec-and-forget {{ .chezmoi.homeDir }}/.config/theme/bin/theme-browser open'
     alt-t = 'exec-and-forget open -a {{ .apps.telegram.appName }}'
     alt-c = 'exec-and-forget open -a {{ .apps.editor.appName }}'
+    # Join the current/next meeting (resolves the link fresh, same logic as the
+    # sketchybar next_event widget's click).
+    alt-m = 'exec-and-forget {{ .chezmoi.homeDir }}/.config/sketchybar/plugins/open_next_meeting.sh'
 {{- if .work }}
     # Work-only launchers (Slack/Asana — installed manually on work machines).
     alt-s = 'exec-and-forget open -a Slack'

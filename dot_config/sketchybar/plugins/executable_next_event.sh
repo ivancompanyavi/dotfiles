@@ -76,4 +76,4 @@ fi
 sketchybar --set "$NAME" \
   label="📅 $title · $when" \
   label.color="$color" \
-  click_script="open '$join'"
+  click_script="$PLUGIN_DIR/open_next_meeting.sh"
