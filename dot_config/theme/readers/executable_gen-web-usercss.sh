@@ -9,6 +9,11 @@
 # browser UI that extensions draw into every page, so it is generated without a
 # domain rule.
 #
+# Both files land on the same page and both carry the palette, so a site style
+# writes it on ":root:root" to outrank all-sites' ":root". Without that the
+# winner is whichever Stylus injects last, and a site keeps the old colors if
+# its all-sites copy has drifted.
+#
 # Install each generated file ONCE in Stylus: open its file:// URL in the
 # browser and tick "Live reload" (Stylus needs "Allow access to file URLs").
 # After that, every `theme reapply` repaints the site without touching Stylus.
@@ -106,10 +111,12 @@ for src in "$SRC_DIR"/*.css; do
   if [ "$name" = "all-sites" ]; then
     scope_open=""
     scope_close=""
+    palette_selector=":root"
     describes="Browser UI drawn on top of any page"
   else
     scope_open="@-moz-document domain(\"$name\") {"
     scope_close="}"
+    palette_selector=":root:root"
     describes="$name"
   fi
   {
@@ -126,7 +133,7 @@ for src in "$SRC_DIR"/*.css; do
    Source: ~/.config/theme/readers/web/${name}.css */
 
 ${scope_open}
-  :root {
+  ${palette_selector} {
 HEADER
     role_vars
     echo "  }"
