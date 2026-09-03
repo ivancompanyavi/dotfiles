@@ -41,7 +41,7 @@ ytd-app h1, ytd-app h2, ytd-app h3, ytd-app span, ytd-app a {
   color: var(--theme-fg) !important;
 }
 
-::selection { background: var(--theme-accent) !important; color: var(--theme-bg) !important; }
+::selection { background: var(--theme-accent) !important; color: var(--theme-on-accent) !important; }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--theme-bg) !important; }
@@ -66,7 +66,7 @@ ytd-topbar-logo-renderer svg { display: none !important; }
 
 ytd-topbar-logo-renderer #logo::after {
   content: "▶ youtube";
-  color: var(--theme-accent) !important;
+  color: var(--theme-accent-text) !important;
   font-weight: 700;
   letter-spacing: .02em;
 }
@@ -86,7 +86,7 @@ ytd-topbar-logo-renderer #logo::after {
 
 .ytSearchboxComponentInputBox::before {
   content: "❯";
-  color: var(--theme-accent) !important;
+  color: var(--theme-accent-text) !important;
   padding: 0 6px 0 10px;
   align-self: center;
 }
@@ -94,7 +94,7 @@ ytd-topbar-logo-renderer #logo::after {
 .ytSearchboxComponentInput {
   background: transparent !important;
   color: var(--theme-fg) !important;
-  caret-color: var(--theme-accent) !important;
+  caret-color: var(--theme-accent-text) !important;
 }
 
 .ytSearchboxComponentSearchButton,
@@ -131,14 +131,14 @@ ytd-guide-entry-renderer[active] yt-formatted-string.title,
 ytd-guide-entry-renderer[active] yt-icon,
 ytd-guide-entry-renderer[active] yt-icon span,
 ytd-guide-entry-renderer[active] yt-icon svg {
-  color: var(--theme-accent) !important;
-  fill: var(--theme-accent) !important;
+  color: var(--theme-accent-text) !important;
+  fill: var(--theme-accent-text) !important;
 }
 
 ytd-guide-section-renderer { border-top: 1px solid var(--tui-border) !important; }
 
 #guide-section-title, #guide-links-primary a, #guide-links-secondary a {
-  color: var(--theme-muted) !important;
+  color: var(--theme-muted-text) !important;
   font-size: 11px !important;
 }
 
@@ -152,7 +152,7 @@ ytd-feed-filter-chip-bar-renderer {
 .ytChipShapeChip {
   background: var(--theme-bg) !important;
   border: 1px solid var(--tui-border) !important;
-  color: var(--theme-muted) !important;
+  color: var(--theme-muted-text) !important;
 }
 
 .ytChipShapeChip::before { content: "["; margin-right: 4px; }
@@ -166,7 +166,7 @@ ytd-feed-filter-chip-bar-renderer {
 .ytChipShapeActive {
   background: var(--theme-accent) !important;
   border-color: var(--theme-accent) !important;
-  color: var(--theme-bg) !important;
+  color: var(--theme-on-accent) !important;
 }
 
 /* ── video cards ──────────────────────────────────────────────────────── */
@@ -197,28 +197,28 @@ ytd-rich-item-renderer #content:hover { border-color: var(--theme-accent) !impor
 
 .ytLockupMetadataViewModelTitle::before {
   content: "▸ ";
-  color: var(--theme-accent) !important;
+  color: var(--theme-accent-text) !important;
 }
 
 .ytLockupViewModelHost:hover .ytLockupMetadataViewModelTitle,
 .ytLockupViewModelHost:hover .ytLockupMetadataViewModelTitle * {
-  color: var(--theme-accent) !important;
+  color: var(--theme-accent-text) !important;
 }
 
 .ytContentMetadataViewModelMetadataRow,
 .ytContentMetadataViewModelMetadataText,
 .ytContentMetadataViewModelMetadataRow * {
-  color: var(--theme-muted) !important;
+  color: var(--theme-muted-text) !important;
 }
 
 /* Duration, LIVE and the rest of the thumbnail badges. */
 badge-shape, yt-thumbnail-badge-view-model, .ytThumbnailBottomOverlayViewModelHost {
   background: var(--theme-bg) !important;
   border: 1px solid var(--tui-border) !important;
-  color: var(--theme-accent) !important;
+  color: var(--theme-accent-text) !important;
 }
 
-badge-shape *, .ytThumbnailBottomOverlayViewModelHost * { color: var(--theme-accent) !important; }
+badge-shape *, .ytThumbnailBottomOverlayViewModelHost * { color: var(--theme-accent-text) !important; }
 
 /* ── shelves and buttons ──────────────────────────────────────────────── */
 
@@ -227,12 +227,12 @@ ytd-rich-section-renderer, ytd-rich-shelf-renderer {
 }
 
 #rich-shelf-header #title, #title.ytd-rich-shelf-renderer {
-  color: var(--theme-accent2) !important;
+  color: var(--theme-accent2-text) !important;
 }
 
 #rich-shelf-header #title::before, #title.ytd-rich-shelf-renderer::before {
   content: "## ";
-  color: var(--theme-muted) !important;
+  color: var(--theme-muted-text) !important;
 }
 
 yt-button-shape button, ytd-button-renderer button, button.yt-spec-button-shape-next {
@@ -243,7 +243,7 @@ yt-button-shape button, ytd-button-renderer button, button.yt-spec-button-shape-
 
 yt-button-shape button:hover, ytd-button-renderer button:hover {
   border-color: var(--theme-accent) !important;
-  color: var(--theme-accent) !important;
+  color: var(--theme-accent-text) !important;
   background: var(--tui-hover) !important;
 }
 

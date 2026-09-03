@@ -19,7 +19,6 @@ THEME_HOME="${THEME_HOME:-$HOME/.config/theme}"
 RESOLVE="$THEME_HOME/lib/resolve.sh"
 SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/web"
 STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/theme"
-ROLES="bg surface fg muted accent accent2 ok warn urgent info"
 
 mkdir -p "$STATE_DIR"
 [ -d "$SRC_DIR" ] || exit 0
@@ -27,16 +26,70 @@ mkdir -p "$STATE_DIR"
 theme="$(bash "$RESOLVE" current-name)"
 polarity="$(bash "$RESOLVE" polarity)"
 
-# Each role as both #rrggbb and an "r, g, b" triplet, so a style can build
-# translucent shades with rgba(var(--theme-fg-rgb), .1).
+# Each role arrives in four shapes. Use the plain color for fills and borders,
+# and the -text one whenever the color is the text itself:
+#   --theme-<role>       the color itself
+#   --theme-<role>-rgb   an "r, g, b" triplet for rgba(..., .1) shades
+#   --theme-<role>-text  the color darkened (or lightened, on a dark theme)
+#                        until it is readable ON the page background, keeping
+#                        its hue. Several light themes have accents too pale to
+#                        read as text, and nord's muted is nearly invisible.
+#   --theme-on-<role>    text color to put ON that color: fg or bg, whichever
+#                        reads better, falling back to black or white when
+#                        neither does. Light themes need this, a bright accent
+#                        is too close in brightness to both of them.
+#
+# Readable means 4.5:1, the WCAG ratio for normal text.
 role_vars() {
-  local role hex
-  for role in $ROLES; do
-    hex="$(bash "$RESOLVE" role "$role")"
-    printf '    --theme-%s: %s;\n' "$role" "$hex"
-    printf '    --theme-%s-rgb: %d, %d, %d;\n' "$role" \
-      "0x${hex:1:2}" "0x${hex:3:2}" "0x${hex:5:2}"
-  done
+  bash "$RESOLVE" roles-hex | python3 -c '
+import sys
+
+roles = {}
+for line in sys.stdin:
+    if "=" in line:
+        key, value = line.strip().split("=", 1)
+        roles[key[len("ROLE_"):].lower()] = value
+
+def luminance(color):
+    channels = [int(color[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+    channels = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+                for c in channels]
+    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2]
+
+def contrast(a, b):
+    light, dark = sorted((luminance(a), luminance(b)), reverse=True)
+    return (light + 0.05) / (dark + 0.05)
+
+TARGET = 4.5
+
+def channels(color):
+    return [int(color[i:i + 2], 16) for i in (1, 3, 5)]
+
+def mix(color, other, amount):
+    a, b = channels(color), channels(other)
+    return "#" + "".join(f"{round(x + (y - x) * amount):02x}" for x, y in zip(a, b))
+
+def readable_on(color):
+    best = max((roles["fg"], roles["bg"]), key=lambda c: contrast(c, color))
+    if contrast(best, color) >= TARGET:
+        return best
+    return max(("#000000", "#ffffff"), key=lambda c: contrast(c, color))
+
+def readable_text(color):
+    toward = "#000000" if luminance(roles["bg"]) > 0.5 else "#ffffff"
+    for step in range(0, 21):
+        candidate = mix(color, toward, step / 20)
+        if contrast(candidate, roles["bg"]) >= TARGET:
+            return candidate
+    return toward
+
+for name, color in roles.items():
+    r, g, b = channels(color)
+    print(f"    --theme-{name}: {color};")
+    print(f"    --theme-{name}-rgb: {r}, {g}, {b};")
+    print(f"    --theme-{name}-text: {readable_text(color)};")
+    print(f"    --theme-on-{name}: {readable_on(color)};")
+'
 }
 
 for src in "$SRC_DIR"/*.css; do

@@ -10,14 +10,14 @@
 
 #vimium-hint-marker-container div.internal-vimium-hint-marker {
   background: var(--theme-accent) !important;
-  border: 1px solid var(--theme-bg) !important;
+  border: 1px solid var(--theme-on-accent) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   padding: 1px 4px !important;
 }
 
 #vimium-hint-marker-container div.internal-vimium-hint-marker span {
-  color: var(--theme-bg) !important;
+  color: var(--theme-on-accent) !important;
   font-family: "Fira Code", "Hack Nerd Font", ui-monospace, monospace !important;
   font-weight: 700 !important;
   text-shadow: none !important;
@@ -25,7 +25,7 @@
 
 /* Characters already typed are dimmed, so the ones left to type stand out. */
 #vimium-hint-marker-container div.internal-vimium-hint-marker .matchingCharacter {
-  color: rgba(var(--theme-bg-rgb), .45) !important;
+  color: color-mix(in srgb, var(--theme-on-accent) 50%, var(--theme-accent)) !important;
 }
 
 /* The hint that Enter would follow. */
@@ -34,7 +34,7 @@
 }
 
 #vimium-hint-marker-container div.vimiumActiveHintMarker span {
-  color: var(--theme-bg) !important;
+  color: var(--theme-on-warn) !important;
 }
 
 /* The boxes drawn around text fields by `gi`. */
