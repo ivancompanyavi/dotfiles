@@ -106,18 +106,26 @@ borders, starship, fzf, lazygit, the browser, and the wallpaper. See
 - **Active theme** = a pointer file at `~/.local/state/theme/current` (machine-local, not committed). Polarity (dark/light) follows macOS appearance live.
 - **Registry** = `registry/<name>.json`, one per theme, with `dark`/`light` variants. Each variant has a `wezterm` scheme name, an `nvim` spec (`module`/`colorscheme`/`background`/`opts`), and 10 semantic `roles` (bg, surface, fg, muted, accent, accent2, ok, warn, urgent, info).
 - **`lib/resolve.sh`** = the resolver. Given the pointer + polarity, emits colors/names in whatever shape a consumer needs (`role accent`, `roles-argb`, `fzf-opts`, `wallpaper`, …). Shell consumers use it; rich tools (WezTerm, Neovim) read the JSON directly in their own language.
-- **`bin/theme`** = the CLI. `theme set <name>` writes the pointer and runs `reapply()`, which pushes the new colors to every surface (sketchybar cache + reload, starship/lazygit generators, borders, WezTerm reload, wallpaper, browser accent).
+- **`bin/theme`** = the CLI. `theme set <name>` writes the pointer and runs `reapply()`, which pushes the new colors to every surface (sketchybar cache + reload, starship/lazygit generators, borders, WezTerm reload, wallpaper, browser theme).
 - **Readers** (`readers/`, `bin/theme-*`) = per-tool adapters.
 
 ### Browser theming (`bin/theme-browser`, a template)
 
 Chromium reads its `browser.theme.*` prefs **only at launch** and rewrites
 `Preferences` on exit — so we can only write while the browser is closed, and
-the accent shows on next launch. `theme-browser` writes the active theme's
-accent as the Chromium seed color (both `user_color`/`user_color2` +
-`is_grayscale`/`is_grayscale2`). Launching via `alt-b` (`theme-browser open`)
-always applies the current theme first. Browser identity is baked in from
-`apps.yaml`. (Brave respects this; Helium was tried first but forces grayscale
+the new colors show on next launch. `theme-browser` writes the active theme's
+**background** as the Chromium seed color (both `user_color`/`user_color2` +
+`is_grayscale`/`is_grayscale2`, plus `color_variant2`), in **every** profile
+under the user-data dir, so a personal and a work profile stay in step.
+
+The seed is the background rather than the accent because Chromium derives a
+whole tonal palette from it instead of painting the chrome with it: an accent
+seed produced a frame in an unrelated color. With a background seed the frame
+lands on the theme background and the toolbar a step above, mirroring the
+theme's own `bg`/`surface` pair.
+
+Launching via `alt-b` (`theme-browser open`) always applies the current theme
+first. Browser identity is baked in from `apps.yaml`. (Brave respects this; Helium was tried first but forces grayscale
 back on after startup — hence the switch to Brave.)
 
 ### To add a theme
