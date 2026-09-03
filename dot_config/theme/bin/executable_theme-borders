@@ -5,7 +5,11 @@
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
 command -v borders >/dev/null 2>&1 || exit 0
 RESOLVE="$HOME/.config/theme/lib/resolve.sh"
+# style=square keeps the border's own corners sharp, to match the rest of the
+# setup. The window corners underneath are rounded by macOS and cannot be
+# changed, so a little of the wallpaper still shows through at each corner.
 exec borders \
+  style=square \
   active_color="$(bash "$RESOLVE" role-argb accent)" \
   inactive_color="$(bash "$RESOLVE" role-argb muted)" \
-  width=5.0
+  width=4.0
