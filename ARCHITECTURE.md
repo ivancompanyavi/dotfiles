@@ -68,7 +68,7 @@ instead of hunting through aerospace, the manifest, and the theme scripts.
 
 Fields: `cask` (Homebrew cask, auto-installed), `bundleId` (aerospace window
 matching), `appName` (`open -a` / `pgrep` / `lsappinfo`), plus per-app extras
-(`profileDir` for the browser).
+(`userDataDir` for the browser).
 
 > Slack and Asana are intentionally **not** in the registry — chezmoi doesn't
 > install or manage them (install them yourself). Their aerospace workspace
@@ -78,7 +78,7 @@ matching), `appName` (`open -a` / `pgrep` / `lsappinfo`), plus per-app extras
 Consumers (all templates):
 - `run_onchange_darwin-install-packages.sh.tmpl` → installs every `.apps.*.cask`
 - `dot_config/aerospace/aerospace.toml.tmpl` → launch bindings + `on-window-detected` rules use `.appName` / `.bundleId`
-- `dot_config/theme/bin/executable_theme-browser.tmpl` → `.browser.{appName,profileDir}`
+- `dot_config/theme/bin/executable_theme-browser.tmpl` → `.browser.{appName,userDataDir}`
 - `dot_config/sketchybar/plugins/executable_{slack,telegram}.sh.tmpl` → `.appName` for `lsappinfo`
 
 **To swap the browser (or any app):** edit its entry in `apps.yaml`, then
