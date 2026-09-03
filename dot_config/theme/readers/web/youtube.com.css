@@ -32,8 +32,12 @@ ytd-app, ytd-app * {
   border-radius: revert !important;
 }
 
-yt-formatted-string, .ytAttributedStringHost, .yt-core-attributed-string,
-yt-attributed-string, h1, h2, h3, span, a {
+/* Everything here stays inside ytd-app on purpose. Extensions draw their own UI
+   into the page (Vimium hangs its link hints straight off <html>), and a bare
+   `span` rule repaints their labels unreadable. */
+ytd-app yt-formatted-string, ytd-app .ytAttributedStringHost,
+ytd-app .yt-core-attributed-string, ytd-app yt-attributed-string,
+ytd-app h1, ytd-app h2, ytd-app h3, ytd-app span, ytd-app a {
   color: var(--theme-fg) !important;
 }
 
