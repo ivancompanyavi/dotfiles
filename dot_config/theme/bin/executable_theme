@@ -45,6 +45,9 @@ reapply() {
   [ -x "$READERS/gen-starship.sh" ] && bash "$READERS/gen-starship.sh" || true
   [ -x "$READERS/gen-lazygit.sh" ]  && bash "$READERS/gen-lazygit.sh"  || true
 
+  # 2b. browser userstyles (Stylus live-reloads the generated files).
+  [ -x "$READERS/gen-web-usercss.sh" ] && bash "$READERS/gen-web-usercss.sh" >/dev/null || true
+
   # 3. aerospace borders (JankyBorders picks up new args live).
   [ -x "$THEME_HOME/bin/theme-borders" ] && "$THEME_HOME/bin/theme-borders" >/dev/null 2>&1 &
 

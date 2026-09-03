@@ -1,0 +1,48 @@
+/* Vimium's link hints, painted with the active theme instead of its yellow.
+   Vimium appends the hint container to <html> on every page, so this style
+   carries no domain rule and applies everywhere.
+
+   Everything is prefixed with the container id to outrank Vimium's own rules,
+   which set the active marker's color with !important.
+
+   Vimium's HUD and the vomnibar live in extension iframes and cannot be
+   reached from here. */
+
+#vimium-hint-marker-container div.internal-vimium-hint-marker {
+  background: var(--theme-accent) !important;
+  border: 1px solid var(--theme-on-accent) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 1px 4px !important;
+}
+
+#vimium-hint-marker-container div.internal-vimium-hint-marker span {
+  color: var(--theme-on-accent) !important;
+  font-family: "Fira Code", "Hack Nerd Font", ui-monospace, monospace !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+}
+
+/* Characters already typed are dimmed, so the ones left to type stand out. */
+#vimium-hint-marker-container div.internal-vimium-hint-marker .matchingCharacter {
+  color: color-mix(in srgb, var(--theme-on-accent) 50%, var(--theme-accent)) !important;
+}
+
+/* The hint that Enter would follow. */
+#vimium-hint-marker-container div.vimiumActiveHintMarker {
+  background: var(--theme-warn) !important;
+}
+
+#vimium-hint-marker-container div.vimiumActiveHintMarker span {
+  color: var(--theme-on-warn) !important;
+}
+
+/* The boxes drawn around text fields by `gi`. */
+div.internal-vimium-input-hint {
+  background-color: rgba(var(--theme-accent-rgb), .2) !important;
+  border: 1px solid var(--theme-accent) !important;
+}
+
+div.internal-vimium-selected-input-hint {
+  border-color: var(--theme-accent2) !important;
+}

@@ -44,6 +44,7 @@ Themes: `tokyonight`, `gruvbox`, `catppuccin`, `rose-pine`.
 | fzf       | `shell/init.zsh` → `FZF_DEFAULT_OPTS` | next shell |
 | lazygit   | `readers/gen-lazygit.sh` → `~/.local/state/theme/lazygit.yml` | next launch (`LG_CONFIG_FILE`) |
 | wallpaper | `resolve.sh wallpaper` + osascript | on switch, random pick from `wallpapers/<theme>/` |
+| websites  | `readers/gen-web-usercss.sh` → `~/.local/state/theme/<domain>.user.css` | live, once installed in Stylus (see below) |
 
 The macOS light/dark watcher is a launchd agent
 (`~/Library/LaunchAgents/com.ivan.theme.dark-notify.plist`) running `dark-notify`,
@@ -61,6 +62,66 @@ which calls `bin/theme-appearance-hook` (→ `theme reapply`) on every flip.
    on each switch. Optional `wallpapers/<name>/dark/` + `/light/` subfolders
    split by polarity. No folder = wallpaper left unchanged.
 4. `theme set <name>` — done.
+
+## Restyling websites
+
+`readers/web/<domain>.css` holds a hand-written stylesheet for one site, written
+against `--theme-*` variables. `gen-web-usercss.sh` resolves those variables for
+the active theme and writes `~/.local/state/theme/<domain>.user.css`, a
+[usercss](https://github.com/openstyles/stylus/wiki/Usercss) file.
+
+The browser side is the [Stylus](https://github.com/openstyles/stylus)
+extension. Chromium has no `userContent.css`, so Stylus is what loads a local
+stylesheet into a page. Set it up once:
+
+1. Install Stylus.
+2. Right-click its icon → **Manage extension** → turn on **Allow access to file
+   URLs**.
+3. Open `file:///Users/<you>/.local/state/theme/<domain>.user.css`, tick **Live
+   reload**, click **Install style**.
+
+**Live reload only runs while that install tab is open**, which is Stylus's own
+wording: "Keep this tab open to auto-update the style on external changes."
+
+You do not need it, though. Stylus remembers the `file://` address a style came
+from and its autoupdate handles `file://` fine: it treats local files as
+localhost, so it compares the code rather than the version and re-applies
+whenever the file differs. The catch is the schedule, 24 hours by default.
+Options, pick one:
+
+- Set "Userstyle autoupdate interval in hours" to `1` in Stylus options.
+- After switching a theme, hit "Check all styles for updates" on Stylus's
+  Manage page for an instant refresh.
+- Keep the install tabs pinned with live reload on, if you want it immediate
+  and hands-off.
+
+Adding a site is one file: `readers/web/<domain>.css`, named after the domain it
+targets (the generator turns the file name into the `@-moz-document domain(...)`
+rule). Install the generated file in Stylus the same way.
+
+`readers/web/all-sites.css` is the exception to the naming rule. It is generated
+without a domain rule, so it applies everywhere, and it holds the browser UI
+that extensions draw on top of any page. Right now that is Vimium's link hints,
+painted in theme colors instead of Vimium's yellow. It needs its own install in
+Stylus, same three steps.
+
+Sites covered today: `youtube.com` (home and watch pages) and `reddit.com`
+(feed and comments).
+
+Three things to keep in mind when styling a page:
+
+- Extensions inject their own elements into it. Vimium hangs its hint container
+  off `<html>`, so keep site rules scoped to the site's own root element
+  (`ytd-app` on YouTube, `body` on Reddit) instead of using bare `span` or `a`.
+- Parts of a site can live in shadow DOM, where element rules do not reach.
+  Reddit's header, search bar and left nav are like that. Custom properties do
+  inherit through the boundary, so remapping the site's own color tokens is the
+  way in. Shapes are not reachable at all, which is why Reddit's search field
+  stays a rounded pill.
+- Anything inside an iframe is out of reach entirely (Vimium's HUD and
+  vomnibar, for example).
+
+Sites change their markup, so expect a rule to stop matching now and then.
 
 ## Notes / caveats
 

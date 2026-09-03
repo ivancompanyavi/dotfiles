@@ -1,0 +1,130 @@
+/* Reddit painted like a terminal.
+
+   Reddit ships a real design-token layer (--color-neutral-background and
+   friends), so most of the work is remapping those tokens onto the theme
+   roles. That also reaches the header and the search bar, which live in shadow
+   DOM: element rules cannot cross that boundary, but custom properties inherit
+   through it.
+
+   Tokens are redefined on every element carrying .theme-beta / .theme-rpl, not
+   just on the root, so the override has to name those classes too. */
+
+:root, .theme-beta, .theme-rpl, .theme-dark, .theme-light {
+  --tui-border: rgba(var(--theme-muted-rgb), .45);
+  --tui-hover: rgba(var(--theme-fg-rgb), .06);
+
+  --color-neutral-background: var(--theme-bg) !important;
+  --color-neutral-background-weak: var(--theme-bg) !important;
+  --color-neutral-background-strong: var(--theme-surface) !important;
+  --color-neutral-background-hover: var(--theme-surface) !important;
+  --color-neutral-background-selected: var(--theme-surface) !important;
+  --color-ui-canvas: var(--theme-bg) !important;
+
+  --color-neutral-content: var(--theme-fg) !important;
+  --color-neutral-content-weak: var(--theme-muted-text) !important;
+  --color-neutral-content-strong: var(--theme-fg) !important;
+  --color-secondary-plain: var(--theme-fg) !important;
+
+  --color-neutral-border: var(--tui-border) !important;
+  --color-neutral-border-weak: var(--tui-border) !important;
+  --color-neutral-border-medium: var(--theme-muted) !important;
+  --color-neutral-border-strong: var(--theme-fg) !important;
+
+  --color-primary: var(--theme-accent-text) !important;
+  --color-primary-hover: var(--theme-accent-text) !important;
+  --color-primary-visited: var(--theme-accent2-text) !important;
+  --color-primary-background: var(--theme-accent) !important;
+  --color-primary-background-hover: var(--theme-accent) !important;
+  --color-secondary-background: var(--theme-surface) !important;
+  --color-secondary-background-hover: var(--theme-surface) !important;
+
+  /* Up is the ok color, down is the urgent one. */
+  --color-upvote-content: var(--theme-ok-text) !important;
+  --color-upvote-plain-weaker: var(--theme-ok-text) !important;
+  --color-upvote-background: var(--theme-ok) !important;
+  --color-upvote-background-hover: var(--theme-ok) !important;
+  --color-downvote-content: var(--theme-urgent-text) !important;
+  --color-downvote-plain-weaker: var(--theme-urgent-text) !important;
+  --color-downvote-background: var(--theme-urgent) !important;
+
+  --color-global-orangered: var(--theme-accent2-text) !important;
+  --color-global-brand-orangered: var(--theme-accent2-text) !important;
+  --color-brand-background: var(--theme-accent2) !important;
+
+  --color-danger-content: var(--theme-urgent-text) !important;
+  --color-success-content: var(--theme-ok-text) !important;
+
+  /* Older parts of the site still read the tone scale. */
+  --color-tone-1: var(--theme-fg) !important;
+  --color-tone-2: var(--theme-muted-text) !important;
+  --color-tone-4: var(--theme-surface) !important;
+  --color-tone-6: var(--theme-bg) !important;
+
+  /* Squares whatever inside the shadow trees uses the radius tokens. */
+  --radius-sm: 0 !important;
+  --radius-md: 0 !important;
+  --radius-lg: 0 !important;
+  --radius-full: 0 !important;
+  --radius-1: 0 !important;
+  --radius-2: 0 !important;
+  --radius-4: 0 !important;
+  --radius-5: 0 !important;
+  --radius-6: 0 !important;
+  --radius-8: 0 !important;
+}
+
+/* ── base ─────────────────────────────────────────────────────────────── */
+
+/* Scoped to body: Vimium hangs its link hints off <html>, outside it. */
+body, body * {
+  font-family: "Fira Code", "Hack Nerd Font", ui-monospace, monospace !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html, body, shreddit-app, #main-content, .main-container { background: var(--theme-bg) !important; }
+
+::selection { background: var(--theme-accent) !important; color: var(--theme-on-accent) !important; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--theme-bg) !important; }
+::-webkit-scrollbar-thumb {
+  background: var(--theme-surface) !important;
+  border: 1px solid var(--tui-border) !important;
+}
+
+/* ── posts ────────────────────────────────────────────────────────────── */
+
+shreddit-post {
+  background: var(--theme-bg) !important;
+  border: 1px solid var(--tui-border) !important;
+  box-sizing: border-box !important;
+  padding: 10px 12px !important;
+  margin-bottom: 8px !important;
+}
+
+shreddit-post:hover { border-color: var(--theme-accent) !important; }
+
+shreddit-post a[slot="title"] { color: var(--theme-fg) !important; }
+
+shreddit-post a[slot="title"]::before {
+  content: "▸ ";
+  color: var(--theme-accent-text) !important;
+}
+
+shreddit-post:hover a[slot="title"] { color: var(--theme-accent-text) !important; }
+
+a[data-testid="subreddit-name"] { color: var(--theme-accent2-text) !important; }
+
+shreddit-post-flair, shreddit-post-flair * {
+  background: transparent !important;
+  border: 1px solid var(--tui-border) !important;
+  color: var(--theme-muted-text) !important;
+}
+
+/* ── left nav ─────────────────────────────────────────────────────────── */
+
+/* Only the host element is reachable. The nav's own rows, the search bar and
+   the dropdowns live in shadow DOM, so they follow the tokens above and keep
+   Reddit's shapes: the search field stays a rounded pill. */
+reddit-sidebar-nav, left-nav-top-section { background: var(--theme-bg) !important; }
