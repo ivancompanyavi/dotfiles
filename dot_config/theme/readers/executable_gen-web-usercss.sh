@@ -18,10 +18,11 @@
 # browser and tick "Live reload" (Stylus needs "Allow access to file URLs").
 # After that, every `theme reapply` repaints the site without touching Stylus.
 #
-# Each run stamps a new @version, so Stylus sees a change even when it compares
-# versions rather than content. There is deliberately no @updateURL: Stylus
-# rejects any update URL that is not http(s), and it already remembers the
-# file:// address the style was installed from.
+# There is deliberately no @updateURL and no version stamping. Stylus rejects an
+# update URL that is not http(s), and it does not need one: it remembers the
+# file:// address a style was installed from, treats file:// as localhost, and
+# compares the code rather than the version. So a regenerated file updates on
+# its own, and a run that changes nothing leaves the file byte-identical.
 set -euo pipefail
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
 
@@ -35,7 +36,6 @@ mkdir -p "$STATE_DIR"
 
 theme="$(bash "$RESOLVE" current-name)"
 polarity="$(bash "$RESOLVE" polarity)"
-version="1.0.$(date +%s)"
 
 # Each role arrives in four shapes. Use the plain color for fills and borders,
 # and the -text one whenever the color is the text itself:
@@ -124,7 +124,7 @@ for src in "$SRC_DIR"/*.css; do
 /* ==UserStyle==
 @name           ${name} — terminal
 @namespace      ivan.theme
-@version        ${version}
+@version        1.0.0
 @description    ${describes}, painted with the active terminal theme.
 @author         Ivan
 ==/UserStyle== */

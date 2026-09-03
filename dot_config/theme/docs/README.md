@@ -80,8 +80,20 @@ stylesheet into a page. Set it up once:
 3. Open `file:///Users/<you>/.local/state/theme/<domain>.user.css`, tick **Live
    reload**, click **Install style**.
 
-After that every `theme reapply` repaints the site, and editing the source CSS
-shows up on the next page load without touching Stylus.
+**Live reload only runs while that install tab is open**, which is Stylus's own
+wording: "Keep this tab open to auto-update the style on external changes."
+
+You do not need it, though. Stylus remembers the `file://` address a style came
+from and its autoupdate handles `file://` fine: it treats local files as
+localhost, so it compares the code rather than the version and re-applies
+whenever the file differs. The catch is the schedule, 24 hours by default.
+Options, pick one:
+
+- Set "Userstyle autoupdate interval in hours" to `1` in Stylus options.
+- After switching a theme, hit "Check all styles for updates" on Stylus's
+  Manage page for an instant refresh.
+- Keep the install tabs pinned with live reload on, if you want it immediate
+  and hands-off.
 
 Adding a site is one file: `readers/web/<domain>.css`, named after the domain it
 targets (the generator turns the file name into the `@-moz-document domain(...)`
