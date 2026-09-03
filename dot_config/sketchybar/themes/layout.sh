@@ -5,10 +5,10 @@
 # the active theme). Sourced via themes/current.sh.
 # ─────────────────────────────────────────────────────────────────────────────
 
-# Bar
-BAR_COLOR="0x00000000"          # fully transparent bar background
-BAR_BORDER_COLOR="0x00000000"   # no visible bar border (width stays 0)
-BAR_BLUR_RADIUS=0               # no frosted blur band — empty areas show the wallpaper
+# Bar. A solid band with a rule under it, like the status line at the bottom of
+# a terminal. The colors live in palette.sh; only the geometry is here.
+BAR_BLUR_RADIUS=0
+BAR_BORDER_WIDTH=1
 BAR_POSITION="top"
 BAR_HEIGHT=40
 # Inner padding between the bar's edge and its first/last item. The outer inset
@@ -16,7 +16,7 @@ BAR_HEIGHT=40
 # WezTerm's default window padding, so the bar's items line up with the
 # terminal's text column (the bar frame itself already matches the window).
 BAR_PADDING=8
-BAR_Y_OFFSET=5
+BAR_Y_OFFSET=0
 BAR_CORNER_RADIUS=0
 Y_OFFSET=0
 
@@ -45,8 +45,11 @@ BACKGROUND_CORNER_RADIUS=0
 BACKGROUND_HEIGHT=24
 LABEL_Y_OFFSET=1
 LABEL_PADDING=6
-BRACKET_BACKGROUND_BORDER_WIDTH=1
+# The band itself separates the bar from the desktop, so the groups inside it
+# are told apart by a separator rather than by a box each.
+BRACKET_BACKGROUND_BORDER_WIDTH=0
 BRACKET_BACKGROUND_CORNER_RADIUS=0
+SEGMENT_SEPARATOR="│"
 
 # Fonts. Labels use the terminal's own font; icons stay on a Nerd Font, which
 # is where the glyphs live.

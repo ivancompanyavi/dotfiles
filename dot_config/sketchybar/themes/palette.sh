@@ -35,7 +35,10 @@ source "$THEME_CACHE" 2>/dev/null || true
 # Text is plain foreground and the boxes are drawn in the muted colour, so the
 # accent is left to mean something: the focused workspace, the app you are in,
 # the next meeting.
+BAR_COLOR="$ROLE_BG"
+BAR_BORDER_COLOR="$ROLE_MUTED"
 BACKGROUND_COLOR="$ROLE_BG"
+SEPARATOR_COLOR="$ROLE_MUTED"
 BACKGROUND_BORDER_COLOR="$ROLE_MUTED"
 BRACKET_BORDER_COLOR="$ROLE_MUTED"
 LABEL_COLOR="$ROLE_FG"

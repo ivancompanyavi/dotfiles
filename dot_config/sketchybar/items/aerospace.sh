@@ -100,5 +100,8 @@ done
 
 sketchybar --add item aerospace_spacer left \
            --set      aerospace_spacer \
-                      width=$ITEM_SPACING \
-                      background.drawing=off
+                      background.drawing=off \
+                      label="$SEGMENT_SEPARATOR" \
+                      label.color="$SEPARATOR_COLOR" \
+                      label.padding_left=$ITEM_SPACING \
+                      label.padding_right=$ITEM_SPACING

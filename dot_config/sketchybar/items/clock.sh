@@ -28,5 +28,8 @@ sketchybar --add bracket clock_bracket clock_spacer_left clock clock_spacer_righ
 
 sketchybar --add item clock_spacer right \
            --set      clock_spacer \
-                      width=$ITEM_SPACING \
-                      background.drawing=off
+                      background.drawing=off \
+                      label="$SEGMENT_SEPARATOR" \
+                      label.color="$SEPARATOR_COLOR" \
+                      label.padding_left=$ITEM_SPACING \
+                      label.padding_right=$ITEM_SPACING
