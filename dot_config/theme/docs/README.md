@@ -93,10 +93,21 @@ that extensions draw on top of any page. Right now that is Vimium's link hints,
 painted in theme colors instead of Vimium's yellow. It needs its own install in
 Stylus, same three steps.
 
-Two things to keep in mind when styling a page: extensions inject their own
-elements into it (Vimium hangs its hint container off `<html>`), so keep site
-rules scoped to the site's own root element, and Vimium's HUD and vomnibar live
-in extension iframes that a userstyle cannot reach.
+Sites covered today: `youtube.com` (home and watch pages) and `reddit.com`
+(feed and comments).
+
+Three things to keep in mind when styling a page:
+
+- Extensions inject their own elements into it. Vimium hangs its hint container
+  off `<html>`, so keep site rules scoped to the site's own root element
+  (`ytd-app` on YouTube, `body` on Reddit) instead of using bare `span` or `a`.
+- Parts of a site can live in shadow DOM, where element rules do not reach.
+  Reddit's header, search bar and left nav are like that. Custom properties do
+  inherit through the boundary, so remapping the site's own color tokens is the
+  way in. Shapes are not reachable at all, which is why Reddit's search field
+  stays a rounded pill.
+- Anything inside an iframe is out of reach entirely (Vimium's HUD and
+  vomnibar, for example).
 
 Sites change their markup, so expect a rule to stop matching now and then.
 
