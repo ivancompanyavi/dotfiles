@@ -1,10 +1,18 @@
 {
   "name": "nord",
-  "_note": "Nord is a dark-only theme (no upstream light palette / the nvim plugin is dark-only), so the light variant mirrors dark: selecting Nord keeps a dark UI even in macOS light mode.",
+  "_note": "Nord is a dark-only palette upstream and gbprod/nord.nvim has no light mode. The light variant keeps Nord's hues, darkened until they read on a Snow Storm background, and uses onenord (Nord + One Dark) for Neovim, which does ship a light colorscheme.",
   "variants": {
     "dark": {
       "wezterm": "nord",
-      "nvim": { "plugin": "gbprod/nord.nvim", "module": "nord", "colorscheme": "nord", "background": "dark", "opts": { "transparent": true } },
+      "nvim": {
+        "plugin": "gbprod/nord.nvim",
+        "module": "nord",
+        "colorscheme": "nord",
+        "background": "dark",
+        "opts": {
+          "transparent": true
+        }
+      },
       "wallpaper": "",
       "roles": {
         "bg": "#2e3440",
@@ -20,20 +28,31 @@
       }
     },
     "light": {
-      "wezterm": "nord",
-      "nvim": { "plugin": "gbprod/nord.nvim", "module": "nord", "colorscheme": "nord", "background": "dark", "opts": { "transparent": true } },
+      "wezterm": "Nord Light (Gogh)",
+      "nvim": {
+        "plugin": "rmehri01/onenord.nvim",
+        "module": "onenord",
+        "colorscheme": "onenord-light",
+        "background": "light",
+        "opts": {
+          "theme": "light",
+          "disable": {
+            "background": true
+          }
+        }
+      },
       "wallpaper": "",
       "roles": {
-        "bg": "#2e3440",
-        "surface": "#3b4252",
-        "fg": "#d8dee9",
-        "muted": "#4c566a",
-        "accent": "#88c0d0",
-        "accent2": "#81a1c1",
-        "ok": "#a3be8c",
-        "warn": "#ebcb8b",
-        "urgent": "#bf616a",
-        "info": "#8fbcbb"
+        "bg": "#eceff4",
+        "surface": "#e5e9f0",
+        "fg": "#2e3440",
+        "muted": "#646d7f",
+        "accent": "#446068",
+        "accent2": "#466181",
+        "ok": "#525f46",
+        "warn": "#706042",
+        "urgent": "#8f4950",
+        "info": "#4b6362"
       }
     }
   }
