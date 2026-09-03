@@ -130,7 +130,7 @@ back on after startup — hence the switch to Brave.)
 ## Window management & bar
 
 - **AeroSpace** (`dot_config/aerospace/aerospace.toml.tmpl`) — tiling WM. Config is `config-version = 2` (AeroSpace 0.21+). `on-window-detected` rules assign apps to workspaces (1 terminal, 2 browser, 3 editor, 4 Asana, 5 Slack, R catch-all) **but only fire for newly-opened windows** — already-open windows aren't retroactively sorted. Registry apps use `.apps.*.bundleId`; Slack/Asana are hardcoded (not registry-managed). `persistent-workspaces` is declared so empty workspaces still show in the bar.
-- **sketchybar** (`dot_config/sketchybar/`) — custom menu bar. `themes/layout.sh` = geometry (theme-independent; bar is fully transparent, `BAR_BLUR_RADIUS=0`), `themes/palette.sh` = colors from the active theme. Uses `Hack Nerd Font` for glyphs.
+- **sketchybar** (`dot_config/sketchybar/`) — custom menu bar, styled like a terminal status line: square boxes with hairline borders, labels in `Fira Code` (the terminal font) and glyphs in `Hack Nerd Font`, the focused workspace drawn inverted. `themes/layout.sh` = geometry (theme-independent; bar is fully transparent, `BAR_BLUR_RADIUS=0`), `themes/palette.sh` = colors from the active theme, where text is plain foreground, boxes are muted, and the accent is reserved for what is active.
 
 ## Gotchas
 

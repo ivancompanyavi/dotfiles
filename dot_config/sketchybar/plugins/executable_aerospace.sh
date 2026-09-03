@@ -23,6 +23,10 @@ if [ "$SENDER" = "aerospace_workspace_change" ]; then
     drawing=off
   fi
 
+  # The focused workspace is drawn as a filled block with inverted text, the
+  # way a TUI marks the selected cell. Only the drawing is toggled here: setting
+  # background.color would switch drawing back on, so the colour is set once
+  # when the item is created.
   if [ "$workspace_id" = "$FOCUSED_WORKSPACE" ]; then
     highlight=on
   else
@@ -31,6 +35,7 @@ if [ "$SENDER" = "aerospace_workspace_change" ]; then
 
   sketchybar --set "$NAME" \
                    drawing="$drawing" \
+                   background.drawing="$highlight" \
                    label.highlight="$highlight" \
                    icon.highlight="$highlight"
 fi

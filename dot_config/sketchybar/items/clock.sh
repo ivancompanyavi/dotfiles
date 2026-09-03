@@ -22,7 +22,7 @@ sketchybar --add item clock_spacer_left right \
 
 sketchybar --add bracket clock_bracket clock_spacer_left clock clock_spacer_right \
            --set         clock_bracket \
-                         background.border_color="$BACKGROUND_BORDER_COLOR" \
+                         background.border_color="$BRACKET_BORDER_COLOR" \
                          background.corner_radius="$BRACKET_BACKGROUND_CORNER_RADIUS" \
                          background.border_width="$BRACKET_BACKGROUND_BORDER_WIDTH"
 

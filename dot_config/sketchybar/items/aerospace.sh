@@ -37,6 +37,7 @@ create_workspace_bracket_for_monitor() {
     sketchybar --add item  workspaces."$monitor_id"."$workspace_id" left \
                           --subscribe workspaces."$monitor_id"."$workspace_id" aerospace_workspace_change \
                           --set       workspaces."$monitor_id"."$workspace_id" \
+                                      background.color="$FOCUS_BACKGROUND_COLOR" \
                                       background.drawing=off \
                                       click_script="aerospace workspace $workspace_id" \
                                       icon="$icon_glyph" \

@@ -17,7 +17,7 @@ BAR_HEIGHT=40
 # terminal's text column (the bar frame itself already matches the window).
 BAR_PADDING=8
 BAR_Y_OFFSET=5
-BAR_CORNER_RADIUS=12
+BAR_CORNER_RADIUS=0
 Y_OFFSET=0
 
 # Outer inset, mirroring AeroSpace's per-monitor outer gaps
@@ -35,20 +35,23 @@ bar_margin_for_displays() {
 }
 BAR_MARGIN="$(bar_margin_for_displays)"
 
-# Item defaults — geometry & typography
+# Item defaults — geometry & typography.
+# Everything is square with hairline borders so the bar reads like a status
+# line drawn in a terminal, matching the browser styles and WezTerm.
 LABEL_ALIGN="center"
 ITEM_SPACING=10
 BACKGROUND_BORDER_WIDTH=0
-BACKGROUND_CORNER_RADIUS=4
+BACKGROUND_CORNER_RADIUS=0
 BACKGROUND_HEIGHT=24
 LABEL_Y_OFFSET=1
 LABEL_PADDING=6
-BRACKET_BACKGROUND_BORDER_WIDTH=2
-BRACKET_BACKGROUND_CORNER_RADIUS=12
+BRACKET_BACKGROUND_BORDER_WIDTH=1
+BRACKET_BACKGROUND_CORNER_RADIUS=0
 
-# Fonts
+# Fonts. Labels use the terminal's own font; icons stay on a Nerd Font, which
+# is where the glyphs live.
 ICON_BASE_FONT="Hack Nerd Font"
 ICON_FONT="$ICON_BASE_FONT:Bold:14.0"
-LABEL_BASE_FONT="Hack Nerd Font"
+LABEL_BASE_FONT="Fira Code"
 LABEL_FONT="$LABEL_BASE_FONT:Regular:14.0"
-LABEL_HIGHLIGHT_FONT="$LABEL_BASE_FONT:ExtraBold:14.0"
+LABEL_HIGHLIGHT_FONT="$LABEL_BASE_FONT:Bold:14.0"
