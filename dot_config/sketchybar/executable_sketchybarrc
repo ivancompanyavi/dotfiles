@@ -7,6 +7,7 @@ source "$THEME_DIR/current.sh"
 bar=(
     blur_radius="$BAR_BLUR_RADIUS"
     border_color="$BAR_BORDER_COLOR"
+    border_width="$BAR_BORDER_WIDTH"
     color="$BAR_COLOR"
     corner_radius="$BAR_CORNER_RADIUS"
     height="$BAR_HEIGHT"

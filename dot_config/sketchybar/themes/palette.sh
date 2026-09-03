@@ -31,9 +31,21 @@ source "$THEME_CACHE" 2>/dev/null || true
 : "${ROLE_URGENT:=0xfff7768e}"
 : "${ROLE_INFO:=0xff7dcfff}"
 
-# Semantic sketchybar variables (map roles → what items/plugins reference)
+# Semantic sketchybar variables (map roles → what items/plugins reference).
+# Text is plain foreground and the boxes are drawn in the muted colour, so the
+# accent is left to mean something: the focused workspace, the app you are in,
+# the next meeting.
+BAR_COLOR="$ROLE_BG"
+BAR_BORDER_COLOR="$ROLE_MUTED"
 BACKGROUND_COLOR="$ROLE_BG"
-BACKGROUND_BORDER_COLOR="$ROLE_ACCENT"
-LABEL_COLOR="$ROLE_ACCENT"
-LABEL_HIGHLIGHT_COLOR="$ROLE_URGENT"
+SEPARATOR_COLOR="$ROLE_MUTED"
+BACKGROUND_BORDER_COLOR="$ROLE_MUTED"
+BRACKET_BORDER_COLOR="$ROLE_MUTED"
+LABEL_COLOR="$ROLE_FG"
 ICON_COLOR="$ROLE_ACCENT"
+ACTIVE_LABEL_COLOR="$ROLE_ACCENT"
+
+# The focused workspace is drawn inverted, the way a TUI marks a selected cell:
+# accent block, text in the bar's own background colour.
+FOCUS_BACKGROUND_COLOR="$ROLE_ACCENT"
+LABEL_HIGHLIGHT_COLOR="$ROLE_BG"
