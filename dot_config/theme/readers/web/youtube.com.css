@@ -248,3 +248,83 @@ yt-button-shape button:hover, ytd-button-renderer button:hover {
 }
 
 ytd-continuation-item-renderer { background: var(--theme-bg) !important; }
+
+/* ── watch page ───────────────────────────────────────────────────────── */
+
+ytd-watch-flexy, #primary-inner, #secondary-inner, ytd-watch-metadata {
+  background: var(--theme-bg) !important;
+}
+
+ytd-watch-metadata #title h1 { color: var(--theme-fg) !important; }
+
+ytd-watch-metadata #title h1::before {
+  content: "# ";
+  color: var(--theme-muted-text) !important;
+}
+
+#owner #channel-name a { color: var(--theme-accent-text) !important; }
+#owner-sub-count, #info-container #info { color: var(--theme-muted-text) !important; }
+
+/* The description reads like a fenced block. */
+#description.ytd-watch-metadata {
+  background: var(--theme-bg) !important;
+  border: 1px solid var(--tui-border) !important;
+  padding: 10px 12px !important;
+}
+
+#description.ytd-watch-metadata:hover { background: var(--tui-hover) !important; }
+
+ytd-text-inline-expander #expand, ytd-text-inline-expander #collapse {
+  color: var(--theme-accent-text) !important;
+}
+
+/* ── comments ─────────────────────────────────────────────────────────── */
+
+ytd-comments, ytd-comments-header-renderer { background: var(--theme-bg) !important; }
+
+#count.ytd-comments-header-renderer { color: var(--theme-accent2-text) !important; }
+
+/* The prefix goes on the inner text node: the h2 itself is a block, so a
+   ::before on it lands on its own line. */
+#count.ytd-comments-header-renderer .count-text::before {
+  content: "## ";
+  color: var(--theme-muted-text) !important;
+}
+
+/* Each comment gets the left rule a terminal uses for quoted text. */
+ytd-comment-view-model {
+  border-left: 1px solid var(--tui-border) !important;
+  padding-left: 10px !important;
+}
+
+ytd-comment-view-model:hover { border-left-color: var(--theme-accent) !important; }
+
+#author-text, #author-text span { color: var(--theme-accent-text) !important; }
+#published-time-text, #published-time-text a { color: var(--theme-muted-text) !important; }
+#content-text, #content-text span { color: var(--theme-fg) !important; }
+
+ytd-author-comment-badge-renderer {
+  background: transparent !important;
+  border: 1px solid var(--theme-accent) !important;
+  color: var(--theme-accent-text) !important;
+}
+
+#more-replies, #more-replies span { color: var(--theme-accent-text) !important; }
+
+/* ── related videos ───────────────────────────────────────────────────── */
+
+#secondary .ytLockupViewModelHost {
+  border: 1px solid var(--tui-border) !important;
+  box-sizing: border-box !important;
+  padding: 6px !important;
+}
+
+#secondary .ytLockupViewModelHost:hover { border-color: var(--theme-accent) !important; }
+
+/* ── tooltips ─────────────────────────────────────────────────────────── */
+
+tp-yt-paper-tooltip #tooltip {
+  background: var(--theme-surface) !important;
+  border: 1px solid var(--tui-border) !important;
+  color: var(--theme-fg) !important;
+}
