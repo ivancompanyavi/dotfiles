@@ -44,6 +44,7 @@ Themes: `tokyonight`, `gruvbox`, `catppuccin`, `rose-pine`.
 | fzf       | `shell/init.zsh` → `FZF_DEFAULT_OPTS` | next shell |
 | lazygit   | `readers/gen-lazygit.sh` → `~/.local/state/theme/lazygit.yml` | next launch (`LG_CONFIG_FILE`) |
 | wallpaper | `resolve.sh wallpaper` + osascript | on switch, random pick from `wallpapers/<theme>/` |
+| websites  | `readers/gen-web-usercss.sh` → `~/.local/state/theme/<domain>.user.css` | live, once installed in Stylus (see below) |
 
 The macOS light/dark watcher is a launchd agent
 (`~/Library/LaunchAgents/com.ivan.theme.dark-notify.plist`) running `dark-notify`,
@@ -61,6 +62,32 @@ which calls `bin/theme-appearance-hook` (→ `theme reapply`) on every flip.
    on each switch. Optional `wallpapers/<name>/dark/` + `/light/` subfolders
    split by polarity. No folder = wallpaper left unchanged.
 4. `theme set <name>` — done.
+
+## Restyling websites
+
+`readers/web/<domain>.css` holds a hand-written stylesheet for one site, written
+against `--theme-*` variables. `gen-web-usercss.sh` resolves those variables for
+the active theme and writes `~/.local/state/theme/<domain>.user.css`, a
+[usercss](https://github.com/openstyles/stylus/wiki/Usercss) file.
+
+The browser side is the [Stylus](https://github.com/openstyles/stylus)
+extension. Chromium has no `userContent.css`, so Stylus is what loads a local
+stylesheet into a page. Set it up once:
+
+1. Install Stylus.
+2. Right-click its icon → **Manage extension** → turn on **Allow access to file
+   URLs**.
+3. Open `file:///Users/<you>/.local/state/theme/<domain>.user.css`, tick **Live
+   reload**, click **Install style**.
+
+After that every `theme reapply` repaints the site, and editing the source CSS
+shows up on the next page load without touching Stylus.
+
+Adding a site is one file: `readers/web/<domain>.css`, named after the domain it
+targets (the generator turns the file name into the `@-moz-document domain(...)`
+rule). Install the generated file in Stylus the same way.
+
+Sites change their markup, so expect a rule to stop matching now and then.
 
 ## Notes / caveats
 
