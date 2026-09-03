@@ -87,6 +87,17 @@ Adding a site is one file: `readers/web/<domain>.css`, named after the domain it
 targets (the generator turns the file name into the `@-moz-document domain(...)`
 rule). Install the generated file in Stylus the same way.
 
+`readers/web/all-sites.css` is the exception to the naming rule. It is generated
+without a domain rule, so it applies everywhere, and it holds the browser UI
+that extensions draw on top of any page. Right now that is Vimium's link hints,
+painted in theme colors instead of Vimium's yellow. It needs its own install in
+Stylus, same three steps.
+
+Two things to keep in mind when styling a page: extensions inject their own
+elements into it (Vimium hangs its hint container off `<html>`), so keep site
+rules scoped to the site's own root element, and Vimium's HUD and vomnibar live
+in extension iframes that a userstyle cannot reach.
+
 Sites change their markup, so expect a rule to stop matching now and then.
 
 ## Notes / caveats
