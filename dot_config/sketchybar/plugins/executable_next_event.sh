@@ -31,6 +31,8 @@ fi
 # every later field left. `cut -f` (tab-delimited by default) preserves empties.
 s_date=$(printf '%s' "$row" | cut -f1)
 s_time=$(printf '%s' "$row" | cut -f2)
+e_date=$(printf '%s' "$row" | cut -f3)
+e_time=$(printf '%s' "$row" | cut -f4)
 html_link=$(printf '%s' "$row" | cut -f5)
 hangout_link=$(printf '%s' "$row" | cut -f6)
 conf_uri=$(printf '%s' "$row" | cut -f8)
@@ -59,7 +61,22 @@ max=28
 [ ${#title} -gt $max ] && title="${title:0:$max}…"
 
 if [ "$mins" -lt 0 ]; then
-  when="live"
+  # Meeting is live - show when it ends
+  if [ -n "$e_time" ]; then
+    end_epoch=$(date -j -f "%Y-%m-%d %H:%M" "$e_date $e_time" +%s 2>/dev/null)
+    if [ -n "$end_epoch" ]; then
+      mins_left=$(( (end_epoch - now_epoch) / 60 ))
+      if [ "$mins_left" -gt 0 ]; then
+        when="live · ends $e_time (${mins_left}m)"
+      else
+        when="live · ending now"
+      fi
+    else
+      when="live"
+    fi
+  else
+    when="live"
+  fi
 elif [ "$mins" -le 90 ]; then
   when="in ${mins}m"
 else
