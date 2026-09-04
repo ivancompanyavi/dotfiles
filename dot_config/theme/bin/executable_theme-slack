@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# ─────────────────────────────────────────────────────────────────────────────
+# theme-slack — Slack's custom sidebar colors for the active theme.
+#
+# Slack is the one surface the theme cannot push to. It keeps the theme on its
+# own servers (that is why it follows you to your phone), so there is no file
+# here to write. This prints the colors and puts the string on the clipboard;
+# paste it into Preferences → Appearance → Custom theme.
+#
+# It only covers the sidebar. The message pane follows Slack's own light/dark
+# setting, which there is no supported way to colour.
+#
+#   theme-slack           print the colors and copy the string
+# ─────────────────────────────────────────────────────────────────────────────
+set -euo pipefail
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
+THEME_HOME="${THEME_HOME:-$HOME/.config/theme}"
+RESOLVE="$THEME_HOME/lib/resolve.sh"
+
+r()    { bash "$RESOLVE" role "$1"; }
+r_on() { bash "$RESOLVE" role-on "$1"; }
+
+# Slack's eight slots, in the order its own share string uses.
+column_bg="$(r bg)"
+menu_bg_hover="$(r surface)"
+active_item="$(r accent)"
+active_item_text="$(r_on accent)"
+hover_item="$(r surface)"
+text_color="$(r fg)"
+active_presence="$(r ok)"
+mention_badge="$(r urgent)"
+
+theme_string="$column_bg,$menu_bg_hover,$active_item,$active_item_text,$hover_item,$text_color,$active_presence,$mention_badge"
+
+printf 'Slack custom theme — %s (%s)\n\n' \
+  "$(bash "$RESOLVE" current-name)" "$(bash "$RESOLVE" polarity)"
+printf '  %-18s %s\n' \
+  "Column BG"        "$column_bg" \
+  "Menu BG Hover"    "$menu_bg_hover" \
+  "Active Item"      "$active_item" \
+  "Active Item Text" "$active_item_text" \
+  "Hover Item"       "$hover_item" \
+  "Text Color"       "$text_color" \
+  "Active Presence"  "$active_presence" \
+  "Mention Badge"    "$mention_badge"
+printf '\n%s\n' "$theme_string"
+
+if command -v pbcopy >/dev/null 2>&1; then
+  printf '%s' "$theme_string" | pbcopy
+  printf '\nCopied. Slack: Preferences → Appearance → Custom theme.\n'
+fi
