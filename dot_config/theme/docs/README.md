@@ -13,6 +13,7 @@ theme current         # active theme name
 theme list            # available themes
 theme reapply         # re-resolve current theme for current polarity
 theme polarity        # dark | light (from macOS)
+theme-slack           # Slack's sidebar colors for the active theme
 ```
 
 Themes: `tokyonight`, `gruvbox`, `catppuccin`, `rose-pine`.
@@ -62,6 +63,22 @@ which calls `bin/theme-appearance-hook` (→ `theme reapply`) on every flip.
    on each switch. Optional `wallpapers/<name>/dark/` + `/light/` subfolders
    split by polarity. No folder = wallpaper left unchanged.
 4. `theme set <name>` — done.
+
+## Slack
+
+Slack is the one surface the theme cannot push to. It stores the theme on its
+own servers, which is why it follows you to your phone, so there is no file
+here to write and nothing for `theme reapply` to do.
+
+`theme-slack` prints the eight sidebar colors for the active theme and copies
+the string to the clipboard. Paste it into Preferences → Appearance → Custom
+theme, or set the swatches by hand from the labelled list it prints.
+
+It covers the sidebar only. The message pane follows Slack's own light/dark
+setting, and there is no supported way to color it. Changing that would mean
+injecting CSS into Slack's Electron bundle, which breaks its signature, breaks
+on every Slack update, and on a work machine is a question for whoever manages
+the laptop.
 
 ## Restyling websites
 

@@ -128,6 +128,14 @@ Launching via `alt-b` (`theme-browser open`) always applies the current theme
 first. Browser identity is baked in from `apps.yaml`. (Brave respects this; Helium was tried first but forces grayscale
 back on after startup — hence the switch to Brave.)
 
+### Slack (`bin/theme-slack`)
+
+Slack keeps its theme server-side, so it cannot be written locally like the
+other surfaces. `theme-slack` prints the eight custom sidebar colors for the
+active theme and copies them to the clipboard, to paste into Slack's
+preferences. Sidebar only; the message pane follows Slack's own light/dark
+setting.
+
 ### To add a theme
 
 1. Add the Neovim colorscheme plugin to `dot_config/nvim/nvim-pack-lock.json` (`src` + pinned `rev`).

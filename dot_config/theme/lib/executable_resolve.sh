@@ -13,6 +13,7 @@
 #   roles-hex                 emit ROLE_<X>=#rrggbb shell assignments
 #   roles-argb                emit ROLE_<X>=0xffrrggbb  (sketchybar/borders form)
 #   role <name>               print one role as #rrggbb
+#   role-on <name>            print a readable text color to put ON that role
 #   role-argb <name>          print one role as 0xffrrggbb
 #   field <jq-path>           print variant.<jq-path> (e.g. .wezterm)
 #   fzf-opts                  print an --color=... string for FZF_DEFAULT_OPTS
@@ -79,6 +80,35 @@ role() {  # $1 = role name → #rrggbb (with fallback)
 
 role_argb() { local h; h="$(role "$1")"; echo "0xff${h#\#}"; }
 
+# Text color to put ON a role's color: fg or bg, whichever keeps more contrast,
+# falling back to black or white when neither reaches 4.5:1 (the WCAG ratio for
+# normal text). Light themes need the fallback, their accents sit too close in
+# brightness to both fg and bg.
+#
+# The browser userstyle generator (readers/gen-web-usercss.sh) applies the same
+# rule, computed there in one pass over the whole palette.
+role_on() {
+  FG="$(role fg)" BG="$(role bg)" ON="$(role "$1")" python3 -c '
+import os
+
+def luminance(color):
+    channels = [int(color[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+    channels = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+                for c in channels]
+    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2]
+
+def contrast(a, b):
+    light, dark = sorted((luminance(a), luminance(b)), reverse=True)
+    return (light + 0.05) / (dark + 0.05)
+
+on = os.environ["ON"]
+best = max((os.environ["FG"], os.environ["BG"]), key=lambda c: contrast(c, on))
+if contrast(best, on) < 4.5:
+    best = max(("#000000", "#ffffff"), key=lambda c: contrast(c, on))
+print(best)
+'
+}
+
 _upper() { printf '%s' "$1" | tr '[:lower:]' '[:upper:]'; }
 roles_hex()  { local r; for r in $ROLES; do echo "ROLE_$(_upper "$r")=$(role "$r")"; done; }
 roles_argb() { local r; for r in $ROLES; do echo "ROLE_$(_upper "$r")=$(role_argb "$r")"; done; }
@@ -133,6 +163,7 @@ case "$cmd" in
   roles-hex)    roles_hex ;;
   roles-argb)   roles_argb ;;
   role)         role "$@" ;;
+  role-on)      role_on "$@" ;;
   role-argb)    role_argb "$@" ;;
   field)        field "$@" ;;
   fzf-opts)     fzf_opts ;;
