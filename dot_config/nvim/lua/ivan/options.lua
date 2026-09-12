@@ -23,22 +23,8 @@ vim.opt.scrolloff = 999
 -- Window borders
 vim.opt.winborder = 'rounded'
 
--- Autocommand groups
-vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+-- Autocommand group
 local group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
-
--- Format on save (handled by conform.nvim if available, fallback to LSP)
-vim.api.nvim_create_autocmd("BufWritePre", {
-    group = "LspFormatting",
-    callback = function(args)
-        local ok, conform = pcall(require, "conform")
-        if ok then
-            conform.format({ bufnr = args.buf, timeout_ms = 500, lsp_fallback = true })
-        else
-            vim.lsp.buf.format({ async = false })
-        end
-    end,
-})
 
 -- Set working directory to opened folder
 vim.api.nvim_create_autocmd("VimEnter", {
@@ -80,13 +66,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
         if client then
             lsp_utils.on_attach(client, bufnr)
         end
-
-        -- Enable inlay hints if supported
-        if client and client:supports_method("textDocument/inlayHint") then
-            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-        end
     end,
 })
+
+-- Tell every server what our completion plugin can handle. Without this they
+-- assume plain Neovim and hold back things like snippets and auto-imports.
+local ok, blink = pcall(require, "blink.cmp")
+if ok then
+    vim.lsp.config("*", { capabilities = blink.get_lsp_capabilities(nil, true) })
+end
 
 -- Enable native LSP servers (Neovim 0.11+)
 -- These servers are configured in lsp/*.lua files

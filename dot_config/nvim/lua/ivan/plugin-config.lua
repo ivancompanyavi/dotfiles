@@ -47,6 +47,20 @@ end
 --------------------------------------------------------------------------------
 -- Telescope keymaps
 --------------------------------------------------------------------------------
+local ok, telescope_config = pcall(require, "telescope")
+if ok then
+    -- Dotfolders often hold real project files, so search them too. Only .git is noise.
+    telescope_config.setup({
+        defaults = {
+            file_ignore_patterns = { "^%.git/" },
+        },
+        pickers = {
+            find_files = { hidden = true },
+            live_grep = { additional_args = { "--hidden" } },
+        },
+    })
+end
+
 local ok, telescope = pcall(require, "telescope.builtin")
 if ok then
     vim.keymap.set("n", "<leader>ff", telescope.find_files, { desc = "Find files" })
@@ -105,33 +119,87 @@ if ok then
 end
 
 --------------------------------------------------------------------------------
--- Treesitter
+-- Treesitter: parses the code for real instead of guessing with patterns.
+-- Gives better colours, and feeds the function/class motions set up below.
 --------------------------------------------------------------------------------
-local ok, treesitter = pcall(require, "nvim-treesitter.configs")
+local ok, treesitter = pcall(require, "nvim-treesitter")
 if ok then
-    treesitter.setup({
-        ensure_installed = {
-            "python",
-            "javascript",
-            "typescript",
-            "tsx",
-            "lua",
-            "ruby",
-            "embedded_template",
-            "go",
-            "gomod",
-            "gosum",
-            "hcl",
-            "terraform",
-            "graphql",
-            "json",
-            "yaml",
-            "toml",
-            "markdown",
-            "markdown_inline",
-        },
-        highlight = { enable = true },
+    treesitter.install({
+        "python",
+        "javascript",
+        "typescript",
+        "tsx",
+        "lua",
+        "ruby",
+        "embedded_template",
+        "go",
+        "gomod",
+        "gosum",
+        "hcl",
+        "terraform",
+        "graphql",
+        "json",
+        "yaml",
+        "toml",
+        "markdown",
+        "markdown_inline",
     })
+
+    -- Colour a file with treesitter whenever its parser is installed.
+    vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("TreesitterHighlight", { clear = true }),
+        callback = function(ev)
+            local lang = vim.treesitter.language.get_lang(ev.match)
+            if lang and vim.treesitter.language.add(lang) then
+                vim.treesitter.start(ev.buf, lang)
+            end
+        end,
+    })
+end
+
+--------------------------------------------------------------------------------
+-- Treesitter text objects: select and jump around by code shape.
+--   af / if   a function / the body of a function
+--   ac / ic   a class / the body of a class
+--   aa / ia   an argument, with or without its comma
+--   ]f / [f   jump to the next / previous function
+--   ]] / [[   jump to the next / previous class
+--------------------------------------------------------------------------------
+local ok, textobjects = pcall(require, "nvim-treesitter-textobjects")
+if ok then
+    textobjects.setup({
+        select = {
+            -- Jump forward to the next match when the cursor is not on one yet.
+            lookahead = true,
+        },
+        move = {
+            set_jumps = true,
+        },
+    })
+
+    local function select_key(key, query, desc)
+        vim.keymap.set({ "x", "o" }, key, function()
+            require("nvim-treesitter-textobjects.select").select_textobject(query, "textobjects")
+        end, { desc = desc })
+    end
+
+    local function move_key(key, direction, query, desc)
+        vim.keymap.set({ "n", "x", "o" }, key, function()
+            require("nvim-treesitter-textobjects.move")[direction](query, "textobjects")
+        end, { desc = desc })
+    end
+
+    select_key("af", "@function.outer", "a function")
+    select_key("if", "@function.inner", "inner function")
+    select_key("ac", "@class.outer", "a class")
+    select_key("ic", "@class.inner", "inner class")
+    select_key("aa", "@parameter.outer", "an argument")
+    select_key("ia", "@parameter.inner", "inner argument")
+
+    move_key("]f", "goto_next_start", "@function.outer", "next function")
+    move_key("[f", "goto_previous_start", "@function.outer", "previous function")
+    move_key("]]", "goto_next_start", "@class.outer", "next class")
+    move_key("[[", "goto_previous_start", "@class.outer", "previous class")
 end
 
 --------------------------------------------------------------------------------

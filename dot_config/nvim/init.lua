@@ -1,6 +1,10 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- Neovim ships per-language "jump to next function" mappings that are buffer
+-- local, so they would win over the treesitter ones. Turn them off.
+vim.g.no_plugin_maps = true
+
 -- Native plugin management with vim.pack (Neovim 0.12+)
 vim.pack.add({
     -- Core dependencies (load first)
@@ -35,8 +39,9 @@ vim.pack.add({
     'https://codeberg.org/andyg/leap.nvim',
     'https://github.com/otavioschwanck/arrow.nvim',
 
-    -- Syntax highlighting
-    'https://github.com/nvim-treesitter/nvim-treesitter',
+    -- Syntax highlighting and code-shape motions (both track the 'main' branch)
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' },
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects', version = 'main' },
 
     -- UI enhancements
     'https://github.com/akinsho/bufferline.nvim',
