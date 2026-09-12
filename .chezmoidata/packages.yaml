@@ -18,6 +18,7 @@ packages:
     - 'ruff'
     - 'ripgrep'
     - 'stylua'
+    - 'tree-sitter-cli'
     - 'typescript-language-server'
     - 'wget'
     - 'jesseduffield/lazygit/lazygit'
