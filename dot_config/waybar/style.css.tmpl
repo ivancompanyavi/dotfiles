@@ -1,0 +1,104 @@
+/*
+ * waybar, styled like the sketchybar status line: square everything, a hairline
+ * under the band, plain foreground text, and the accent reserved for what is
+ * active (the focused workspace is drawn inverted, like a TUI's selected cell).
+ * @bg, @fg, @accent, … are generated from the active theme.
+ */
+@import url("file://{{ .chezmoi.homeDir }}/.local/state/theme/waybar-colors.css");
+
+* {
+    font-family: "Fira Code", "Hack Nerd Font";
+    font-size: 14px;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+window#waybar {
+    background: @bg;
+    color: @fg;
+    border-bottom: 1px solid @muted;
+}
+
+tooltip {
+    background: @bg;
+    border: 1px solid @muted;
+}
+
+tooltip label {
+    color: @fg;
+}
+
+#workspaces {
+    margin: 0 8px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    margin: 8px 0;
+    color: @fg;
+    background: transparent;
+}
+
+#workspaces button:hover {
+    background: @surface;
+}
+
+#workspaces button.active {
+    background: @accent;
+    color: @on_accent;
+    font-weight: bold;
+}
+
+#workspaces button.urgent {
+    color: @urgent;
+}
+
+#submap {
+    color: @accent;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+#window {
+    color: @accent;
+    padding: 0 10px;
+}
+
+#custom-sep {
+    color: @muted;
+    padding: 0 10px;
+}
+
+#custom-next-event,
+#custom-telegram,
+#network,
+#cpu,
+#memory,
+#temperature,
+#pulseaudio,
+#idle_inhibitor,
+#tray {
+    padding: 0 8px;
+}
+
+#custom-next-event          { color: @accent; }
+#custom-next-event.imminent { color: @urgent; }
+
+#temperature.critical       { color: @urgent; }
+#pulseaudio.muted           { color: @muted; }
+#idle_inhibitor.activated   { color: @warn; }
+
+#custom-telegram.closed { color: @accent; }
+#custom-telegram.read   { color: @ok; }
+#custom-telegram.unread { color: @urgent; }
+
+#network               { color: @ok; }
+#network.disconnected  { color: @muted; }
+#network.linked        { color: @warn; }
+
+
+#clock {
+    padding: 0 8px 0 0;
+}

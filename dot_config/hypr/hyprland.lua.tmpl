@@ -80,9 +80,10 @@ hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto") -- run Electron apps natively on 
 
 hl.config({
     general = {
-        -- AeroSpace's external-monitor gaps
+        -- AeroSpace's external-monitor gaps. The top is 40 rather than 80
+        -- because waybar reserves its own 40px, where sketchybar reserved none.
         gaps_in  = 22,
-        gaps_out = { top = 80, right = 120, bottom = 80, left = 120 },
+        gaps_out = { top = 40, right = 120, bottom = 80, left = 120 },
         border_size = 3,
         resize_on_border = false,
         allow_tearing = false,
@@ -174,11 +175,6 @@ hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "
 --- WORKSPACES ---
 ------------------
 
--- AeroSpace's persistent-workspaces: always shown in the bar, even when empty.
-for _, ws in ipairs({ "1", "2", "3", "4", "5", "name:R" }) do
-    hl.workspace_rule({ workspace = ws, persistent = true })
-end
-
 -- Telegram lives in a dropdown (special workspace) and starts on first toggle.
 hl.workspace_rule({ workspace = "special:telegram", on_created_empty = telegram })
 
@@ -257,6 +253,9 @@ hl.bind(mainMod .. " + Space",  hl.dsp.exec_cmd(launcher))
 -- Theme (aerospace: alt-shift-t picker, alt-d light/dark)
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(terminal .. " start --class theme-picker -- " .. theme_bin .. "/theme-picker"))
 hl.bind(mainMod .. " + D",         hl.dsp.exec_cmd("darkman toggle"))
+
+-- Join the current/next meeting (aerospace: alt-m)
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(home .. "/.config/waybar/scripts/open-next-meeting.sh"))
 
 -- Layouts (aerospace: alt-slash tiles, alt-comma accordion, alt-period floating)
 hl.bind(mainMod .. " + slash",  hl.dsp.layout("togglesplit"))

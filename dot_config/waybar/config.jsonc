@@ -1,0 +1,152 @@
+// -*- mode: jsonc -*-
+// waybar: the Linux counterpart of sketchybar. A solid band at the top with a
+// hairline under it, inset to the window column (Hyprland's 120px side gaps),
+// labels in Fira Code and glyphs from Hack Nerd Font. Colors come from the
+// theme system (style.css imports them).
+{
+    "layer": "top",
+    "position": "top",
+    "height": 40,
+    "margin-left": 120,
+    "margin-right": 120,
+    "spacing": 0,
+
+    // sketchybar's items, plus the Linux-side extras (volume, memory,
+    // temperature, idle inhibitor, tray).
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/submap",
+        "custom/sep",
+        "custom/next-event"
+    ],
+    "modules-center": [],
+    "modules-right": [
+        "hyprland/window",
+        "custom/sep",
+        "custom/telegram",
+        "network",
+        "cpu",
+        "memory",
+        "temperature",
+        "pulseaudio",
+        "idle_inhibitor",
+        "tray",
+        "custom/sep",
+        "clock"
+    ],
+
+    // Workspaces with a glyph per role, as in sketchybar's aerospace item. Only
+    // workspaces that exist are shown: ones with windows, plus the focused one.
+    "hyprland/workspaces": {
+        "format": "{icon} {name}",
+        "format-icons": {
+            "1": "\uf120",   // terminal
+            "2": "\uf0ac",   // browser
+            "3": "\uf121",   // editor
+            "4": "\uf0ae",   // tasks
+            "5": "\uf198",   // chat
+            "R": "\uf141",   // everything else
+            "default": "\uf0c8"
+        },
+        "sort-by": "number",
+        "show-special": false
+    },
+
+    // aerospace's service-mode marker
+    "hyprland/submap": {
+        "format": "[s]",
+        "tooltip": false
+    },
+
+    // Front app, in the accent colour
+    "hyprland/window": {
+        "format": "{class}",
+        "rewrite": {
+            "org\\.wezfurlong\\.wezterm": "WezTerm",
+            "firefox": "Firefox",
+            "org\\.telegram\\.desktop": "Telegram",
+            "thunar": "Thunar"
+        },
+        "max-length": 40,
+        "separate-outputs": true
+    },
+
+    "custom/sep": {
+        "format": "│",
+        "tooltip": false
+    },
+
+    // Unread count from Telegram's window title; click toggles the dropdown.
+    "custom/telegram": {
+        "exec": "~/.config/waybar/scripts/telegram.sh",
+        "return-type": "json",
+        "interval": 5,
+        "on-click": "hyprctl dispatch 'hl.dsp.workspace.toggle_special(\"telegram\")'"
+    },
+
+    "network": {
+        "format-ethernet": "\udb80\ude00",
+        "format-wifi": "\udb82\udd28",
+        "format-linked": "\udb82\udd2f",
+        "format-disconnected": "\udb82\udd2d",
+        "tooltip-format": "{ifname} · {ipaddr}/{cidr} via {gwaddr}",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) · {ipaddr}"
+    },
+
+    // Current or next meeting from Google Calendar (gcalcli); reddens when it is
+    // five minutes out or live. Click (or SUPER+M) joins it. Hidden until
+    // gcalcli is set up.
+    "custom/next-event": {
+        "exec": "~/.config/waybar/scripts/next-event.sh",
+        "return-type": "json",
+        "interval": 60,
+        "on-click": "~/.config/waybar/scripts/open-next-meeting.sh"
+    },
+
+    "memory": {
+        "format": "\udb80\udf5b {percentage}%",
+        "interval": 15
+    },
+
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": ["\uf2cb", "\uf2c9", "\uf2c7"]
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "\uf026 muted",
+        "format-icons": {
+            "headphone": "\uf025",
+            "default": ["\uf026", "\uf027", "\uf028"]
+        },
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "scroll-step": 5
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "\uf06e",
+            "deactivated": "\uf070"
+        }
+    },
+
+    "cpu": {
+        "format": "\uf4bc {usage}%",
+        "interval": 15,
+        "tooltip": false
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    "clock": {
+        "format": "{:%a %b %d %H:%M}",
+        "interval": 30,
+        "tooltip-format": "<tt>{calendar}</tt>"
+    }
+}
