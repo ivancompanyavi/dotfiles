@@ -30,7 +30,10 @@ config.window_background_opacity = 0.9
 config.default_cwd = "~/projects"
 
 config.macos_window_background_blur = 10
-config.window_decorations = "RESIZE"
+-- macOS: resizable, no title bar. Linux: no decorations at all; Hyprland draws
+-- the borders and handles resizing (on Wayland, "RESIZE" still gets WezTerm's
+-- own title bar with maximize/close buttons).
+config.window_decorations = wezterm.target_triple:find("darwin") and "RESIZE" or "NONE"
 config.hide_tab_bar_if_only_one_tab = true
 config.native_macos_fullscreen_mode = false
 
