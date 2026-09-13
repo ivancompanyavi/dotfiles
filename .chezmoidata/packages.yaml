@@ -93,4 +93,3 @@ packages:
     aur:
     - 'basedpyright'
     - 'gcalcli'
-    - 'terraform-ls'

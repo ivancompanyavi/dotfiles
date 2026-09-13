@@ -47,10 +47,7 @@ apps:
     cask: "cursor"
     bundleId: "com.todesktop.230313mzl4w4u92"
     appName: "Cursor"
-    linux:
-      aur: "cursor-bin"
-      class: "cursor"  # unverified: confirm with `hyprctl clients` once installed
-      exec: "cursor"
+    # No `linux` block: Cursor isn't used on Linux, so nothing is installed there.
   telegram:
     cask: "telegram"
     bundleId: "ru.keepcoder.Telegram"
