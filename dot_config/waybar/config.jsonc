@@ -32,7 +32,8 @@
         "idle_inhibitor",
         "tray",
         "custom/sep",
-        "clock"
+        "clock",
+        "custom/power"
     ],
 
     // Workspaces with a glyph per role, as in sketchybar's aerospace item. Only
@@ -142,6 +143,20 @@
     "tray": {
         "icon-size": 16,
         "spacing": 8
+    },
+
+    // Click for suspend / log out / reboot / shut down
+    "custom/power": {
+        "format": "\u23fb",
+        "tooltip": false,
+        "menu": "on-click",
+        "menu-file": "$HOME/.config/waybar/power_menu.xml",
+        "menu-actions": {
+            "suspend": "systemctl suspend",
+            "logout": "hyprctl dispatch 'hl.dsp.exit()'",
+            "reboot": "systemctl reboot",
+            "poweroff": "systemctl poweroff"
+        }
     },
 
     "clock": {

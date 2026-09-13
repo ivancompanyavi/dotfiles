@@ -102,3 +102,35 @@ tooltip label {
 #clock {
     padding: 0 8px 0 0;
 }
+
+#custom-power {
+    color: @urgent;
+    padding: 0 10px;
+}
+
+#custom-power:hover {
+    background: @surface;
+}
+
+/* The power menu, square and in theme colors like the rest of the bar */
+menu {
+    background: @bg;
+    color: @fg;
+    border: 1px solid @muted;
+    padding: 4px 0;
+}
+
+menuitem {
+    padding: 6px 16px;
+}
+
+menuitem:hover {
+    background: @accent;
+    color: @on_accent;
+}
+
+menu separator {
+    background: @muted;
+    min-height: 1px;
+    margin: 4px 0;
+}
