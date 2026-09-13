@@ -1,0 +1,5 @@
+# darkman owns light/dark on Linux (the macOS appearance setting's job on the
+# Mac). No location, so there are no sunrise/sunset switches: the mode only
+# changes when toggled (Super+D). Add lat/lng here to switch automatically.
+usegeoclue: false
+portal: true

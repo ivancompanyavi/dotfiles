@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
-# theme — select and apply a system-wide theme across WezTerm, Neovim,
-# sketchybar, aerospace borders, starship, fzf, lazygit and the wallpaper.
+# theme — select and apply a system-wide theme across WezTerm, Neovim, starship,
+# fzf, lazygit and the wallpaper, plus sketchybar and aerospace borders on macOS
+# or Hyprland borders, waybar, fuzzel and swaync on Linux.
 #
 #   theme                 open the fzf picker (also: `theme pick`)
 #   theme set <name>      switch to <name> and reload everything
@@ -31,27 +32,15 @@ current()     { bash "$RESOLVE" current-name; }
 
 reapply() {
   mkdir -p "$STATE_DIR"
-  # 1. sketchybar palette cache (fast path for the reader), then reload the bar.
-  #    Write atomically (temp + mv) so a concurrent plugin tick never reads a
-  #    half-written cache.
-  if bash "$RESOLVE" roles-argb > "$STATE_DIR/.sketchybar-palette.env.tmp" 2>/dev/null; then
-    mv -f "$STATE_DIR/.sketchybar-palette.env.tmp" "$STATE_DIR/sketchybar-palette.env"
-  else
-    rm -f "$STATE_DIR/.sketchybar-palette.env.tmp"
-  fi
-  command -v sketchybar >/dev/null 2>&1 && sketchybar --reload >/dev/null 2>&1 || true
 
-  # 2. shell-tool artifacts (generators appear in Phase 3; guarded until then).
+  # 1. Shell-tool artifacts (next shell / next launch picks them up).
   [ -x "$READERS/gen-starship.sh" ] && bash "$READERS/gen-starship.sh" || true
   [ -x "$READERS/gen-lazygit.sh" ]  && bash "$READERS/gen-lazygit.sh"  || true
 
-  # 2b. browser userstyles (Stylus live-reloads the generated files).
+  # 2. Browser userstyles (Stylus live-reloads the generated files).
   [ -x "$READERS/gen-web-usercss.sh" ] && bash "$READERS/gen-web-usercss.sh" >/dev/null || true
 
-  # 3. aerospace borders (JankyBorders picks up new args live).
-  [ -x "$THEME_HOME/bin/theme-borders" ] && "$THEME_HOME/bin/theme-borders" >/dev/null 2>&1 &
-
-  # 4. WezTerm: force a live reload across ALL open windows. WezTerm auto-watches
+  # 3. WezTerm: force a live reload across ALL open windows. WezTerm auto-watches
   #    its main config file, so touching it (content unchanged → no git diff) is
   #    the reliable trigger; the external-file watch on the pointer isn't always
   #    honored, and a window opened before that watch line existed never
@@ -61,17 +50,70 @@ reapply() {
     [ -f "$_wz" ] && touch "$_wz"
   done
 
-  # 5. Wallpaper — best-effort. No wallpaper mapped for this theme+polarity =>
-  #    leave the current wallpaper untouched.
+  # 4. Desktop surfaces differ per OS.
   local wp; wp="$(bash "$RESOLVE" wallpaper 2>/dev/null || true)"
+  case "$(uname -s)" in
+    Darwin) reapply_macos "$wp" ;;
+    *)      reapply_linux "$wp" ;;
+  esac
+}
+
+reapply_macos() {
+  local wp="$1"
+  # sketchybar palette cache (fast path for the reader), then reload the bar.
+  # Write atomically (temp + mv) so a concurrent plugin tick never reads a
+  # half-written cache.
+  if bash "$RESOLVE" roles-argb > "$STATE_DIR/.sketchybar-palette.env.tmp" 2>/dev/null; then
+    mv -f "$STATE_DIR/.sketchybar-palette.env.tmp" "$STATE_DIR/sketchybar-palette.env"
+  else
+    rm -f "$STATE_DIR/.sketchybar-palette.env.tmp"
+  fi
+  command -v sketchybar >/dev/null 2>&1 && sketchybar --reload >/dev/null 2>&1 || true
+
+  # aerospace borders (JankyBorders picks up new args live).
+  [ -x "$THEME_HOME/bin/theme-borders" ] && "$THEME_HOME/bin/theme-borders" >/dev/null 2>&1 &
+
+  # Wallpaper — best-effort. No wallpaper mapped for this theme+polarity =>
+  # leave the current wallpaper untouched.
   if [ -n "$wp" ]; then
     osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"$wp\"" >/dev/null 2>&1 || true
   fi
 
-  # 6. Browser accent — best-effort. Chromium only reads the theme at launch,
-  #    so this no-ops while the browser is open and applies on its next launch
-  #    (see theme-browser; the browser is defined in .chezmoidata/apps.yaml).
+  # Browser accent — best-effort. Chromium only reads the theme at launch,
+  # so this no-ops while the browser is open and applies on its next launch
+  # (see theme-browser; the browser is defined in .chezmoidata/apps.yaml).
   [ -x "$THEME_HOME/bin/theme-browser" ] && "$THEME_HOME/bin/theme-browser" apply || true
+}
+
+reapply_linux() {
+  local wp="$1"
+  # Generated configs first: they are what each surface reads at startup, so a
+  # reboot or relogin comes back in the right theme even if nothing is running.
+  local gen
+  for gen in hyprland waybar fuzzel swaync; do
+    [ -x "$READERS/gen-$gen.sh" ] && bash "$READERS/gen-$gen.sh" || true
+  done
+
+  # Wallpaper: hyprpaper starts from the generated config; a running instance
+  # is switched over IPC. No wallpaper for this theme => keep the current one.
+  if [ -n "$wp" ]; then
+    printf 'wallpaper {\n    monitor =\n    path = %s\n    fit_mode = cover\n}\n\nsplash = false\n' "$wp" \
+      > "$STATE_DIR/hyprpaper.conf"
+  fi
+
+  # Live reloads only make sense inside a running Hyprland session (darkman also
+  # runs this hook at login, before the compositor exists).
+  # Each client talks to its daemon only if that daemon is running (swaync's
+  # client waits forever for a missing one), and under a timeout regardless.
+  [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ] || return 0
+  timeout 5 hyprctl reload >/dev/null 2>&1 || true
+  pkill -SIGUSR2 -x waybar 2>/dev/null || true
+  if pgrep -x swaync >/dev/null 2>&1; then
+    timeout 5 swaync-client --reload-css >/dev/null 2>&1 || true
+  fi
+  if [ -n "$wp" ] && pgrep -x hyprpaper >/dev/null 2>&1; then
+    timeout 5 hyprctl hyprpaper wallpaper ",$wp,cover" >/dev/null 2>&1 || true
+  fi
 }
 
 set_theme() {

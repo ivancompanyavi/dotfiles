@@ -50,6 +50,8 @@ current_name() {
 }
 
 polarity() {
+  # Set by the darkman hook, which knows the mode it is switching to.
+  case "${THEME_POLARITY:-}" in dark|light) echo "$THEME_POLARITY"; return ;; esac
   case "$(uname -s)" in
     Darwin)
       if defaults read -g AppleInterfaceStyle 2>/dev/null | grep -qi dark; then echo dark; else echo light; fi
@@ -61,7 +63,7 @@ polarity() {
       # default to dark when neither answers.
       local mode
       mode="$(darkman get 2>/dev/null || true)"
-      if [ -z "$mode" ]; then
+      if [ "$mode" != dark ] && [ "$mode" != light ]; then
         case "$(busctl --user call org.freedesktop.portal.Desktop /org/freedesktop/portal/desktop \
                   org.freedesktop.portal.Settings ReadOne ss org.freedesktop.appearance color-scheme 2>/dev/null)" in
           *" 2") mode=light ;;

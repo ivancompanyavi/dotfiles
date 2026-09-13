@@ -29,4 +29,6 @@ ARCHITECTURE.md
 .config/darkman/**
 .local/share/darkman
 .local/share/darkman/**
+.config/xdg-desktop-portal
+.config/xdg-desktop-portal/**
 {{ end }}

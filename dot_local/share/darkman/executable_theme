@@ -1,0 +1,19 @@
+#!/bin/sh
+# darkman runs this on every light/dark switch, and once when it starts, with
+# the new mode ("dark" or "light") as $1. Linux counterpart of the macOS
+# dark-notify agent that calls theme-appearance-hook.
+mode="$1"
+# Before the first `darkman set`, darkman has no mode and passes "null".
+case "$mode" in dark|light) ;; *) exit 0 ;; esac
+
+# GTK apps: libadwaita follows color-scheme, GTK3 apps the adw-gtk3 theme.
+if [ "$mode" = dark ]; then
+  gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+  gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3-dark
+else
+  gsettings set org.gnome.desktop.interface color-scheme prefer-light
+  gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3
+fi
+
+# Everything else re-resolves the current theme for the new mode.
+THEME_POLARITY="$mode" exec "$HOME/.config/theme/bin/theme" reapply

@@ -49,4 +49,7 @@ printf '\n%s\n' "$theme_string"
 if command -v pbcopy >/dev/null 2>&1; then
   printf '%s' "$theme_string" | pbcopy
   printf '\nCopied. Slack: Preferences → Appearance → Custom theme.\n'
+elif command -v wl-copy >/dev/null 2>&1; then
+  printf '%s' "$theme_string" | wl-copy
+  printf '\nCopied. Slack: Preferences → Appearance → Custom theme.\n'
 fi
