@@ -72,6 +72,11 @@ end)
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
+-- Qt apps (Telegram) read light/dark and use file dialogs through the XDG
+-- portal. Without this, Qt on Hyprland ignores the portal's color-scheme, so
+-- they don't follow darkman.
+hl.env("QT_QPA_PLATFORMTHEME", "xdgdesktopportal")
+
 -- NVIDIA (https://wiki.hypr.land/Nvidia/)
 hl.env("LIBVA_DRIVER_NAME", "nvidia")          -- VA-API via libva-nvidia-driver
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
