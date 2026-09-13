@@ -66,6 +66,12 @@ config.keys = {
 if not is_mac then
     -- Ctrl+A twice sends a real Ctrl+A (start of line in the shell).
     table.insert(config.keys, { key = "a", mods = "LEADER|CTRL", action = wezterm.action.SendKey({ key = "a", mods = "CTRL" }) })
+    -- Tabs, from WezTerm's macOS defaults (CMD+T, CMD+1..9), behind the leader.
+    -- Ctrl+Shift+T and Ctrl+Shift+1..9 keep working as Linux's defaults.
+    table.insert(config.keys, { key = "t", mods = "LEADER", action = wezterm.action.SpawnTab("CurrentPaneDomain") })
+    for i = 1, 9 do
+        table.insert(config.keys, { key = tostring(i), mods = "LEADER", action = wezterm.action.ActivateTab(i - 1) })
+    end
 end
 
 -- Resolve and apply the active theme last, so it wins over any static colors.
