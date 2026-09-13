@@ -25,12 +25,14 @@ local mainMod = "SUPER"
 --- MONITORS ---
 ----------------
 
--- Samsung Odyssey G8: "preferred" picks 4K@60, so request 120Hz explicitly
+-- Samsung Odyssey G8: "preferred" picks 4K@60, so request 120Hz explicitly.
+-- Scale 1.5 is the Mac's scaled 4K ("looks like 2560x1440"): everything,
+-- gaps and bar included, is sized in these logical pixels.
 hl.monitor({
     output   = "HDMI-A-1",
     mode     = "3840x2160@120",
     position = "0x0",
-    scale    = 1,
+    scale    = 1.5,
 })
 
 -- Fallback for any other monitor
@@ -90,8 +92,9 @@ hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto") -- run Electron apps natively on 
 
 hl.config({
     general = {
-        -- AeroSpace's external-monitor gaps. The top is 40 rather than 80
-        -- because waybar reserves its own 40px, where sketchybar reserved none.
+        -- AeroSpace's external-monitor gaps (logical pixels, like on the Mac).
+        -- The top is 40 rather than 80 because waybar reserves its own 40px,
+        -- where sketchybar reserved none.
         gaps_in  = 22,
         gaps_out = { top = 40, right = 120, bottom = 80, left = 120 },
         border_size = 3,
@@ -140,6 +143,12 @@ hl.config({
     misc = {
         force_default_wallpaper = 0,
         disable_hyprland_logo   = true,
+    },
+
+    -- X11 apps can't scale fractionally; draw them at native resolution
+    -- instead of stretching them blurry.
+    xwayland = {
+        force_zero_scaling = true,
     },
 
     input = {
