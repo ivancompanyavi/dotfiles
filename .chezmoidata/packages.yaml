@@ -31,7 +31,7 @@ packages:
     - 'font-fira-code'
     - 'font-hack-nerd-font'
     - 'nikitabobko/tap/aerospace'
-  # Arch Linux + Hyprland. `pacman` = official repos; `aur` = built with paru,
+  # Arch Linux + Hyprland. `pacman` = official repos; `aur` = built with yay,
   # which the install script bootstraps if missing. Swappable apps (browser,
   # terminal, editor) come from apps.yaml's `linux` blocks, not from here.
   linux:

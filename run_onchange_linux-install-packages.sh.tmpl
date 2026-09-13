@@ -30,16 +30,19 @@ aur_pkgs=(
 echo "==> pacman: ${#pacman_pkgs[@]} packages"
 sudo pacman -S --needed --noconfirm "${pacman_pkgs[@]}"
 
-if ! command -v paru >/dev/null 2>&1; then
-  echo "==> bootstrapping paru (AUR helper)"
+# AUR helper: yay-bin. Checked by running it, not just finding it on PATH: a
+# prebuilt helper linked against an older libalpm is installed but can't start
+# after a pacman upgrade (paru-bin hit exactly that with libalpm 16).
+if ! yay --version >/dev/null 2>&1; then
+  echo "==> bootstrapping yay (AUR helper)"
   tmp="$(mktemp -d)"
-  git clone --depth 1 https://aur.archlinux.org/paru-bin.git "$tmp/paru-bin"
-  (cd "$tmp/paru-bin" && makepkg -si --noconfirm)
+  git clone --depth 1 https://aur.archlinux.org/yay-bin.git "$tmp/yay-bin"
+  (cd "$tmp/yay-bin" && makepkg -si --noconfirm)
   rm -rf "$tmp"
 fi
 
 if [ "${#aur_pkgs[@]}" -gt 0 ]; then
   echo "==> AUR: ${#aur_pkgs[@]} packages"
-  paru -S --needed "${aur_pkgs[@]}"
+  yay -S --needed "${aur_pkgs[@]}"
 fi
 {{ end -}}
