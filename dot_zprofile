@@ -1,0 +1,16 @@
+# ~/.zprofile: read by zsh login shells (the TTY login). Environment set here
+# is inherited by Hyprland and everything it launches.
+
+# User-installed tools: Claude Code and other ~/.local/bin binaries, npm globals,
+# and the theme CLI. `typeset -U` drops duplicates.
+typeset -U path
+path=(~/.local/bin ~/.npm-global/bin ~/.config/theme/bin $path)
+export PATH
+
+export EDITOR=nvim
+export VISUAL=nvim
+
+# Start Hyprland after logging in on TTY1 (other TTYs stay plain consoles)
+if [[ -z $WAYLAND_DISPLAY && $(tty) == /dev/tty1 ]]; then
+    exec start-hyprland
+fi

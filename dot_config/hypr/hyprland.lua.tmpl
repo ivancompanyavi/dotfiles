@@ -49,10 +49,15 @@ hl.monitor({
 hl.on("hyprland.start", function()
     -- Portal and dunst/swaync can be D-Bus activated before the compositor exists
     -- and hit systemd's restart limit; clear that and restart the portal now.
-    hl.exec_cmd("systemctl --user reset-failed xdg-desktop-portal-hyprland.service; systemctl --user restart xdg-desktop-portal-hyprland.service")
+    hl.exec_cmd("systemctl --user reset-failed xdg-desktop-portal-hyprland.service swaync.service; systemctl --user restart xdg-desktop-portal-hyprland.service")
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
     -- The theme system writes hyprpaper's config; generate it first on a fresh machine.
-    hl.exec_cmd("[ -f " .. theme_state .. "/hyprpaper.conf ] || " .. theme_bin .. "/theme reapply; hyprpaper -c " .. theme_state .. "/hyprpaper.conf")
+    -- hyprpaper once exited silently at login, so retry a few times and keep its
+    -- output in $XDG_RUNTIME_DIR/hyprpaper.log.
+    local paper_conf = theme_state .. "/hyprpaper.conf"
+    hl.exec_cmd("[ -f " .. paper_conf .. " ] || " .. theme_bin .. "/theme reapply; "
+        .. "for i in 1 2 3 4 5; do hyprpaper -c " .. paper_conf .. " && break; sleep 1; done "
+        .. ">> \"$XDG_RUNTIME_DIR/hyprpaper.log\" 2>&1")
     hl.exec_cmd("waybar")
     hl.exec_cmd("swaync")
     hl.exec_cmd("wl-paste --watch cliphist store")

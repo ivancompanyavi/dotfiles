@@ -1,0 +1,31 @@
+# ~/.zshrc: interactive zsh. Started from the zsh-newuser-install baseline.
+
+# History
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+setopt autocd extendedglob
+setopt hist_ignore_dups share_history
+
+# Vi keybindings on the command line
+bindkey -v
+
+# Completion
+autoload -Uz compinit
+compinit
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# fzf keybindings: Ctrl+R history, Ctrl+T files, Alt+C cd
+command -v fzf >/dev/null && source <(fzf --zsh)
+
+# mise-managed runtimes (the Ruby LSP runs through `mise x`)
+command -v mise >/dev/null && eval "$(mise activate zsh)"
+
+# Prompt
+command -v starship >/dev/null && eval "$(starship init zsh)"
+
+# Theme integration: fzf colors plus themed starship and lazygit configs.
+# Must come after starship init.
+[ -f ~/.config/theme/shell/init.zsh ] && source ~/.config/theme/shell/init.zsh

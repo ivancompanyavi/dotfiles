@@ -16,7 +16,10 @@ ARCHITECTURE.md
 .config/theme/bin/theme-browser
 {{ end }}
 {{ if ne .chezmoi.os "linux" }}
-# Linux-only: Hyprland and the Wayland desktop around it
+# Linux-only: zsh startup files (the Mac keeps its own, unmanaged) and
+# Hyprland plus the Wayland desktop around it
+.zshrc
+.zprofile
 .config/hypr
 .config/hypr/**
 .config/waybar
