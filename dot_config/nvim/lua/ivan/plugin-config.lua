@@ -4,7 +4,7 @@
 
 --------------------------------------------------------------------------------
 -- Colorscheme — driven by the shared theme system (~/.config/theme).
--- Applies the active theme now and wires live macOS polarity following +
+-- Applies the active theme now and wires live light/dark following +
 -- :ThemeReload (see lua/ivan/theme.lua). Replaces the old hardcoded tokyonight
 -- block and the separate auto-dark-mode.setup() call below.
 --------------------------------------------------------------------------------

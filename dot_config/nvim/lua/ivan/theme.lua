@@ -1,11 +1,11 @@
 -- ─────────────────────────────────────────────────────────────────────────
 -- Neovim theme reader. Reads the active theme (pointer file) from the shared
 -- ~/.config/theme registry and applies the matching colorscheme for the current
--- macOS polarity.
+-- system polarity (macOS appearance, or darkman on Linux).
 --
 -- Behaviour (per design):
 --   • Theme *name* changes take effect in NEW nvim sessions (or :ThemeReload).
---   • Light/dark *polarity* follows macOS live via auto-dark-mode.nvim, which
+--   • Light/dark *polarity* follows the system live via auto-dark-mode.nvim, which
 --     calls M.apply("dark"|"light") on change.
 -- ─────────────────────────────────────────────────────────────────────────
 local M = {}
@@ -32,10 +32,15 @@ local function current_name()
   return "tokyonight"
 end
 
--- macOS appearance → "dark" | "light".
-function M.macos_polarity()
-  local out = vim.fn.system({ "defaults", "read", "-g", "AppleInterfaceStyle" })
-  return (out and out:lower():find("dark")) and "dark" or "light"
+-- System appearance → "dark" | "light": the macOS appearance setting on the Mac,
+-- the theme resolver (darkman, then the XDG portal) everywhere else.
+function M.system_polarity()
+  if vim.fn.has("mac") == 1 then
+    local out = vim.fn.system({ "defaults", "read", "-g", "AppleInterfaceStyle" })
+    return (out and out:lower():find("dark")) and "dark" or "light"
+  end
+  local out = vim.fn.system({ "bash", THEME_HOME .. "/lib/resolve.sh", "polarity" })
+  return vim.trim(out) == "light" and "light" or "dark"
 end
 
 -- The nvim spec for the active theme + polarity, with a tokyonight fallback.
@@ -55,9 +60,9 @@ local function load_spec(polarity)
   return v.nvim
 end
 
--- Apply the active theme for the given polarity (defaults to macOS polarity).
+-- Apply the active theme for the given polarity (defaults to the system's).
 function M.apply(polarity)
-  polarity = polarity or M.macos_polarity()
+  polarity = polarity or M.system_polarity()
   local spec = load_spec(polarity)
   if spec.background then vim.o.background = spec.background end
   if spec.module then
@@ -72,11 +77,11 @@ end
 
 function M.setup()
   -- Initial apply for this session (reads the pointer once).
-  M.apply(M.macos_polarity())
+  M.apply(M.system_polarity())
 
   -- Re-read the pointer on demand (theme name changes are new-session by design).
   vim.api.nvim_create_user_command("ThemeReload", function()
-    M.apply(M.macos_polarity())
+    M.apply(M.system_polarity())
     vim.notify("Theme reloaded: " .. current_name(), vim.log.levels.INFO)
   end, { desc = "Re-read the active theme pointer and apply it" })
 
