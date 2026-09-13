@@ -1,0 +1,45 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# Installs the linux package lists from .chezmoidata (packages.yaml + the
+# `linux` blocks in apps.yaml). Like the darwin script it only re-runs when the
+# rendered list changes, and it never uninstalls anything.
+set -euo pipefail
+
+pacman_pkgs=(
+{{- range .packages.linux.pacman }}
+  {{ . | quote }}
+{{- end }}
+{{- range $name, $app := .apps }}
+{{- if and (hasKey $app "linux") (hasKey $app.linux "pacman") }}
+  {{ $app.linux.pacman | quote }}
+{{- end }}
+{{- end }}
+)
+
+aur_pkgs=(
+{{- range .packages.linux.aur }}
+  {{ . | quote }}
+{{- end }}
+{{- range $name, $app := .apps }}
+{{- if and (hasKey $app "linux") (hasKey $app.linux "aur") }}
+  {{ $app.linux.aur | quote }}
+{{- end }}
+{{- end }}
+)
+
+echo "==> pacman: ${#pacman_pkgs[@]} packages"
+sudo pacman -S --needed --noconfirm "${pacman_pkgs[@]}"
+
+if ! command -v paru >/dev/null 2>&1; then
+  echo "==> bootstrapping paru (AUR helper)"
+  tmp="$(mktemp -d)"
+  git clone --depth 1 https://aur.archlinux.org/paru-bin.git "$tmp/paru-bin"
+  (cd "$tmp/paru-bin" && makepkg -si --noconfirm)
+  rm -rf "$tmp"
+fi
+
+if [ "${#aur_pkgs[@]}" -gt 0 ]; then
+  echo "==> AUR: ${#aur_pkgs[@]} packages"
+  paru -S --needed "${aur_pkgs[@]}"
+fi
+{{ end -}}

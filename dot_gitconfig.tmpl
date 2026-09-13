@@ -19,12 +19,14 @@
 	required = true
 [pull]
 	rebase = true
+{{- $gh := "gh" }}
+{{- if eq .chezmoi.os "darwin" }}{{ $gh = "/opt/homebrew/bin/gh" }}{{ end }}
 [credential "https://github.com"]
 	helper =
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !{{ $gh }} auth git-credential
 [credential "https://gist.github.com"]
 	helper =
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !{{ $gh }} auth git-credential
 # Machine-local / tool-managed git settings (e.g. `git maintenance register`
 # writes here-adjacent entries). Not managed by chezmoi. Optional — git ignores
 # a missing include path.

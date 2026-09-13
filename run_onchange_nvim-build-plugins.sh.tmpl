@@ -1,4 +1,3 @@
-{{ if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
 
 # Trigger rebuild when nvim-pack-lock.json changes:
@@ -19,4 +18,3 @@ if [ -d "$MDP_DIR/app" ] && [ ! -d "$MDP_DIR/app/node_modules" ]; then
     echo "Building markdown-preview.nvim..."
     (cd "$MDP_DIR/app" && npx --yes yarn install)
 fi
-{{ end -}}

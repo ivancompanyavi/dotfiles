@@ -5,6 +5,7 @@
 #
 # Consumed by (all chezmoi templates):
 #   run_onchange_darwin-install-packages.sh.tmpl        -> every .apps.<x>.cask
+#   run_onchange_linux-install-packages.sh.tmpl         -> every .apps.<x>.linux.{pacman,aur}
 #   dot_config/aerospace/aerospace.toml.tmpl             -> .apps.<x>.{bundleId,appName}
 #   dot_config/theme/bin/executable_theme-browser.tmpl   -> .apps.browser.{appName,userDataDir}
 #   dot_config/sketchybar/plugins/executable_telegram.sh.tmpl -> .apps.telegram.appName
@@ -13,6 +14,13 @@
 #   cask      Homebrew cask to install
 #   bundleId  macOS bundle id (aerospace window matching)
 #   appName   .app name for `open -a` / pgrep / lsappinfo
+#
+# Linux (Arch + Hyprland) reads the nested `linux` block instead:
+#   pacman    official-repo package to install   (or `aur` for an AUR package)
+#   class     Wayland app class (Hyprland window rules; see `hyprctl clients`)
+#   exec      command that launches the app
+# An app can be a different program per OS (the browser is Brave on macOS and
+# Firefox on Linux); templates only ever read the fields for their own OS.
 #
 # NB: Slack and Asana are intentionally NOT here — chezmoi does not install or
 # manage those (install them yourself). Their aerospace workspace rules + the
@@ -23,15 +31,31 @@ apps:
     bundleId: "com.brave.Browser"
     appName: "Brave Browser"
     userDataDir: "BraveSoftware/Brave-Browser"  # under ~/Library/Application Support/; holds every profile
+    linux:
+      pacman: "firefox"
+      class: "firefox"
+      exec: "firefox"
   terminal:
     cask: "wezterm"
     bundleId: "com.github.wez.wezterm"
     appName: "WezTerm"
+    linux:
+      pacman: "wezterm"
+      class: "org.wezfurlong.wezterm"
+      exec: "wezterm"
   editor:
     cask: "cursor"
     bundleId: "com.todesktop.230313mzl4w4u92"
     appName: "Cursor"
+    linux:
+      aur: "cursor-bin"
+      class: "cursor"  # unverified: confirm with `hyprctl clients` once installed
+      exec: "cursor"
   telegram:
     cask: "telegram"
     bundleId: "ru.keepcoder.Telegram"
     appName: "Telegram"
+    linux:
+      pacman: "telegram-desktop"
+      class: "org.telegram.desktop"
+      exec: "Telegram"

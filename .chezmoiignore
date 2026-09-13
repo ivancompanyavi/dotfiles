@@ -4,3 +4,29 @@
 # Repo-only docs — should never be applied into $HOME.
 README.md
 ARCHITECTURE.md
+
+# ── Per-OS surfaces ─────────────────────────────────────────────────────────
+{{ if ne .chezmoi.os "darwin" }}
+# macOS-only: AeroSpace, sketchybar, JankyBorders, Brave theming
+.config/aerospace
+.config/aerospace/**
+.config/sketchybar
+.config/sketchybar/**
+.config/theme/bin/theme-borders
+.config/theme/bin/theme-browser
+{{ end }}
+{{ if ne .chezmoi.os "linux" }}
+# Linux-only: Hyprland and the Wayland desktop around it
+.config/hypr
+.config/hypr/**
+.config/waybar
+.config/waybar/**
+.config/fuzzel
+.config/fuzzel/**
+.config/swaync
+.config/swaync/**
+.config/darkman
+.config/darkman/**
+.local/share/darkman
+.local/share/darkman/**
+{{ end }}
