@@ -37,15 +37,12 @@ config.window_decorations = wezterm.target_triple:find("darwin") and "RESIZE" or
 config.hide_tab_bar_if_only_one_tab = true
 config.native_macos_fullscreen_mode = false
 
--- Pane bindings: CMD on macOS. On Linux, Super belongs to Hyprland, Ctrl and Alt
--- to the programs running in the shell, so panes go behind a Ctrl+A leader
--- instead (Ctrl+A, then the same letter as on the Mac).
+-- Pane bindings: CMD on macOS, ALT on Linux, which is the same physical key on a
+-- PC keyboard. Super belongs to Hyprland, and plain Ctrl+letter to the programs
+-- in the shell (Ctrl+D, Ctrl+W, ...); Alt only costs a few readline word edits.
 local is_mac = wezterm.target_triple:find("darwin") ~= nil
-local MOD = is_mac and "CMD" or "LEADER"
+local MOD = is_mac and "CMD" or "ALT"
 local MOD_SHIFT = MOD .. "|SHIFT"
-if not is_mac then
-    config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
-end
 
 config.keys = {
     { key = "d", mods = MOD,       action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
@@ -64,13 +61,11 @@ config.keys = {
 }
 
 if not is_mac then
-    -- Ctrl+A twice sends a real Ctrl+A (start of line in the shell).
-    table.insert(config.keys, { key = "a", mods = "LEADER|CTRL", action = wezterm.action.SendKey({ key = "a", mods = "CTRL" }) })
-    -- Tabs, from WezTerm's macOS defaults (CMD+T, CMD+1..9), behind the leader.
-    -- Ctrl+Shift+T and Ctrl+Shift+1..9 keep working as Linux's defaults.
-    table.insert(config.keys, { key = "t", mods = "LEADER", action = wezterm.action.SpawnTab("CurrentPaneDomain") })
+    -- Tabs: CMD+T and CMD+1..9 are WezTerm defaults on macOS; give Linux the same
+    -- on ALT. Ctrl+Shift+T and Ctrl+Shift+1..9 keep working as Linux's defaults.
+    table.insert(config.keys, { key = "t", mods = "ALT", action = wezterm.action.SpawnTab("CurrentPaneDomain") })
     for i = 1, 9 do
-        table.insert(config.keys, { key = tostring(i), mods = "LEADER", action = wezterm.action.ActivateTab(i - 1) })
+        table.insert(config.keys, { key = tostring(i), mods = "ALT", action = wezterm.action.ActivateTab(i - 1) })
     end
 end
 
