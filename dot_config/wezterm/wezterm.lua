@@ -34,21 +34,36 @@ config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 config.native_macos_fullscreen_mode = false
 
+-- Pane bindings: CMD on macOS. On Linux, Super belongs to Hyprland, Ctrl and Alt
+-- to the programs running in the shell, so panes go behind a Ctrl+A leader
+-- instead (Ctrl+A, then the same letter as on the Mac).
+local is_mac = wezterm.target_triple:find("darwin") ~= nil
+local MOD = is_mac and "CMD" or "LEADER"
+local MOD_SHIFT = MOD .. "|SHIFT"
+if not is_mac then
+    config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
+end
+
 config.keys = {
-    { key = "d", mods = "CMD",       action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
-    { key = "d", mods = "CMD|SHIFT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-    { key = "w", mods = "CMD",       action = wezterm.action.CloseCurrentPane({ confirm = true }) },
-    { key = "k", mods = "CMD",       action = wezterm.action.ActivatePaneDirection("Up") },
-    { key = "j", mods = "CMD",       action = wezterm.action.ActivatePaneDirection("Down") },
-    { key = "h", mods = "CMD",       action = wezterm.action.ActivatePaneDirection("Left") },
-    { key = "l", mods = "CMD",       action = wezterm.action.ActivatePaneDirection("Right") },
-    { key = "K", mods = "CMD",       action = wezterm.action.AdjustPaneSize({ "Up", 5 }) },
-    { key = "J", mods = "CMD",       action = wezterm.action.AdjustPaneSize({ "Down", 5 }) },
-    { key = "H", mods = "CMD",       action = wezterm.action.AdjustPaneSize({ "Left", 5 }) },
-    { key = "L", mods = "CMD",       action = wezterm.action.AdjustPaneSize({ "Right", 5 }) },
-    { key = "m", mods = "CMD",       action = wezterm.action.ToggleFullScreen },
-    { key = " ", mods = "CTRL",      action = wezterm.action.SendKey({ key = " ", mods = "CTRL" }) },
+    { key = "d", mods = MOD,       action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+    { key = "d", mods = MOD_SHIFT, action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+    { key = "w", mods = MOD,       action = wezterm.action.CloseCurrentPane({ confirm = true }) },
+    { key = "k", mods = MOD,       action = wezterm.action.ActivatePaneDirection("Up") },
+    { key = "j", mods = MOD,       action = wezterm.action.ActivatePaneDirection("Down") },
+    { key = "h", mods = MOD,       action = wezterm.action.ActivatePaneDirection("Left") },
+    { key = "l", mods = MOD,       action = wezterm.action.ActivatePaneDirection("Right") },
+    { key = "K", mods = MOD,       action = wezterm.action.AdjustPaneSize({ "Up", 5 }) },
+    { key = "J", mods = MOD,       action = wezterm.action.AdjustPaneSize({ "Down", 5 }) },
+    { key = "H", mods = MOD,       action = wezterm.action.AdjustPaneSize({ "Left", 5 }) },
+    { key = "L", mods = MOD,       action = wezterm.action.AdjustPaneSize({ "Right", 5 }) },
+    { key = "m", mods = MOD,       action = wezterm.action.ToggleFullScreen },
+    { key = " ", mods = "CTRL",    action = wezterm.action.SendKey({ key = " ", mods = "CTRL" }) },
 }
+
+if not is_mac then
+    -- Ctrl+A twice sends a real Ctrl+A (start of line in the shell).
+    table.insert(config.keys, { key = "a", mods = "LEADER|CTRL", action = wezterm.action.SendKey({ key = "a", mods = "CTRL" }) })
+end
 
 -- Resolve and apply the active theme last, so it wins over any static colors.
 apply_theme(config)

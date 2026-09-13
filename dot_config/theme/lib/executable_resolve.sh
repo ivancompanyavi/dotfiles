@@ -9,7 +9,7 @@
 #
 # Usage: resolve.sh <command> [args]
 #   current-name              print the active theme name (pointer or fallback)
-#   polarity                  print dark|light (from macOS appearance)
+#   polarity                  print dark|light (macOS appearance, or darkman on Linux)
 #   roles-hex                 emit ROLE_<X>=#rrggbb shell assignments
 #   roles-argb                emit ROLE_<X>=0xffrrggbb  (sketchybar/borders form)
 #   role <name>               print one role as #rrggbb
@@ -50,7 +50,27 @@ current_name() {
 }
 
 polarity() {
-  if defaults read -g AppleInterfaceStyle 2>/dev/null | grep -qi dark; then echo dark; else echo light; fi
+  case "$(uname -s)" in
+    Darwin)
+      if defaults read -g AppleInterfaceStyle 2>/dev/null | grep -qi dark; then echo dark; else echo light; fi
+      ;;
+    *)
+      # Linux: darkman owns the mode and publishes it to the XDG settings
+      # portal, which is what WezTerm, Neovim and GTK apps follow. Ask darkman
+      # first, then the portal itself (color-scheme 1 = dark, 2 = light), and
+      # default to dark when neither answers.
+      local mode
+      mode="$(darkman get 2>/dev/null || true)"
+      if [ -z "$mode" ]; then
+        case "$(busctl --user call org.freedesktop.portal.Desktop /org/freedesktop/portal/desktop \
+                  org.freedesktop.portal.Settings ReadOne ss org.freedesktop.appearance color-scheme 2>/dev/null)" in
+          *" 2") mode=light ;;
+          *)     mode=dark ;;
+        esac
+      fi
+      echo "$mode"
+      ;;
+  esac
 }
 
 _registry_file() {
