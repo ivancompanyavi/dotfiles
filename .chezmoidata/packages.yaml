@@ -17,6 +17,7 @@ packages:
     - 'neovim'
     - 'ruff'
     - 'ripgrep'
+    - 'rust-analyzer'
     - 'stylua'
     - 'tree-sitter-cli'
     - 'typescript-language-server'

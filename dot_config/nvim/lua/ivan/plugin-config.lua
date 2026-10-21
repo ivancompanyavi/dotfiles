@@ -137,6 +137,7 @@ if ok then
         "gosum",
         "hcl",
         "terraform",
+        "rust",
         "graphql",
         "json",
         "yaml",
@@ -355,6 +356,7 @@ if ok then
             terraform = { "terraform_fmt" },
             hcl = { "terraform_fmt" },
             go = { "gofmt", "goimports" },
+            rust = { "rustfmt" },
         },
         format_on_save = function(bufnr)
             local disable_filetypes = { c = true, cpp = true }
